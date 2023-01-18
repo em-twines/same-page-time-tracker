@@ -10,13 +10,31 @@ from .serializers import RequestSerializer, Employee_Request_Serializer, Manager
 # <<<<<<<<<<<<<<<<< EXAMPLE FOR STARTER CODE USE <<<<<<<<<<<<<<<<<
 
 
-#view all requests.
+#Manager
+
+#view all requests
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def view_all_requests(request):
-    requests = Request.objects.all()
-    serializer = RequestSerializer(requests, many=True)
+    requests_for_pto = Request.objects.all()
+    serializer = RequestSerializer(requests_for_pto, many=True)
     return Response(serializer.data)
+
+
+# I want to access the request id then its employee request id then the user id of that. 
+
+#Employee
+
+#view all their own requests
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def view_all_requests_by_employee(request):
+    all_requests_by_user = Employee_Request.objects.filter(use = request.user.id)
+    serializer = RequestSerializer(all_requests_by_user, many=True)
+    return Response(serializer.data)
+
+
+
 
 #Submit request
 @api_view(['POST'])
@@ -26,8 +44,10 @@ def submit_request(request):
         'User ', f"{request.user.id} {request.user.email} {request.user.username}")
     serializer = RequestSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(user=request.user)
+        serializer.save(user=request.users.user_id)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+ 
 
-
+#amenity = user
+#store = request
