@@ -5,5 +5,6 @@ from requests_for_pto import views
 
 urlpatterns = [
     path('', views.view_all_requests),
-    path('submit/', views.submit_request),
+    path('<int:pk>/', views.approve_or_deny),
+    # path('submit/', views.submit_request),
 ]

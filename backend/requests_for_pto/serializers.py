@@ -5,8 +5,8 @@ from .models import Request, Employee_Request, Manager_Employee
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
-        fields = ['id', 'request_text', 'day', 'hours_requested', 'users']
-        depth = 2
+        fields = ['id', 'request_text', 'day', 'hours_requested', 'decision', 'is_pending']
+
 
 class Employee_Request_Serializer(serializers.ModelSerializer):
     class Meta:
