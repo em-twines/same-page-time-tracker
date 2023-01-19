@@ -43,21 +43,22 @@ def approve_or_deny(request, pk):
 def view_all_requests_by_employee(request):
     
     #get all times one employee has posted a request
-    all_requests_by_user = Employee_Request.objects.filter(user_id = request.user.id)
+    #creates list of all junction table id's
+    all_requests_by_user = Employee_Request.objects.filter(user = request.user.id)
+    print(all_requests_by_user)
     all_requests_objects = all_requests_by_user.values()
-    all_requests_count = all_requests_objects.count()
-
+    print(all_requests_objects)
     # #get array of all corresponding request id's
     requests_array = []
-    requests_array_values = []
     #requests_array = list of request id's
-    requests_array = [item['id'] for item in all_requests_objects]
-    print(requests_array)
+    requests_array = [item['request_for_pto_id'] for item in all_requests_objects]
+    print('list of request ids', requests_array)
 
     i = 0
     request_objects = []
     while i < len(requests_array):
-        request_objects += Request.objects.filter(id = requests_array[i])
+        request_objects += Request.objects.filter(pto_request__request_for_pto_id = requests_array[i])
+        print(requests_array[i])
         i += 1
         
     # print all requests associated with those id's
