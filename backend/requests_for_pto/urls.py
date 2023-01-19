@@ -12,4 +12,5 @@ urlpatterns = [
     #Employee:
     path('employee/', views.view_all_requests_by_employee),
     path('submit/', views.submit_request),
+    path('submit/<int:pk>', views.modify_request),
 ]

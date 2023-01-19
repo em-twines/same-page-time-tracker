@@ -72,11 +72,28 @@ def view_all_requests_by_employee(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def submit_request(request):
-    print(
-        'User ', f"{request.user.id} {request.user.email} {request.user.username}")
-    serializer = RequestSerializer(data=request.data)
-    if serializer.is_valid():
+    # print(
+    #     'User ', f"{request.user.id} {request.user.email} {request.user.username}")
+    if request.method == 'POST':
+        serializer = RequestSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            Employee_Request.objects.create(user=request.user, request_for_pto=serializer.instance)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
+    
+@api_view(['PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def modify_request(request, pk):
+    request_for_pto = get_object_or_404(Request, pk = pk)
+    if request.method == 'PUT':
+        serializer = RequestSerializer(request_for_pto, data = request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
-        Employee_Request.objects.create(user=request.user, request_for_pto=serializer.instance)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data, status.HTTP_200_OK)
+    elif request.method == 'DELETE':
+        request_for_pto.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
+
