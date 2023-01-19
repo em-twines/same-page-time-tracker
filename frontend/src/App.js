@@ -3,7 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Pages Imports
-import HomePage from "./pages/HomePage/HomePage";
+import HomePage_employee from "./pages/HomePage/HomePage_employee";
+import HomePage_manager from "./pages/HomePage/HomePage_manager";
+
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
@@ -23,7 +25,8 @@ function App() {
           path="/"
           element={
             <PrivateRoute>
-              <HomePage />
+              <HomePage_employee />
+              <HomePage_manager />
             </PrivateRoute>
           }
         />
