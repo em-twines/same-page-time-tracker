@@ -34,31 +34,48 @@ def approve_or_deny(request, pk):
     return Response(serializer.data, status.HTTP_200_OK)
 
 
+
 #Employee
 
-# #view all their own requests
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def view_all_requests_by_employee(request):
-#     all_requests_by_user = Employee_Request.objects.filter(use = request.user.id)
-#     serializer = RequestSerializer(all_requests_by_user, many=True)
-#     return Response(serializer.data)
+#view all their own requests
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def view_all_requests_by_employee(request):
+    
+    #get all times one employee has posted a request
+    all_requests_by_user = Employee_Request.objects.filter(user_id = request.user.id)
+    all_requests_objects = all_requests_by_user.values()
+    all_requests_count = all_requests_objects.count()
+
+    # #get array of all corresponding request id's
+    requests_array = []
+    requests_array_values = []
+    #requests_array = list of request id's
+    requests_array = [item['id'] for item in all_requests_objects]
+    print(requests_array)
+
+    i = 0
+    request_objects = []
+    while i < len(requests_array):
+        request_objects += Request.objects.filter(id = requests_array[i])
+        i += 1
+        
+    # print all requests associated with those id's
+    serializer = RequestSerializer(request_objects, many=True)
+    print(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 
-
-# #Submit request
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def submit_request(request):
-#     print(
-#         'User ', f"{request.user.id} {request.user.email} {request.user.username}")
-#     serializer = RequestSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save(user=request.users.user_id)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
- 
-
-#amenity = user
-#store = request
+#Submit request
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def submit_request(request):
+    print(
+        'User ', f"{request.user.id} {request.user.email} {request.user.username}")
+    serializer = RequestSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        Employee_Request.objects.create(user=request.user, request_for_pto=serializer.instance)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
