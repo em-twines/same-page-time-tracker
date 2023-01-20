@@ -10,6 +10,7 @@ class Request(models.Model):
     decision = models.BooleanField(default=False)
     is_pending = models.BooleanField(default=True)
 
+
 class Employee_Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     request_for_pto = models.ForeignKey(Request, on_delete=models.CASCADE,related_name="pto_request")

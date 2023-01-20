@@ -3,6 +3,7 @@ from .models import Request, Employee_Request, Manager_Employee
 
 
 class RequestSerializer(serializers.ModelSerializer):
+    # day = serializers.DateField(input_formats='%m-%d-%Y')
     class Meta:
         model = Request
         fields = ['id', 'request_text', 'day', 'hours_requested', 'decision', 'is_pending']

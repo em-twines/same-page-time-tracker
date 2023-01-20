@@ -34,8 +34,9 @@ button:hover {
 }
 
 .container {
-  margin: 0 auto;
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   overflow: auto;
   text-align: center;
 }
@@ -51,8 +52,40 @@ button:hover {
 .form input {
   display: block;
   width: 100%;
-  height: 25px;
-  margin: 5px;
-  padding: 3px 7px;
-  font-size: 17px;
+  height: 2rem;
+  margin: 1rem;
+  padding: 1rem 1rem
+  
+  
+}
+
+.calendar-and-form-container{
+  display: flex; 
+  justify-content: center;
+  margin: auto;
+  width: 100vw;
+}
+
+.calendar-container{
+  display: flex; 
+  justify-content: flex-start;
+}
+
+.form-container{
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+
+.form-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.title{
+  font-size: 2rem;
+  padding-bottom: 3rem;
 }

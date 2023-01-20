@@ -5,16 +5,18 @@ import axios from "axios";
 
 
 import Calendar from "../../components/Calendar/Calendar.jsx";
+import RequestForm from "../../components/RequestForm";
 
-
-const HomePage_employee = () => {
+const HomePage_employee = ({setRequest, user, token,getRequests}) => {
   
-  const [user, token] = useAuth();
-
   return (
     <div className = 'container'>
-      <h1>Home Page for {user.username}!</h1>
-      <Calendar/>
+      <div className = 'title'>Home Page for {user.username}!</div>
+      <div className = 'calendar-and-form-container'>
+        <RequestForm setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests}/>
+        <Calendar id = "calendar"/>
+        
+      </div>
     </div>
   );
 };

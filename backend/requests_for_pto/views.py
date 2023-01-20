@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404
 #view all requests
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+
 def view_all_requests(request):
     requests_for_pto = Request.objects.all()
     serializer = RequestSerializer(requests_for_pto, many=True)
@@ -24,8 +25,8 @@ def view_all_requests(request):
 #Approve requests
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
-def approve_or_deny(request, pk):
 
+def approve_or_deny(request, pk):
     request_for_pto = get_object_or_404(Request, pk = pk)
     request.data['is_pending'] = False
     serializer = RequestSerializer(request_for_pto, data = request.data, partial = True)
@@ -43,27 +44,23 @@ def approve_or_deny(request, pk):
 def view_all_requests_by_employee(request):
     
     #get all times one employee has posted a request
+
     #creates list of all junction table id's
     all_requests_by_user = Employee_Request.objects.filter(user = request.user.id)
-    print(all_requests_by_user)
     all_requests_objects = all_requests_by_user.values()
-    print(all_requests_objects)
-    # #get array of all corresponding request id's
-    requests_array = []
-    #requests_array = list of request id's
-    requests_array = [item['request_for_pto_id'] for item in all_requests_objects]
-    print('list of request ids', requests_array)
 
+    #get array of all corresponding request_id's
+    requests_array = []
+    requests_array = [item['request_for_pto_id'] for item in all_requests_objects]
+
+    #loops through request_id's to find corresponding request objects.
     i = 0
     request_objects = []
     while i < len(requests_array):
         request_objects += Request.objects.filter(pto_request__request_for_pto_id = requests_array[i])
-        print(requests_array[i])
         i += 1
         
-    # print all requests associated with those id's
     serializer = RequestSerializer(request_objects, many=True)
-    print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -71,9 +68,8 @@ def view_all_requests_by_employee(request):
 #Submit request
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+
 def submit_request(request):
-    # print(
-    #     'User ', f"{request.user.id} {request.user.email} {request.user.username}")
     if request.method == 'POST':
         serializer = RequestSerializer(data=request.data)
         if serializer.is_valid():
@@ -86,13 +82,16 @@ def submit_request(request):
     
 @api_view(['PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
+
 def modify_request(request, pk):
     request_for_pto = get_object_or_404(Request, pk = pk)
+
     if request.method == 'PUT':
         serializer = RequestSerializer(request_for_pto, data = request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status.HTTP_200_OK)
+
     elif request.method == 'DELETE':
         request_for_pto.delete()
         return Response(status.HTTP_204_NO_CONTENT)
