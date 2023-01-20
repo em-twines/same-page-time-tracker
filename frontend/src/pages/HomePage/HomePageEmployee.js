@@ -2,7 +2,7 @@ import React from "react";
 import CalendarEmployee from '../../components/Calendar/CalendarEmployee';
 import RequestForm from "../../components/RequestForm";
 
-const HomePage_employee = ({setRequest, user, token,getRequests,request_for_pto}) => {
+const HomePageEmployee = ({setRequest, user, token,getRequests,request_for_pto}) => {
   
   return (
     <div className = 'container'>
@@ -16,7 +16,7 @@ const HomePage_employee = ({setRequest, user, token,getRequests,request_for_pto}
   );
 };
 
-export default HomePage_employee;
+export default HomePageEmployee;
 
 // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
 // The "token" value is the JWT token that you will send in the header of any request requiring authentication

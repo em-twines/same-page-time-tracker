@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from .models import Request, Employee_Request, Manager_Employee, User
 from .serializers import RequestSerializer, Employee_Request_Serializer, Manager_Employee_Serializer
 from django.shortcuts import get_object_or_404
-# <<<<<<<<<<<<<<<<< EXAMPLE FOR STARTER CODE USE <<<<<<<<<<<<<<<<<
+from authentication.serializers import RegistrationSerializer
 
 
 #Manager
@@ -16,10 +16,31 @@ from django.shortcuts import get_object_or_404
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 
+#get access to request id, access with dot notation to get user for each.
 def view_all_requests(request):
     requests_for_pto = Request.objects.all()
+    all_requests_objects = requests_for_pto.values()
+    print(all_requests_objects)
+    #returns array of Request object id's
+    requests_array = [item['id'] for item in all_requests_objects]
+    print(requests_array)
+    i = 0
+    matched_ids = []
+    while i < len(requests_array):
+        matched_id_object = Employee_Request.objects.filter(request_for_pto = requests_array[i])
+        matched_ids += matched_id_object.values()
+        i+= 1
+        print(matched_ids)
+    matched_user_ids = [item['user_id'] for item in matched_ids]
+    print(matched_user_ids)
+    found_users = []
+    for item in matched_user_ids:
+        found_users += User.objects.filter(id = item)
+    print(found_users)
     serializer = RequestSerializer(requests_for_pto, many=True)
-    return Response(serializer.data)
+    serializer2 = RegistrationSerializer(found_users, many=True)
+    serializer_list = [serializer.data, serializer2.data]
+    return Response(serializer_list)
 
 
 #Approve requests

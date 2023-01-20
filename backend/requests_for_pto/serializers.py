@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Request, Employee_Request, Manager_Employee
+from datetime import date
 
 
 class RequestSerializer(serializers.ModelSerializer):
@@ -9,12 +10,14 @@ class RequestSerializer(serializers.ModelSerializer):
         fields = ['id', 'request_text', 'day', 'hours_requested', 'decision', 'is_pending']
 
 
+
 class Employee_Request_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Employee_Request
         fields = ['id', 'user_id', 'request_id']
-        depth = 1
 
+        depth = 1
+    user_id = serializers.IntegerField(write_only = True)
 
 class Manager_Employee_Serializer(serializers.ModelSerializer):
     class Meta:

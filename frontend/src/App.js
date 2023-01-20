@@ -6,8 +6,8 @@ import "./App.css";
 import 'bootstrap';
 
 // Pages Imports
-import HomePage_employee from "./pages/HomePage/HomePage_employee";
-import HomePage_manager from "./pages/HomePage/HomePage_manager";
+import HomePage_employee from "./pages/HomePage/HomePageEmployee";
+import HomePage_manager from "./pages/HomePage/HomePageManager";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 

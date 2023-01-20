@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react';
 import CalendarManager from '../../components/Calendar/CalendarManger';
 import axios from 'axios';
 
 
-export default function HomePage_manager({setRequest, user, token,request_for_pto}) {
+export default function HomePageManager({setRequest, setRequests, user, token, request_for_pto, requests_for_pto}) {
+  const[currentEvents, setCurrentEvents] = useState(requests_for_pto);
 
   async function getAllRequests(){
 
@@ -16,7 +17,10 @@ export default function HomePage_manager({setRequest, user, token,request_for_pt
       }
     );
     console.log(res.data);
-      setRequest(res.data); 
+      setRequests(res.data); 
+      console.log(res.data)
+      handleEvents(res.data);
+
     }
     catch (error) {
       console.log(error)
@@ -31,6 +35,12 @@ export default function HomePage_manager({setRequest, user, token,request_for_pt
   }
 
 
+  function handleEvents(events) {
+    setCurrentEvents(requests_for_pto);
+    debugger;
+
+  }
+
 
 
 
@@ -40,7 +50,7 @@ export default function HomePage_manager({setRequest, user, token,request_for_pt
       <div className = 'title'>Home Page for {user.username}!</div>
       <div className = 'calendar-and-form-container'>
       <div className = 'calendar-and-button-container'>
-        <CalendarManager request_for_pto = {request_for_pto} user ={user} getAllRequests = {getAllRequests}/>
+        <CalendarManager request_for_pto = {request_for_pto} requests_for_pto = {requests_for_pto} user ={user} getAllRequests = {getAllRequests} setRequests = {setRequests} handleEvents = {handleEvents}/>
         <button onClick={handleSubmit}>Review Requests</button>
       </div>
       </div>
