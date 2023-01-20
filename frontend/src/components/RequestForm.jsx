@@ -20,7 +20,6 @@ export default function RequestForm({
 
   function handleSubmit(event) {
     event.preventDefault();
-    debugger;
     let newRequest = {
       request_text: request_text,
       day: day,
@@ -28,16 +27,14 @@ export default function RequestForm({
       decision: false,
       is_pending: true,
     };
-    console.log(newRequest)
     postRequest(newRequest);
-    // setRequestText("");
-    // setDay(currentDate);
-    // setHours_requested();
+    setRequestText("");
+    setDay();
+    setHoursRequested();
   }
 
   //adds a comment with body to the database.
   async function postRequest(newRequest) {
-    console.log(newRequest)
     try {
       let res = await axios.post(
         `http://127.0.0.1:8000/api/requests_for_pto/submit/`,

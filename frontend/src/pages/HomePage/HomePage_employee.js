@@ -1,20 +1,15 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import axios from "axios";
-
-
-import Calendar from "../../components/Calendar/Calendar.jsx";
+import CalendarEmployee from '../../components/Calendar/CalendarEmployee';
 import RequestForm from "../../components/RequestForm";
 
-const HomePage_employee = ({setRequest, user, token,getRequests}) => {
+const HomePage_employee = ({setRequest, user, token,getRequests,request_for_pto}) => {
   
   return (
     <div className = 'container'>
       <div className = 'title'>Home Page for {user.username}!</div>
       <div className = 'calendar-and-form-container'>
         <RequestForm setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests}/>
-        <Calendar id = "calendar"/>
+        <CalendarEmployee request_for_pto = {request_for_pto}/>
         
       </div>
     </div>

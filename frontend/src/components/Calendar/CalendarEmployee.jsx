@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import "./Calendar.css";
 
-export default class Calendar extends React.Component {
+export default class CalendarEmployee extends React.Component {
   render() {
     return (
       <FullCalendar className = 'calendar-container'

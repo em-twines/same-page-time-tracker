@@ -25,7 +25,7 @@ function App() {
 
 const[request_for_pto, setRequest] = useState({});
 const [user, token] = useAuth();
-
+const[requests_for_pto, setRequests] = useState([]);
 
 async function getRequests(){
 
@@ -38,7 +38,7 @@ async function getRequests(){
     }
   );
   console.log(res.data);
-    setRequest(res.data); 
+    setRequests(res.data); 
   }
   catch (error) {
     console.log(error)
@@ -55,7 +55,7 @@ async function getRequests(){
           path="/managers"
           element={
             <PrivateRoute>
-              <HomePage_manager setRequest = {setRequest} user = {user} token = {token}/>
+              <HomePage_manager setRequest = {setRequest} user = {user} token = {token} request_for_pto={request_for_pto} requests_for_pto = {requests_for_pto} setRequests = {setRequests}/>
             </PrivateRoute>
           }
         />          
@@ -63,7 +63,7 @@ async function getRequests(){
           path="/employees"
           element={
             <PrivateRoute>
-              <HomePage_employee setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests}/>
+              <HomePage_employee setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests} request_for_pto ={request_for_pto}/>
             </PrivateRoute> } 
           />  
         <Route path="/register" element={<RegisterPage />} />
