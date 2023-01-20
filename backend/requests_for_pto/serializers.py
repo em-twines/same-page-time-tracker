@@ -9,8 +9,6 @@ class RequestSerializer(serializers.ModelSerializer):
         model = Request
         fields = ['id', 'request_text', 'day', 'hours_requested', 'decision', 'is_pending']
 
-
-
 class Employee_Request_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Employee_Request
