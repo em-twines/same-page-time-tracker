@@ -37,7 +37,7 @@ export default function HomePageManager({setRequest, setRequests, user, token, r
 
   function handleEvents(events) {
     setCurrentEvents(requests_for_pto);
-    debugger;
+
 
   }
 

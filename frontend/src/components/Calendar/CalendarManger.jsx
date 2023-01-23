@@ -26,7 +26,7 @@ export default function CalendarManager({user, requests_for_pto, setRequests, ge
     }
     let events = requests_for_pto.map((el) => {
       return{
-        title: `${el.user, console.log(el)} out`,
+        // title: `${el.user, console.log(el)} out`,
         date: el.day
       }
     })

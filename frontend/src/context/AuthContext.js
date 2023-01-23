@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 201) {
         console.log("Successful registration! Log in to access token");
         setIsServerError(false);
-        navigate("/login");
+        navigate("/");
       } else {
         navigate("/register");
       }
@@ -58,7 +58,12 @@ export const AuthProvider = ({ children }) => {
         let loggedInUser = jwtDecode(response.data.access);
         setUser(setUserObject(loggedInUser));
         setIsServerError(false);
-        navigate("/");
+        if (loggedInUser.is_manager){
+          navigate("/manager");
+        } 
+        else{
+          navigate("/employee")
+        }
       } else {
         navigate("/register");
       }

@@ -47,27 +47,30 @@ async function getRequests(){
 }
 
 
+
   return (
     <div>
-      <Navbar />
+      <Navbar/>
       <Routes>
+        {console.log(user)}
         <Route
-          path="/managers"
+          path="/manager"
           element={
             <PrivateRoute>
               <HomePage_manager setRequest = {setRequest} user = {user} token = {token} request_for_pto={request_for_pto} requests_for_pto = {requests_for_pto} setRequests = {setRequests}/>
-            </PrivateRoute>
-          }
-        />          
+            </PrivateRoute>} 
+        />         
+
         <Route
-          path="/employees"
+          path="/employee"
           element={
             <PrivateRoute>
               <HomePage_employee setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests} request_for_pto ={request_for_pto}/>
             </PrivateRoute> } 
           />  
+
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
       </Routes>
       <Footer />
     </div>
