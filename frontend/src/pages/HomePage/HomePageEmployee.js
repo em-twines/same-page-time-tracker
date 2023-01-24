@@ -42,7 +42,7 @@ const HomePageEmployee = ({decision, setDecision}) => {
       <div className = 'title'>Home Page for {user.username}!</div>
       <div className = 'calendar-and-form-container'>
         <RequestForm setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests}/>
-        <CalendarEmployee decision = {decision} setDecision = {setDecision} requests_for_pto = {requests_for_pto} deletion = {deletion} setDeletion = {setDeletion}/>
+        <CalendarEmployee decision = {decision} setDecision = {setDecision} requests_for_pto = {requests_for_pto} deletion = {deletion} setDeletion = {setDeletion} getRequests = {getRequests}/>
         
       </div>
     </div>

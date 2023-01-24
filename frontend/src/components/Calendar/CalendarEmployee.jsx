@@ -7,14 +7,19 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import MuiEmployee from "./MuiEmployee";
+// import MuiManager from "./MuiManager";
+// import MuiEdit from "./MuiEdit";
 
 
-export default function CalendarEmployee({ requests_for_pto, getAllRequests , setEvents, eventsDefined, decision, setDecision, deletion, setDeletion}) {
+export default function CalendarEmployee({ requests_for_pto, getAllRequests , setEvents, eventsDefined, decision, setDecision, deletion, setDeletion, getRequests}) {
   // const[weekendsVisible, setWeekendsVisible] = useState(true);
   // const [eventsDefined, setEvents] = useState();
   const [open, setOpen] = useState(false);
   
   const [eventInQuestionEmployee, setEventInQuestionEmployee] = useState({});
+
+  const [openChild, setOpenChild] = useState(false);
+
 
   const handleOpen = () => setOpen(true);
   const [eventsDefinedEmployee, setEventsEmployee] = useState();
@@ -71,8 +76,9 @@ export default function CalendarEmployee({ requests_for_pto, getAllRequests , se
   
   return (
     <div className="demo-app">
-      <MuiEmployee open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {decision} eventInQuestionEmployee={eventInQuestionEmployee} setEventInQuestionEmployee = {setEventInQuestionEmployee} eventsDefined = {eventsDefined} getEventsObjectsEmployee = {getEventsObjectsEmployee} deletion = {deletion} setDeletion = {setDeletion}/>
-     
+  
+      <MuiEmployee open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {decision} eventInQuestionEmployee={eventInQuestionEmployee} setEventInQuestionEmployee = {setEventInQuestionEmployee} eventsDefined = {eventsDefined} getEventsObjectsEmployee = {getEventsObjectsEmployee} deletion = {deletion} setDeletion = {setDeletion} openChild = {openChild} setOpenChild = {setOpenChild} getRequests = {getRequests}/>
+  
       <div className="demo-app-main">
         
         <FullCalendar

@@ -7,7 +7,6 @@ import Modal from "@mui/material/Modal";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -21,52 +20,87 @@ const style = {
 };
 
 export default function MuiEmployee({
-
   open,
   setOpen,
   eventInQuestionEmployee,
   getEventsObjectsEmployee,
   deletion,
   setDeletion,
+  openChild,
+  setOpenChild,
+  getRequests,
 }) {
-
   const [user, token] = useAuth();
-
+  //   const [openChild, setOpenChild] = useState(false);
   const handleClose = () => setOpen(false);
+  function handleOpenChild() {
+    setOpen(false);
+    setOpenChild(true);
+  }
+  const handleCloseChild = () => setOpenChild(false);
+  const [request_text, setRequestText] = useState("");
+  const [day, setDay] = useState();
+  const [hours_requested, setHoursRequested] = useState();
 
- 
-  async function deleteRequest(){
-
-    try{
-    let res = await axios.delete(`http://127.0.0.1:8000/api/requests_for_pto/submit/${eventInQuestionEmployee.id}`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+  async function deleteRequest() {
+    try {
+      let res = await axios.delete(
+        `http://127.0.0.1:8000/api/requests_for_pto/submit/${eventInQuestionEmployee.id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error getting your requests!");
     }
-    catch (error) {
-      console.log(error)
-      alert('Sorry! We have encountered an error getting your requests!');
-    }
-    setDeletion(!deletion)
+    setDeletion(!deletion);
     getEventsObjectsEmployee();
-
   }
 
+  if (openChild) {
+    setOpen(false);
+    console.log("open: ", open);
+  }
 
-  
+  function handleSubmit(event) {
+    event.preventDefault();
+    let editedRequest = {
+      request_text: request_text,
+      day: day,
+      hours_requested: hours_requested,
+      decision: false,
+      is_pending: true,
+    };
+    postRequest(editedRequest);
+    setRequestText("");
+    setDay();
+    setHoursRequested();
+    handleCloseChild();
+  }
 
-
-
-
-
-
+  async function postRequest(editedRequest) {
+    try {
+      let res = await axios.put(
+        `http://127.0.0.1:8000/api/requests_for_pto/submit/${eventInQuestionEmployee.id}`,
+        editedRequest,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      getRequests();
+    } catch (error) {
+      console.log(error, editedRequest);
+      toast("Sorry! We have encountered an error editing your request!");
+    }
+  }
 
   return (
     <div>
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -74,7 +108,7 @@ export default function MuiEmployee({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <Button
+          <Button
             variant="contained"
             color="error"
             onClick={() => {
@@ -83,17 +117,17 @@ export default function MuiEmployee({
             }}
           >
             Delete
-            {/* !!!!!!!!!!!!!!!!!!!!! TODO: add are you sure popover !!!!!!!!!!!!!!!!!!*/}
-        </Button>
+            {/* !!!!!!!!!!!!!!!!!!!!! TODO: add 'are you sure popover' !!!!!!!!!!!!!!!!!!*/}
+          </Button>
 
           <Button
             variant="contained"
-            // onClick={() => {
-            //   handleClose();
-            // }}
+            onClick={() => {
+              handleOpenChild();
+            }}
           >
             Edit
-        </Button>
+          </Button>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             PTO Request
           </Typography>
@@ -103,9 +137,56 @@ export default function MuiEmployee({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Message: {eventInQuestionEmployee.message}
           </Typography>
-        
         </Box>
       </Modal>
+
+      <Modal
+        open={openChild}
+        onClose={handleCloseChild}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Edit Request
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <form onSubmit={handleSubmit} className="form-content">
+              <h2>Request PTO</h2>
+              <label>Add a Message</label>
+              <input
+                className="form input"
+                type="text"
+                onChange={(event) => setRequestText(event.target.value)}
+                required
+                value={request_text}
+              ></input>
+              <label>Day</label>
+              <input
+                className="form input"
+                // default = '{{currentDate}}'
+                type="date"
+                // onKeyDown={(e) => e.preventDefault()}
+                onChange={(event) => setDay(event.target.value)}
+                required
+                value={day}
+              ></input>
+              <label>Hours</label>
+              <input
+                className="form input"
+                default={8}
+                type="number"
+                onChange={(event) => setHoursRequested(event.target.value)}
+                required
+                value={hours_requested}
+              ></input>
+              <button
+                type="submit">Submit Request</button>
+            </form>
+          </Typography>
+        </Box>
+      </Modal>
+      {/* <MuiEdit  openChild = {openChild} setOpenChild = {setOpenChild}/> */}
     </div>
   );
 }
