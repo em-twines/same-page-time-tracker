@@ -9,25 +9,20 @@ import interactionPlugin from "@fullcalendar/interaction";
 import MuiEmployee from "./MuiEmployee";
 
 
-export default function CalendarEmployee({ requests_for_pto, getAllRequests , setEvents, eventsDefined, decision, setDecision}) {
+export default function CalendarEmployee({ requests_for_pto, getAllRequests , setEvents, eventsDefined, decision, setDecision, deletion, setDeletion}) {
   // const[weekendsVisible, setWeekendsVisible] = useState(true);
   // const [eventsDefined, setEvents] = useState();
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
-  const [eventInQuestion, setEventInQuestion] = useState({});
-  const [personName, setPersonName] = useState('');
-  const [hours, setHours] = useState(0);
+  
+  const [eventInQuestionEmployee, setEventInQuestionEmployee] = useState({});
+
   const handleOpen = () => setOpen(true);
   const [eventsDefinedEmployee, setEventsEmployee] = useState();
 
   const handleEventClick = (clickInfo) => {
     handleOpen();
-      setEventInQuestion(clickInfo.event)
-      setTitle(clickInfo.event.title);
-      setMessage(clickInfo.event.extendedProps.details);
-      setPersonName(clickInfo.event.extendedProps.name)
-      setHours(clickInfo.event.extendedProps.hours)
+      setEventInQuestionEmployee(clickInfo.event)
+     
   };
 
 
@@ -76,7 +71,7 @@ export default function CalendarEmployee({ requests_for_pto, getAllRequests , se
   
   return (
     <div className="demo-app">
-      <MuiEmployee open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {decision} message = {message} eventInQuestion = {eventInQuestion} personName = {personName} hours = {hours}  eventsDefined = {eventsDefined}/>
+      <MuiEmployee open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {decision} eventInQuestionEmployee={eventInQuestionEmployee} setEventInQuestionEmployee = {setEventInQuestionEmployee} eventsDefined = {eventsDefined} getEventsObjectsEmployee = {getEventsObjectsEmployee} deletion = {deletion} setDeletion = {setDeletion}/>
      
       <div className="demo-app-main">
         

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
 
 const style = {
@@ -22,33 +24,49 @@ export default function MuiEmployee({
 
   open,
   setOpen,
-  title,
-  message,
-
-  hours,
-
+  eventInQuestionEmployee,
+  getEventsObjectsEmployee,
+  deletion,
+  setDeletion,
 }) {
-  //   const [open, setOpen] = React.useState(false);
-  //   const handleOpen = () => setOpen(true);
+
   const [user, token] = useAuth();
-//   const [decision, setDecision] = useState();
 
   const handleClose = () => setOpen(false);
 
  
+  async function deleteRequest(){
+
+    try{
+    let res = await axios.delete(`http://127.0.0.1:8000/api/requests_for_pto/submit/${eventInQuestionEmployee.id}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    }
+    catch (error) {
+      console.log(error)
+      alert('Sorry! We have encountered an error getting your requests!');
+    }
+    setDeletion(!deletion)
+    getEventsObjectsEmployee();
+
+  }
+
+
   
+
+
+
+
+
+
+
   return (
     <div>
-      {/* <Button onClick={()=>{handleOpen(); handleEventClick()}}>View Details</Button> */}
-      <ToastContainer
-        autoClose={2500}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        theme="dark"
-      />
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -56,14 +74,34 @@ export default function MuiEmployee({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+        <Button
+            variant="contained"
+            color="error"
+            onClick={() => {
+              deleteRequest();
+              handleClose();
+            }}
+          >
+            Delete
+            {/* !!!!!!!!!!!!!!!!!!!!! TODO: add are you sure popover !!!!!!!!!!!!!!!!!!*/}
+        </Button>
+
+          <Button
+            variant="contained"
+            // onClick={() => {
+            //   handleClose();
+            // }}
+          >
+            Edit
+        </Button>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {title}
+            PTO Request
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Hours: {hours}
+            Hours: {eventInQuestionEmployee.hours}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Message: {message}
+            Message: {eventInQuestionEmployee.message}
           </Typography>
         
         </Box>

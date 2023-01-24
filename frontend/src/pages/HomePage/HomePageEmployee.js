@@ -8,6 +8,8 @@ const HomePageEmployee = ({decision, setDecision}) => {
   const [user, token] = useAuth();
   const[request_for_pto, setRequest] = useState({});
   const[requests_for_pto, setRequests] = useState([]);
+  const[deletion, setDeletion] = useState(false);
+
 
   async function getRequests(){
 
@@ -32,7 +34,7 @@ const HomePageEmployee = ({decision, setDecision}) => {
 
   useEffect(()=>{
     getRequests();
-   },[decision])
+   },[decision, deletion])
   
 
   return (
@@ -40,7 +42,7 @@ const HomePageEmployee = ({decision, setDecision}) => {
       <div className = 'title'>Home Page for {user.username}!</div>
       <div className = 'calendar-and-form-container'>
         <RequestForm setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests}/>
-        <CalendarEmployee decision = {decision} setDecision = {setDecision} requests_for_pto = {requests_for_pto}/>
+        <CalendarEmployee decision = {decision} setDecision = {setDecision} requests_for_pto = {requests_for_pto} deletion = {deletion} setDeletion = {setDeletion}/>
         
       </div>
     </div>
