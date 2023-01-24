@@ -67,7 +67,9 @@ def view_all_requests_by_employee(request):
     serializer = RequestSerializer(request_objects, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+    # requests_pto = Employee_Request.objects.filter(user = request.user)
+    # serializer = CombineSerializer(requests_pto, many = True)
+    # return Response(serializer.data)
 
 #Submit request
 @api_view(['POST'])

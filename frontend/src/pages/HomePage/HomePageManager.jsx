@@ -4,11 +4,10 @@ import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
 
 
-export default function HomePageManager() {
+export default function HomePageManager({decision, setDecision}) {
   const [user, token] = useAuth();
   const [requests, setRequests] = useState([])
   const [eventsDefined, setEvents] = useState();
-  const [decision, setDecision] = useState();
 
 
   async function getAllRequests(){

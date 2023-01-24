@@ -20,31 +20,13 @@ import PrivateRoute from "./utils/PrivateRoute";
 import axios from "axios";
 
 
+
 function App() {
 
 
-const[request_for_pto, setRequest] = useState({});
 const [user, token] = useAuth();
-const[requests_for_pto, setRequests] = useState([]);
+const [decision, setDecision] = useState();
 
-async function getRequests(){
-
-  try{
-  let res = await axios.get(`http://127.0.0.1:8000/api/requests_for_pto/employee/`,
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  console.log(res.data);
-    setRequests(res.data); 
-  }
-  catch (error) {
-    console.log(error)
-    alert('Sorry! We have encountered an error getting your requests!');
-  }
-}
 
 
 
@@ -61,14 +43,14 @@ async function getRequests(){
           path="/manager"
           element={
             <PrivateRoute>
-              <HomePage_manager/>
+              <HomePage_manager decision = {decision} setDecision = {setDecision}/>
             </PrivateRoute>} 
         />         
         <Route
           path="/employee"
           element={
             <PrivateRoute>
-              <HomePage_employee setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests} request_for_pto ={request_for_pto}/>
+              <HomePage_employee decision = {decision} setDecision = {setDecision}/>
             </PrivateRoute> } 
           />  
         

@@ -1,92 +1,104 @@
-import React from 'react'
-import FullCalendar from '@fullcalendar/react' // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
-import "./Calendar.css";
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default class CalendarEmployee extends React.Component {
-  render() {
-    return (
-      <FullCalendar className = 'calendar-container'
-        plugins={[ dayGridPlugin ]}
-        initialView="dayGridMonth"
-        events={[
-          // { title: 'Emily Out', date: '2023-01-21' },
-          // { title: 'event 2', date: '2019-04-02' }
-        ]}
-      />
-    )
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import MuiEmployee from "./MuiEmployee";
+
+
+export default function CalendarEmployee({ requests_for_pto, getAllRequests , setEvents, eventsDefined, decision, setDecision}) {
+  // const[weekendsVisible, setWeekendsVisible] = useState(true);
+  // const [eventsDefined, setEvents] = useState();
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [message, setMessage] = useState('');
+  const [eventInQuestion, setEventInQuestion] = useState({});
+  const [personName, setPersonName] = useState('');
+  const [hours, setHours] = useState(0);
+  const handleOpen = () => setOpen(true);
+  const [eventsDefinedEmployee, setEventsEmployee] = useState();
+
+  const handleEventClick = (clickInfo) => {
+    handleOpen();
+      setEventInQuestion(clickInfo.event)
+      setTitle(clickInfo.event.title);
+      setMessage(clickInfo.event.extendedProps.details);
+      setPersonName(clickInfo.event.extendedProps.name)
+      setHours(clickInfo.event.extendedProps.hours)
+  };
+
+
+
+  function getEventsObjectsEmployee() {
+    let events = requests_for_pto.map((el) => {
+      // '#CFC5CE';
+      let eventColor = '#383be0'; 
+      if (el.is_pending === false){
+      
+        //if denied
+        if (el.decision === false){
+          eventColor = '#e0384675';    
+        }    
+        else{
+        //if approved
+          eventColor = '#52ab6275';           
+        }
+      }
+      // TODO: Add a past events color here
+
+      return {
+        id: el.id,
+        title: `PTO Request`,
+        start: el.day,
+        color: eventColor,
+
+        extendedProps: {
+          details: el.request_text,
+          hours: el.hours_requested,
+          status: el.is_pending,
+          response: el.decision, 
+        },
+      };
+    });
+    setEventsEmployee(events);
   }
+
+  useEffect(() => {
+    getEventsObjectsEmployee();
+  }, [requests_for_pto]);
+
+
+
+
+  
+  return (
+    <div className="demo-app">
+      <MuiEmployee open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {decision} message = {message} eventInQuestion = {eventInQuestion} personName = {personName} hours = {hours}  eventsDefined = {eventsDefined}/>
+     
+      <div className="demo-app-main">
+        
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
+
+          initialView="dayGridMonth"
+          editable={true}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          events={eventsDefinedEmployee}
+          eventClick={handleEventClick}
+        
+        />
+        <div></div>
+      </div>
+    </div>
+  );
 }
-
-// import React from 'react'
-
-// export default function Calendar(){
-//     document.addEventListener('DOMContentLoaded', function() {
-//         var calendarEl = document.getElementById('calendar');
-      
-//         var calendar = new FullCalendar.Calendar(calendarEl, {
-//           initialView: 'dayGridMonth',
-//           initialDate: '2023-01-07',
-//           headerToolbar: {
-//             left: 'prev,next today',
-//             center: 'title',
-//             right: 'dayGridMonth,timeGridWeek,timeGridDay'
-//           },
-//           events: [
-//             {
-//               title: 'All Day Event',
-//               start: '2023-01-01'
-//             },
-//             {
-//               title: 'Long Event',
-//               start: '2023-01-07',
-//               end: '2023-01-10'
-//             },
-//             {
-//               groupId: '999',
-//               title: 'Repeating Event',
-//               start: '2023-01-09T16:00:00'
-//             },
-//             {
-//               groupId: '999',
-//               title: 'Repeating Event',
-//               start: '2023-01-16T16:00:00'
-//             },
-//             {
-//               title: 'Conference',
-//               start: '2023-01-11',
-//               end: '2023-01-13'
-//             },
-//             {
-//               title: 'Meeting',
-//               start: '2023-01-12T10:30:00',
-//               end: '2023-01-12T12:30:00'
-//             },
-//             {
-//               title: 'Lunch',
-//               start: '2023-01-12T12:00:00'
-//             },
-//             {
-//               title: 'Meeting',
-//               start: '2023-01-12T14:30:00'
-//             },
-//             {
-//               title: 'Birthday Party',
-//               start: '2023-01-13T07:00:00'
-//             },
-//             {
-//               title: 'Click for Google',
-//               url: 'http://google.com/',
-//               start: '2023-01-28'
-//             }
-//           ]
-//         });
-      
-//         calendar.render();
-//       });
-//   return (
-//     <div>
-//         <div id='calendar'></div>
-//     </div>
-//   )
-// }
