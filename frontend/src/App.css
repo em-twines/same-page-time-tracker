@@ -97,3 +97,9 @@ button:hover {
   justify-content: center;
   margin: auto;
 }
+
+.toast{
+  top: 50%!important;
+  left: 50%!important;
+  transform: translate(-50%, -50%)!important;
+}

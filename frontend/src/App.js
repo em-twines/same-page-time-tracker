@@ -48,19 +48,22 @@ async function getRequests(){
 
 
 
+
+
   return (
     <div>
       <Navbar/>
       <Routes>
-        {console.log(user)}
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+       
         <Route
           path="/manager"
           element={
             <PrivateRoute>
-              <HomePage_manager setRequest = {setRequest} user = {user} token = {token} request_for_pto={request_for_pto} requests_for_pto = {requests_for_pto} setRequests = {setRequests}/>
+              <HomePage_manager/>
             </PrivateRoute>} 
         />         
-
         <Route
           path="/employee"
           element={
@@ -68,9 +71,7 @@ async function getRequests(){
               <HomePage_employee setRequest = {setRequest} user = {user} token = {token} getRequests = {getRequests} request_for_pto ={request_for_pto}/>
             </PrivateRoute> } 
           />  
-
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<LoginPage />} />
+        
       </Routes>
       <Footer />
     </div>

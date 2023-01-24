@@ -12,9 +12,10 @@ function setUserObject(user) {
     return null;
   }
   return {
-    username: user.username,
     id: user.user_id,
+    username: user.username,
     first_name: user.first_name,
+    is_manager: user.is_manager,
   };
 }
 
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         email: registerData.email,
         first_name: registerData.firstName,
         last_name: registerData.lastName,
+        is_manager: false,
       };
       let response = await axios.post(`${BASE_URL}/register/`, finalData);
       if (response.status === 201) {
@@ -58,14 +60,18 @@ export const AuthProvider = ({ children }) => {
         let loggedInUser = jwtDecode(response.data.access);
         setUser(setUserObject(loggedInUser));
         setIsServerError(false);
-        if (loggedInUser.is_manager){
-          navigate("/manager");
-        } 
-        else{
-          navigate("/employee")
-        }
-      } else {
-        navigate("/register");
+        // navigate("/");
+
+          if (loggedInUser.is_manager === true){
+            console.log('is_manager: ' , loggedInUser.is_manager)
+            navigate("/manager");
+          } 
+          else{
+            navigate("/employee")
+          }
+       }
+       else {
+        navigate("/");
       }
     } catch (error) {
       console.log(error.response.data);

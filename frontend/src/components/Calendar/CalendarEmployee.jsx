@@ -10,8 +10,8 @@ export default class CalendarEmployee extends React.Component {
         plugins={[ dayGridPlugin ]}
         initialView="dayGridMonth"
         events={[
-          { title: 'Emily Out', date: '2023-01-21' },
-          { title: 'event 2', date: '2019-04-02' }
+          // { title: 'Emily Out', date: '2023-01-21' },
+          // { title: 'event 2', date: '2019-04-02' }
         ]}
       />
     )

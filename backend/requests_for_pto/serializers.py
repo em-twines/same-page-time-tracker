@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Request, Employee_Request, Manager_Employee
+from authentication.serializers import RegistrationSerializer
 from datetime import date
 
 
@@ -23,3 +24,11 @@ class Manager_Employee_Serializer(serializers.ModelSerializer):
         fields = ['id', 'user_id', 'user_id']
         depth = 1
 
+
+class CombineSerializer(serializers.Serializer):
+    user = RegistrationSerializer(many=False)
+    request_for_pto = RequestSerializer(many=False)
+    class Meta:
+        model = Employee_Request
+        fields = ["id","user", 'request_for_pto' ]
+        depth=1

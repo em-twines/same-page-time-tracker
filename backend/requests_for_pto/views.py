@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from .models import Request, Employee_Request, Manager_Employee, User
-from .serializers import RequestSerializer, Employee_Request_Serializer, Manager_Employee_Serializer
+from .serializers import RequestSerializer, Employee_Request_Serializer,CombineSerializer, Manager_Employee_Serializer
 from django.shortcuts import get_object_or_404
 from authentication.serializers import RegistrationSerializer
 
@@ -17,29 +17,13 @@ from authentication.serializers import RegistrationSerializer
 @permission_classes([IsAuthenticated])
 
 def view_all_requests(request):
-    #retrieves all request objects and unpacks their values
-    requests_for_pto = Request.objects.all()
-    all_requests_objects = requests_for_pto.values()
 
-    #returns array of Request object id's
-    requests_array = [item['id'] for item in all_requests_objects]
-    i = 0
-    matched_ids = []
-    while i < len(requests_array):
-        matched_id_object = Employee_Request.objects.filter(request_for_pto = requests_array[i])
-        matched_ids += matched_id_object.values()
-        i+= 1
+    requests_pto = Employee_Request.objects.all()
+    serializer = CombineSerializer(requests_pto, many = True)
+    return Response(serializer.data)
+
     
-    #returns array of user objects
-    matched_user_ids = [item['user_id'] for item in matched_ids]
-    found_users = []
-    for item in matched_user_ids:
-        found_users += User.objects.filter(id = item)
-    
-    serializer = RequestSerializer(requests_for_pto, many=True)
-    serializer2 = RegistrationSerializer(found_users, many=True)
-    serializer_list = [serializer.data, serializer2.data]
-    return Response(serializer_list)
+    # requests_pto = Employee_Request.objects.filter(user = request.user)
 
 
 #Approve requests
