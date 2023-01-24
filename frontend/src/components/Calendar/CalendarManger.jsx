@@ -14,14 +14,17 @@ export default function CalendarManager({ requests }) {
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
+  const [eventInQuestion, setEventInQuestion] = useState({});
+  const [personName, setPersonName] = useState('');
 
   const handleOpen = () => setOpen(true);
 
   const handleEventClick = (clickInfo) => {
     handleOpen();
+      setEventInQuestion(clickInfo.event)
       setTitle(clickInfo.event.title);
       setMessage(clickInfo.event.extendedProps.details);
-
+      setPersonName(clickInfo.event.extendedProps.name)
   };
 
   function renderEventContent(eventInfo) {
@@ -37,10 +40,15 @@ export default function CalendarManager({ requests }) {
     let events = requests.map((el) => {
       return {
         id: el.request_for_pto.id,
+       
         title: `${el.user.first_name} ${el.user.last_name} out`,
         start: el.request_for_pto.day,
         extendedProps: {
           details: el.request_for_pto.request_text,
+          hours: el.request_for_pto.hours_requested,
+          status: el.request_for_pto.is_pending,
+          response: el.request_for_pto.decision, 
+          name: el.user.first_name,
         },
       };
     });
@@ -59,17 +67,8 @@ export default function CalendarManager({ requests }) {
 
   return (
     <div className="demo-app">
-      <MUI requests ={requests} open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {title} message = {message}/>
-      {/* <ToastContainer
-        className = 'toast'
-        autoClose={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        theme="dark"
-        /> */}
+      <MUI requests ={requests} open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {title} message = {message} eventInQuestion = {eventInQuestion} personName = {personName}/>
+     
       <div className="demo-app-main">
         
         <FullCalendar
