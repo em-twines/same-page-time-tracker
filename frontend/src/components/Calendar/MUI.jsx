@@ -24,18 +24,22 @@ const style = {
 export default function MUI({
   requests,
   open,
-  handleOpen,
   setOpen,
   title,
   message,
   eventInQuestion,
   personName,
+  hours,
+  getAllRequests,
+  getEventsObjects,
+  eventsDefined,
+  decision,
+  setDecision,
 }) {
   //   const [open, setOpen] = React.useState(false);
   //   const handleOpen = () => setOpen(true);
   const [user, token] = useAuth();
-
-  const [decision, setDecision] = useState();
+//   const [decision, setDecision] = useState();
 
   const handleClose = () => setOpen(false);
 
@@ -50,34 +54,40 @@ export default function MUI({
           },
         }
       );
-      console.log(res.data);
-      setDecision(res.data);
+      setDecision(res.data); 
+
     } catch (error) {
       console.log(error);
       toast("Sorry! We have encountered an error getting your requests!");
-    }
+    }      
+
+    getEventsObjects();
+
   }
 
   function approvePTO() {
     let newDecision = {
       decision: true,
     };
-    toast(`You approved ${personName}'s request for PTO!`)
+    toast(`You approved ${personName}'s request for PTO!`);
     RespondToRequest(newDecision);
+
   }
   function denyPTO() {
     let newDecision = {
       decision: false,
     };
-    toast(`You denied ${personName}'s request for PTO.`)
+    toast(`You denied ${personName}'s request for PTO.`);
     RespondToRequest(newDecision);
+
+
   }
 
   return (
     <div>
       {/* <Button onClick={()=>{handleOpen(); handleEventClick()}}>View Details</Button> */}
       <ToastContainer
-        autoClose={3000}
+        autoClose={2500}
         newestOnTop
         closeOnClick
         rtl={false}
@@ -85,7 +95,6 @@ export default function MUI({
         draggable
         theme="dark"
       />
-      <Button onClick={handleOpen}>View Details</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -97,6 +106,9 @@ export default function MUI({
             {title}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Hours: {hours}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Message: {message}
           </Typography>
           <Button
@@ -104,8 +116,6 @@ export default function MUI({
             onClick={() => {
               approvePTO();
               handleClose();
-    
-
             }}
           >
             Approve

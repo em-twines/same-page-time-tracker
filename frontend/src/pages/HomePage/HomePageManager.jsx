@@ -7,6 +7,8 @@ import useAuth from "../../hooks/useAuth";
 export default function HomePageManager() {
   const [user, token] = useAuth();
   const [requests, setRequests] = useState([])
+  const [eventsDefined, setEvents] = useState();
+  const [decision, setDecision] = useState();
 
 
   async function getAllRequests(){
@@ -36,7 +38,7 @@ export default function HomePageManager() {
 
  useEffect(()=>{
   getAllRequests()
- },[])
+ },[decision])
 
 
 
@@ -49,7 +51,7 @@ export default function HomePageManager() {
       <div className = 'calendar-and-button-container'>
         {requests.length > 0 ?
         <>
-        <CalendarManager  requests={requests}/>
+        <CalendarManager  requests={requests} getAllRequests = {getAllRequests} eventsDefined = {eventsDefined} setEvents = {setEvents} decision = {decision} setDecision = {setDecision}/>
         {/* <button onClick={handleSubmit}>Review Requests</button> */}
         </>
         :null}
