@@ -30,6 +30,8 @@ export default function AddManagers({}) {
   }
   const handleClose = () => setOpen(false);
   const [users, setUsers] = useState([]);
+//   const [isManager, setIsManager] = useState({is_manager: });
+  const[toggle, setToggle] = useState();
   const [user, token] = useAuth();
 
   //   function GetUniqueUsers() {
@@ -73,6 +75,13 @@ export default function AddManagers({}) {
     }
   }
 
+  function makeManger(el){
+    if(toggle){
+        //post is manager true
+    }
+  }
+
+
   return (
     <div>
       <Button onClick={handleOpen}>Add Managers</Button>
@@ -91,7 +100,7 @@ export default function AddManagers({}) {
           
           {users?.map((el, index) => {
             return (
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }} onClick={() => {setToggle(!toggle); console.log(el)}}>
                 {`${el.first_name} `} {el.last_name} <br></br>Make Manager
              
                 <Toggle />

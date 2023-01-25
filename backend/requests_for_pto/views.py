@@ -127,3 +127,40 @@ def returnEmployeeByID(request, pk):
     elif request.method == 'DELETE':
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+
+def makeManager(request, pk):
+    user_is_manager = get_object_or_404(User, pk = pk)
+    request.data['is_pending'] = False
+    serializer = RegistrationSerializer(user_is_manager, data = request.data, partial = True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status.HTTP_200_OK)
+
+
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+
+def adjustTenure(request, pk, tenure):
+    user_tenure = get_object_or_404(User, pk = pk)
+    request.data['tenure'] = tenure
+    serializer = RegistrationSerializer(user_tenure, data = request.data, partial = True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status.HTTP_200_OK)
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+
+def adjustState(request, pk, state):
+    user_state = get_object_or_404(User, pk = pk)
+    # request.data['state'] = state
+    serializer = RegistrationSerializer(user_state, data = request.data, partial = True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status.HTTP_200_OK)
