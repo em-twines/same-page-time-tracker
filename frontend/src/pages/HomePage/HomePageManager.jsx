@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CalendarManager from '../../components/Calendar/CalendarManger';
+import AddManagers from '../../components/AddManagers';
 import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
 
@@ -35,8 +36,10 @@ export default function HomePageManager({decision, setDecision}) {
   }
 
 
+
+
  useEffect(()=>{
-  getAllRequests()
+    getAllRequests();
  },[decision])
 
 
@@ -50,8 +53,8 @@ export default function HomePageManager({decision, setDecision}) {
       <div className = 'calendar-and-button-container'>
         {requests.length > 0 ?
         <>
-        <CalendarManager  requests={requests} getAllRequests = {getAllRequests} eventsDefined = {eventsDefined} setEvents = {setEvents} decision = {decision} setDecision = {setDecision}/>
-        {/* <button onClick={handleSubmit}>Review Requests</button> */}
+          <CalendarManager  requests={requests} getAllRequests = {getAllRequests} eventsDefined = {eventsDefined} setEvents = {setEvents} decision = {decision} setDecision = {setDecision}/>          
+          <AddManagers requests= {requests} />      
         </>
         :null}
       </div>
