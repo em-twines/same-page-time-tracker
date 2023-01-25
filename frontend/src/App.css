@@ -103,3 +103,11 @@ button:hover {
   left: 50%!important;
   transform: translate(-50%, -50%)!important;
 }
+
+.align-buttons{
+  display: flex; 
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+  padding: 8rem;
+}

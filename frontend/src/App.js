@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 import useAuth from "./hooks/useAuth";
 import "./App.css";
 import 'bootstrap';
+import "bootstrap/dist/css/bootstrap.css";
 
 // Pages Imports
 import HomePage_employee from "./pages/HomePage/HomePageEmployee";
 import HomePage_manager from "./pages/HomePage/HomePageManager";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import ManageStaff from "./pages/ManageStaff";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -44,6 +46,13 @@ const [decision, setDecision] = useState();
           element={
             <PrivateRoute>
               <HomePage_manager decision = {decision} setDecision = {setDecision}/>
+            </PrivateRoute>} 
+        />         
+         <Route
+          path="/manager/manage-staff"
+          element={
+            <PrivateRoute>
+              <ManageStaff/>
             </PrivateRoute>} 
         />         
         <Route

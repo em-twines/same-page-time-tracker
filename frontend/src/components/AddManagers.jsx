@@ -23,7 +23,7 @@ const style = {
   p: 4,
 };
 
-export default function AddManagers({}) {
+export default function AddManagers({getAllEmployees, users, toggle, setToggle}) {
   const [open, setOpen] = useState(false);
 
   function handleOpen() {
@@ -31,40 +31,14 @@ export default function AddManagers({}) {
     getAllEmployees();
   }
   const handleClose = () => setOpen(false);
-  const [users, setUsers] = useState([]);
   const [manager, setManager] = useState();
   const [managers, setManagers] = useState([]);
   const [user, token] = useAuth();
-  const [toggle, setToggle] = useState([]);
 
 
-  async function getAllEmployees() {
-    try {
-      let res = await axios.get(
-        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-
-      setUsers(res.data);
-      let managers = res.data.map((el) => {
-        return el.is_manager === true;
-      });
-      setManagers(managers);
-      setToggle(managers);
-    } catch (error) {
-      console.log(error);
-      toast("Sorry! We have encountered an error getting all the requests!");
-      // TODO: change alert
-    }
-  }
 
   async function makeManager(newManager, employee) {
-    console.log("preflight",employee)
-    console.log("preflight",newManager)
+   
     try {
       let res = await axios.patch(
         `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/${employee.id}/`,
@@ -75,7 +49,6 @@ export default function AddManagers({}) {
           },
         }
       );
-      console.log(res)
       setManager(res.data);
     } catch (error) {
       console.log(error);
@@ -109,7 +82,7 @@ export default function AddManagers({}) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Add Managers</Button>
+      <Button variant="contained" onClick={handleOpen}>Add Managers</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -121,7 +94,7 @@ export default function AddManagers({}) {
             id="modal-modal-title"
             variant="h6"
             component="h2"
-          ></Typography>
+          >Adjust Manager Status</Typography>
 
           {users?.map((el, index) => {
             return (
@@ -132,8 +105,6 @@ export default function AddManagers({}) {
 
               >
                 {" "}
-                {console.log("is manager", el.is_manager)}
-
                 {`${el.first_name} `} {el.last_name} <br></br>Make Manager
                 <ToggleSwitch toggle={toggle} setToggle={handleToggle} element={el} />
 
