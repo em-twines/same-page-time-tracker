@@ -3,7 +3,8 @@ import Button from "@mui/material/Button";
 import { Modal, ToggleButton } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import ToggleSwitch from "./ToggleSwitch";
+import Toggle from 'react-toggle'
+import "react-toggle/style.css" 
 
 
 const style = {
@@ -69,7 +70,7 @@ export default function AddManagers({ requests }) {
           {users?.map((el) => {
             return (
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                {el} <br></br>Make Manager<ToggleSwitch/>
+                {el} <br></br>Make Manager<Toggle/>
               </Typography>
             );
           })}

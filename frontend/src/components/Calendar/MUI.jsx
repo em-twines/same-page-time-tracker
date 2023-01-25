@@ -46,7 +46,7 @@ export default function MUI({
   async function RespondToRequest(newDecision) {
     try {
       let res = await axios.patch(
-        `http://127.0.0.1:8000/api/requests_for_pto/${eventInQuestion.id}/`,
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/${eventInQuestion.id}/`,
         newDecision,
         {
           headers: {

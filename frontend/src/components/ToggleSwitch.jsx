@@ -1,22 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import Switch from "react-switch";
+import "react-toggle/style.css" 
 
 class ToggleSwitch extends Component {
+  constructor() {
+    super();
+    this.state = { checked: false };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(checked) {
+    this.setState({ checked });
+  }
+
   render() {
     return (
-      <div className="toggle-switch">
-        <input
-          type="checkbox"
-          className="toggle-switch-checkbox"
-          name={this.props.Name}
-          id={this.props.Name}
-        />
-        <label className="toggle-switch-label" htmlFor={this.props.Name}>
-          <span className="toggle-switch-inner" />
-          <span className="toggle-switch-switch" />
-        </label>
-      </div>
+      <label>
+        <span>Switch with default style</span>
+        <Switch onChange={this.handleChange} checked={this.state.checked} />
+      </label>
     );
   }
 }
-
-export default ToggleSwitch;

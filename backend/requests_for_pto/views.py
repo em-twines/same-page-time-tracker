@@ -102,3 +102,28 @@ def modify_request(request, pk):
         request_for_pto.delete()
         return Response(status.HTTP_204_NO_CONTENT)
 
+
+@api_view(['GET'])
+def returnAllEmployees(request):
+    if request.method == 'GET':
+        employees = User.objects.all()
+        serializer = RegistrationSerializer(employees, many=True)
+        return Response(serializer.data)
+    
+    
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def returnEmployeeByID(request, pk):
+
+    employee = get_object_or_404(User, pk=pk)
+    if request.method == 'GET':
+        serializer = RegistrationSerializer(employee)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = RegistrationSerializer(employee, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(collection_id=cpk)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        employee.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
