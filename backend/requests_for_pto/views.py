@@ -103,6 +103,9 @@ def modify_request(request, pk):
         return Response(status.HTTP_204_NO_CONTENT)
 
 
+
+
+
 @api_view(['GET'])
 def returnAllEmployees(request):
     if request.method == 'GET':
@@ -111,6 +114,9 @@ def returnAllEmployees(request):
         return Response(serializer.data)
     
     
+
+
+
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def returnEmployeeByID(request, pk):
@@ -133,7 +139,7 @@ def returnEmployeeByID(request, pk):
 
 def makeManager(request, pk):
     user_is_manager = get_object_or_404(User, pk = pk)
-    request.data['is_pending'] = False
+    # request.data['is_manager'] = False
     serializer = RegistrationSerializer(user_is_manager, data = request.data, partial = True)
     serializer.is_valid(raise_exception=True)
     serializer.save()
@@ -147,7 +153,6 @@ def makeManager(request, pk):
 
 def adjustTenure(request, pk, tenure):
     user_tenure = get_object_or_404(User, pk = pk)
-    request.data['tenure'] = tenure
     serializer = RegistrationSerializer(user_tenure, data = request.data, partial = True)
     serializer.is_valid(raise_exception=True)
     serializer.save()
@@ -157,9 +162,8 @@ def adjustTenure(request, pk, tenure):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 
-def adjustState(request, pk, state):
+def adjustState(request, pk):
     user_state = get_object_or_404(User, pk = pk)
-    # request.data['state'] = state
     serializer = RegistrationSerializer(user_state, data = request.data, partial = True)
     serializer.is_valid(raise_exception=True)
     serializer.save()

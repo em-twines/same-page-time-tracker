@@ -3,6 +3,9 @@ import CalendarManager from '../../components/Calendar/CalendarManger';
 import AddManagers from '../../components/AddManagers';
 import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 export default function HomePageManager({decision, setDecision}) {
@@ -25,8 +28,7 @@ export default function HomePageManager({decision, setDecision}) {
     }
     catch (error) {
       console.log(error)
-      alert('Sorry! We have encountered an error getting all the requests!');
-      // TODO: change alert
+      toast('Sorry! We have encountered an error getting all the requests!');
     }
   }
 

@@ -1,24 +1,30 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import Switch from "react-switch";
 import "react-toggle/style.css" 
 
-class ToggleSwitch extends Component {
-  constructor() {
-    super();
-    this.state = { checked: false };
-    this.handleChange = this.handleChange.bind(this);
-  }
 
-  handleChange(checked) {
-    this.setState({ checked });
-  }
+export default function ToggleSwitch({toggle, setToggle, element}) {
 
-  render() {
-    return (
-      <label>
-        <span>Switch with default style</span>
-        <Switch onChange={this.handleChange} checked={this.state.checked} />
+    const [checked, setChecked] = useState(toggle)
+
+  return (
+    <div>
+    <label>
+        <Switch checked={element.is_manager} onChange={(event)=>setToggle(event,element)}/>
       </label>
-    );
-  }
+    </div>
+  )
 }
+
+
+// class ToggleSwitch extends Component {
+//   constructor() {
+//     super();
+//     this.state ={ checked: false };
+//     this.handleChange = this.handleChange.bind(this);
+//   }
+
+//   handleChange(checked) {
+//     this.setState({ checked });
+//   }
+
