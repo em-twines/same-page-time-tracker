@@ -3,9 +3,10 @@ import Button from "@mui/material/Button";
 import { Modal, ToggleButton } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import Toggle from 'react-toggle'
-import "react-toggle/style.css" 
-
+import Toggle from "react-toggle";
+import "react-toggle/style.css";
+import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -19,36 +20,57 @@ const style = {
   p: 4,
 };
 
-export default function AddManagers({ requests }) {
+export default function AddManagers({}) {
   const [open, setOpen] = useState(false);
-  
+
   function handleOpen() {
     setOpen(true);
-    GetUniqueUsers();
+    // GetUniqueUsers();
+    getAllEmployees();
   }
   const handleClose = () => setOpen(false);
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
+  const [user, token] = useAuth();
 
-  function GetUniqueUsers() {
-    let uniqueUsers = [];
-    uniqueUsers = requests.map((el) => {
-      if (uniqueUsers.length == 0) {
-        // uniqueUsers.push(`${el.user.first_name} ${el.user.last_name} `);
-        return `${el.user.first_name} ${el.user.last_name} `
-      } else if (uniqueUsers.length > 0) {
-        if (!uniqueUsers.includes(el.last_name)) {
-        //   uniqueUsers.push(`${el.user.first_name} ${el.user.last_name} `);
-            return `${el.user.first_name} ${el.user.last_name} `
+  //   function GetUniqueUsers() {
+  //     let uniqueUsers = [];
+  //     uniqueUsers = requests.map((el) => {
+  //       if (uniqueUsers.length == 0) {
+  //         // uniqueUsers.push(`${el.user.first_name} ${el.user.last_name} `);
+  //         return `${el.user.first_name} ${el.user.last_name} `
+  //       } else if (uniqueUsers.length > 0) {
+  //         if (!uniqueUsers.includes(el.last_name)) {
+  //         //   uniqueUsers.push(`${el.user.first_name} ${el.user.last_name} `);
+  //             return `${el.user.first_name} ${el.user.last_name} `
+  //         }
+
+  //       }
+  //       uniqueUsers.reverse();
+  //       return uniqueUsers
+  //     //   setUsers(uniqueUsers);
+  //     });
+  //     console.log('uniqueUsers from outtermost unction',  uniqueUsers )
+  //     setUsers([... new Set(uniqueUsers)])
+
+  //   }
+
+  async function getAllEmployees() {
+    try {
+      let res = await axios.get(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         }
+      );
 
-      }
-      uniqueUsers.reverse();
-      return uniqueUsers 
-    //   setUsers(uniqueUsers);
-    });
-    console.log('uniqueUsers from outtermost unction',  uniqueUsers )
-    setUsers([... new Set(uniqueUsers)])
-
+      setUsers(res.data);
+    } catch (error) {
+      console.log(error);
+      alert("Sorry! We have encountered an error getting all the requests!");
+      // TODO: change alert
+    }
   }
 
   return (
@@ -66,11 +88,13 @@ export default function AddManagers({ requests }) {
             variant="h6"
             component="h2"
           ></Typography>
-
-          {users?.map((el) => {
+          
+          {users?.map((el, index) => {
             return (
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                {el} <br></br>Make Manager<Toggle/>
+                {`${el.first_name} `} {el.last_name} <br></br>Make Manager
+             
+                <Toggle />
               </Typography>
             );
           })}

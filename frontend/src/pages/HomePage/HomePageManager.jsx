@@ -14,7 +14,7 @@ export default function HomePageManager({decision, setDecision}) {
   async function getAllRequests(){
 
     try{
-    let res = await axios.get(`http://127.0.0.1:8000/api/requests_for_pto/`,
+    let res = await axios.get(`http://127.0.0.1:8000/api/requests_for_pto/manager/`,
       {
         headers: {
           Authorization: "Bearer " + token,

@@ -6,10 +6,11 @@ from requests_for_pto import views
 urlpatterns = [
 
     #Manager:
+    path('manager/', views.view_all_requests),
     path('manager/staff/', views.returnAllEmployees),
     path('manager/staff/<int:pk>/', views.returnEmployeeByID),
 
-    path('manager/', views.view_all_requests),
+
     path('manager/<int:pk>/', views.approve_or_deny),
 
     #Employee:
