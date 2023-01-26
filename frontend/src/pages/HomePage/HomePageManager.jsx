@@ -58,7 +58,7 @@ export default function HomePageManager({ decision, setDecision }) {
               />
             </>
           ) : null}
-          <Button onClick={() => navigate("/manager/manage-staff")}>
+          <Button variant="contained" onClick={() => navigate("/manager/manage-staff")}>
             Manage Staff
           </Button>
         </div>

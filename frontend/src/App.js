@@ -3,8 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import React, { useState } from 'react';
 import useAuth from "./hooks/useAuth";
 import "./App.css";
-import 'bootstrap';
-import "bootstrap/dist/css/bootstrap.css";
+
 
 // Pages Imports
 import HomePage_employee from "./pages/HomePage/HomePageEmployee";

@@ -7,13 +7,11 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import MuiEmployee from "./MuiEmployee";
-// import MuiManager from "./MuiManager";
-// import MuiEdit from "./MuiEdit";
+
 
 
 export default function CalendarEmployee({ requests_for_pto, getAllRequests , setEvents, eventsDefined, decision, setDecision, deletion, setDeletion, getRequests}) {
-  // const[weekendsVisible, setWeekendsVisible] = useState(true);
-  // const [eventsDefined, setEvents] = useState();
+
   const [open, setOpen] = useState(false);
   
   const [eventInQuestionEmployee, setEventInQuestionEmployee] = useState({});

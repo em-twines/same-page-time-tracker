@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import "./Calendar.css"
+import listPlugin from '@fullcalendar/list'
 import MUI from "./MUI";
 
 export default function CalendarManager({ requests, getAllRequests , setEvents, eventsDefined, decision, setDecision}) {
@@ -96,6 +97,7 @@ export default function CalendarManager({ requests, getAllRequests , setEvents, 
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
+          
           // events = {addeventSource(events)}
           initialView="dayGridMonth"
           editable={true}

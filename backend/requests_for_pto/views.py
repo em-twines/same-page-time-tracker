@@ -151,7 +151,7 @@ def makeManager(request, pk):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 
-def adjustTenure(request, pk, tenure):
+def adjustTenure(request, pk):
     user_tenure = get_object_or_404(User, pk = pk)
     serializer = RegistrationSerializer(user_tenure, data = request.data, partial = True)
     serializer.is_valid(raise_exception=True)

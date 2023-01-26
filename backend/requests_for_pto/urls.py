@@ -10,7 +10,7 @@ urlpatterns = [
     path('manager/staff/', views.returnAllEmployees),
     path('manager/staff/<int:pk>/', views.returnEmployeeByID),
     path('manager/staff/manage/<int:pk>/', views.makeManager),
-    path('manager/staff/manage/tenure/<int:pk>/<int:tenure>/', views.adjustTenure),
+    path('manager/staff/manage/tenure/<int:pk>/', views.adjustTenure),
     path('manager/staff/manage/state/<int:pk>/', views.adjustState),
     path('manager/<int:pk>/', views.approve_or_deny),
 

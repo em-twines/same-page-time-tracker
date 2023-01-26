@@ -22,22 +22,55 @@ const style = {
   p: 4,
 };
 
-export default function AdjustTenure({getAllEmployees, users}) {
-
+export default function AdjustTenure({ getAllEmployees, users }) {
   const [user, token] = useAuth();
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-  
+  const [tenure, setTenure] = useState();
+
   function handleOpen() {
     setOpen(true);
     getAllEmployees();
   }
 
+  function handleSubmit(event, el, e){
+    event.preventDefault();
+    console.log('tenure from handlechange :', tenure)
+    UpdateTenure(tenure, el);
+  }
 
+  function handleChange(e, employee, index){
+    console.log('change', employee.id)
+    console.log('if' , employee)
+    employee.tenure = e.target.value;
+    setTenure(employee.tenure)
+  }
+
+  async function UpdateTenure(tenure, employee) {
+    try {
+      let res = await axios.patch(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/tenure/${employee.id}/`,
+        {tenure},
+
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );        
+
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error making your requests!");
+    }
+    getAllEmployees();
+  }
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>Adjust Staff Tenure</Button>
+      <Button variant="contained" onClick={handleOpen}>
+        Adjust Staff Tenure
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -45,43 +78,41 @@ export default function AdjustTenure({getAllEmployees, users}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >Adjust Staff Tenure</Typography>
-       
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Adjust Staff Tenure
+          </Typography>
 
-       <table className="table table-striped">
-          <thead>
-            <tr>              
-              <th>Name</th>
-              <th></th>
-              <th>Tenure in Years</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((el) => {
-              return (
-                <tr key={el.id}>
-                  {/* {index + 1} */}
-                  <td>{el.first_name}</td>
-                  <td>{el.last_name}</td>
-                  <td><form>
-                    <label>Adjust Tenure</label>
-                    <input type = 'number'></input>
-                  </form></td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th></th>
+                <th>Tenure in Years</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users?.map((el, index) => {
+                return (
+    
+                  <tr key={index}>
+                    {/* {index + 1} */}
+                    <td>{el.first_name}</td>
+                    <td>{el.last_name}</td>
+                    <td>
+                      <form id = 'submit-int' onSubmit={(event)=>{handleSubmit(event, el, index)}}>
+                        <label>Adjust Tenure</label>
+                            <input type="number" onChange={(e) => {handleChange(e, el, index)}} ></input>
+                      </form>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
 
-       
+          <Button variant="contained" form="submit-int" type="submit">Submit</Button>
 
-        <Button type = 'submit'>Submit</Button>
-
-          <Button onClick={handleClose}>Close</Button>
+          <Button variant="contained" onClick={handleClose}>Close</Button>
         </Box>
       </Modal>
     </div>
