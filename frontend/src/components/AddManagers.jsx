@@ -24,7 +24,6 @@ const style = {
 };
 
 export default function AddManagers({getAllEmployees, users, toggle, setToggle}) {
-  const [open, setOpen] = useState(false);
 
   function handleOpen() {
     setOpen(true);
@@ -34,6 +33,7 @@ export default function AddManagers({getAllEmployees, users, toggle, setToggle})
   const [manager, setManager] = useState();
   const [managers, setManagers] = useState([]);
   const [user, token] = useAuth();
+  const [open, setOpen] = useState(false);
 
 
 

@@ -6,9 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material"; 
-
-
+import { Button } from "@mui/material";
 
 export default function HomePageManager({ decision, setDecision }) {
   const [user, token] = useAuth();
@@ -43,6 +41,8 @@ export default function HomePageManager({ decision, setDecision }) {
 
   return (
     <div className="container">
+      <ToastContainer />
+
       <div className="title">Home Page for {user.username}!</div>
       <div className="calendar-and-form-container">
         <div className="calendar-and-button-container">
@@ -58,7 +58,10 @@ export default function HomePageManager({ decision, setDecision }) {
               />
             </>
           ) : null}
-          <Button variant="contained" onClick={() => navigate("/manager/manage-staff")}>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/manager/manage-staff")}
+          >
             Manage Staff
           </Button>
         </div>

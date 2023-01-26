@@ -8,9 +8,9 @@ urlpatterns = [
     #Manager:
     path('manager/', views.view_all_requests),
     path('manager/staff/', views.returnAllEmployees),
-    path('manager/staff/<int:pk>/', views.returnEmployeeByID),
+    path('staff/<int:pk>/', views.returnEmployeeByID),
+    path('staff/pto/<int:pk>/', views.affectPTO),
     path('manager/staff/manage/<int:pk>/', views.makeManager),
-    # path('manager/staff/manage/tenure/', views.adjustTenure),
     path('manager/staff/manage/tenure/<int:pk>/', views.adjustTenure),
     path('manager/staff/manage/state/<int:pk>/', views.adjustState),
     path('manager/<int:pk>/', views.approve_or_deny),

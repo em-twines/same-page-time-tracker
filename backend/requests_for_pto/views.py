@@ -179,3 +179,21 @@ def adjustState(request, pk):
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response(serializer.data, status.HTTP_200_OK)
+
+
+
+
+
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+
+def affectPTO(request, pk):
+    user = get_object_or_404(User, pk = pk)
+    user.pto += int(request.data.get('pto'))
+    request.data['pto'] = user.pto
+    serializer = RegistrationSerializer(user, data = request.data, partial = True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status.HTTP_200_OK)

@@ -6,7 +6,7 @@ class User(AbstractUser):
     is_manager = models.BooleanField('is_manager', default=False)
     tenure = models.IntegerField('tenure', default=0)
     state = models.CharField('state', max_length = 255, default = '')
-
+    pto = models.IntegerField('pto', default=80)
     '''
     This is a custom version of the built in User class
     It contains all of the built in fields and functionality of the standard User

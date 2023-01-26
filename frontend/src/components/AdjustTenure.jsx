@@ -72,10 +72,7 @@ export default function AdjustTenure({ getAllEmployees, users }) {
 
 
 function handleChange(e, employee, index){
-    console.log('change emp id', employee.id)
-    console.log('if' , employee)
     employee.tenure = e.target.value;
-    console.log('change value', employee.tenure)
     setTenure(employee.tenure)
   }
 
