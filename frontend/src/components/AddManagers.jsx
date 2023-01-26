@@ -50,6 +50,7 @@ export default function AddManagers({getAllEmployees, users, toggle, setToggle})
         }
       );
       setManager(res.data);
+      console.log(newManager)
     } catch (error) {
       console.log(error);
       toast("Sorry! We have encountered an error making your requests!");
