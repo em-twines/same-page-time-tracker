@@ -29,16 +29,20 @@ export default function MuiEmployee({
   openChild,
   setOpenChild,
   getRequests,
+  date,
+  hours,
+  message,
 }) {
   const [user, token] = useAuth();
   //   const [openChild, setOpenChild] = useState(false);
   const handleClose = () => setOpen(false);
   function handleOpenChild() {
-    setOpen(false);
-    setOpenChild(true);
+    // setOpenChild(true);
+    // setOpenChild(true);
+    // console.log('details', message)
   }
   const handleCloseChild = () => setOpenChild(false);
-  const [request_text, setRequestText] = useState("");
+  const [request_text, setRequestText] = useState();
   const [day, setDay] = useState();
   const [hours_requested, setHoursRequested] = useState();
 
@@ -60,10 +64,6 @@ export default function MuiEmployee({
     getEventsObjectsEmployee();
   }
 
-  if (openChild) {
-    setOpen(false);
-    console.log("open: ", open);
-  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -101,44 +101,6 @@ export default function MuiEmployee({
 
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              deleteRequest();
-              handleClose();
-            }}
-          >
-            Delete
-            {/* !!!!!!!!!!!!!!!!!!!!! TODO: add 'are you sure popover' !!!!!!!!!!!!!!!!!!*/}
-          </Button>
-
-          <Button
-            variant="contained"
-            onClick={() => {
-              handleOpenChild();
-            }}
-          >
-            Edit
-          </Button>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            PTO Request
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Hours: {eventInQuestionEmployee.hours}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Message: {eventInQuestionEmployee.message}
-          </Typography>
-        </Box>
-      </Modal>
 
       <Modal
         open={openChild}
@@ -157,6 +119,7 @@ export default function MuiEmployee({
               <input
                 className="form input"
                 type="text"
+                defaultValue={message}
                 onChange={(event) => setRequestText(event.target.value)}
                 required
                 value={request_text}
@@ -164,7 +127,7 @@ export default function MuiEmployee({
               <label>Day</label>
               <input
                 className="form input"
-                // default = '{{currentDate}}'
+                defaultValue={date}
                 type="date"
                 // onKeyDown={(e) => e.preventDefault()}
                 onChange={(event) => setDay(event.target.value)}
@@ -174,19 +137,33 @@ export default function MuiEmployee({
               <label>Hours</label>
               <input
                 className="form input"
-                default={8}
+                defaultValue={hours}
                 type="number"
                 onChange={(event) => setHoursRequested(event.target.value)}
                 required
                 value={hours_requested}
               ></input>
-              <button
-                type="submit">Submit Request</button>
+              <div className="align-buttons-horizontal">
+                <Button variant="contained" type="submit" size="small">
+                  Submit Edits
+                </Button>
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="error"
+                  onClick={() => {
+                    deleteRequest();
+                    handleCloseChild();
+                  }}
+                >
+                  Delete
+                  {/* !! TODO: add 'are you sure popover' !*/}
+                </Button>
+              </div>
             </form>
           </Typography>
         </Box>
       </Modal>
-      {/* <MuiEdit  openChild = {openChild} setOpenChild = {setOpenChild}/> */}
     </div>
   );
 }

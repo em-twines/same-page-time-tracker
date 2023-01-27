@@ -3,12 +3,11 @@ import CalendarManager from "../../components/Manager/CalendarManger";
 import AddManagers from "../../components/Manager/AddManagers";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import AdjustTenure from "../../components/Manager/AdjustTenure";
-
+import MessageManager from "../../components/Manager/MessageManager";
 
 
 export default function HomePageManager({ decision, setDecision }) {
@@ -20,7 +19,10 @@ export default function HomePageManager({ decision, setDecision }) {
   const [users, setUsers] = useState([]);
   const [managers, setManagers] = useState([]);
   const [toggle, setToggle] = useState([]);
+  const [defaultMessage, setDefaultMesssage] = useState('');
 
+
+  
   async function getAllEmployees() {
       try {
         let res = await axios.get(
@@ -41,7 +43,6 @@ export default function HomePageManager({ decision, setDecision }) {
       } catch (error) {
         console.log(error);
         toast("Sorry! We have encountered an error getting all the requests!");
-        // TODO: change alert
       }
     }
 
@@ -72,7 +73,7 @@ export default function HomePageManager({ decision, setDecision }) {
 
   return (
     <div className="container">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <div className="title">Home Page for {user.username}!</div>
       <div className="calendar-and-form-container">
@@ -80,6 +81,7 @@ export default function HomePageManager({ decision, setDecision }) {
         <AddManagers getAllEmployees = {getAllEmployees} users = {users} toggle = {toggle} setToggle = {setToggle}/>
           <AdjustTenure getAllEmployees = {getAllEmployees} users = {users} />{/* <div className="calendar-and-button-container"> */}
           </div>
+          <MessageManager defaultMessage={defaultMessage} setDefaultMessage = {setDefaultMesssage}/>
           {requests.length > 0 ? (
             <>
               <CalendarManager
@@ -89,6 +91,7 @@ export default function HomePageManager({ decision, setDecision }) {
                 setEvents={setEvents}
                 decision={decision}
                 setDecision={setDecision}
+                defaultMessage = {defaultMessage}
               />
             </>
           ) : null}

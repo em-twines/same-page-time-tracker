@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -27,12 +25,23 @@ export default function CalendarEmployee({
   const [eventInQuestionEmployee, setEventInQuestionEmployee] = useState({});
   const [openChild, setOpenChild] = useState(false);
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => setOpenChild(true);
   const [eventsDefinedEmployee, setEventsEmployee] = useState();
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [eventInQuestion, setEventInQuestion] = useState({});
+  const [hours, setHours] = useState(0);
+  const [date, setDate] = useState();
+
 
   const handleEventClick = (clickInfo) => {
     handleOpen();
+    setMessage(clickInfo.event.extendedProps.details);
+    setDate(clickInfo.event.start);
+    setHours(clickInfo.event.extendedProps.hours);
     setEventInQuestionEmployee(clickInfo.event);
+
+    
     console.log(clickInfo.event);
   };
 
@@ -89,6 +98,9 @@ export default function CalendarEmployee({
         getRequests={getRequests}
         hours_requested={hours_requested}
         setHoursRequested={setHoursRequested}
+        hours = {hours}
+        message = {message}      
+        date = {date}  
         
       />
 

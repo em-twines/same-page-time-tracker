@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -17,6 +16,7 @@ export default function CalendarManager({
   eventsDefined,
   decision,
   setDecision,
+  defaultMessage,
 }) {
   // const[weekendsVisible, setWeekendsVisible] = useState(true);
   // const [eventsDefined, setEvents] = useState();
@@ -103,6 +103,7 @@ export default function CalendarManager({
         decision={decision}
         setDecision={setDecision}
         userId={userId}
+        defaultMessage = {defaultMessage}
       />
 
       <div className="demo-app-main">

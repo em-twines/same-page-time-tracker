@@ -3,7 +3,6 @@ import axios from "axios";
 import CalendarEmployee from "../../components/Employee/CalendarEmployee";
 import RequestForm from "../../components/Employee/RequestForm";
 import useAuth from "../../hooks/useAuth";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const HomePageEmployee = ({ decision, setDecision }) => {
@@ -47,7 +46,6 @@ const HomePageEmployee = ({ decision, setDecision }) => {
     } catch (error) {
       console.log(error);
       toast("Sorry! We have encountered an error getting all the requests!");
-      // TODO: change alert
     }
   }
 

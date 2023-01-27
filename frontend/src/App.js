@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import React, { useState } from 'react';
 import useAuth from "./hooks/useAuth";
 import "./App.css";
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 // Pages Imports
 import HomePageEmployee from "./pages/Employee/HomePageEmployee";
@@ -35,6 +36,15 @@ const [decision, setDecision] = useState();
   return (
     <div>
       <Navbar/>
+      <ToastContainer
+        autoClose={2500}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="dark"/>
+
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

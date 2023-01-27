@@ -7,7 +7,6 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import ToggleSwitch from "./ToggleSwitch";
 

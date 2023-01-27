@@ -140,3 +140,13 @@ button:hover {
   gap: 4rem;
   justify-content: center;
 }
+/* .toast-message{
+  background: rgb(81, 81, 126);
+    color: #fff;
+} */
+
+.align-buttons-horizontal{
+  display: flex; 
+  justify-content: space-between;
+  padding-top: 2rem;
+}

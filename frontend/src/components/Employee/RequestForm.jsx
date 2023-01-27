@@ -5,7 +5,6 @@ import { Modal, ToggleButton } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const style = {
@@ -78,7 +77,7 @@ export default function RequestForm({
       setHoursRequested(0);
       handleClose();
     } else {
-      toast("Insufficient PTO Remaining", { autoClose: 3000 });
+      toast("Insufficient PTO Remaining");
     }
   }
 
@@ -120,14 +119,12 @@ export default function RequestForm({
     } catch (error) {
       console.log(error);
       toast("Sorry! We have encountered an error in managing your pto bank!");
-      // TODO: change alert.
     }
   }
 
   return (
     <div className="form-container ">
       <div>
-        <ToastContainer />
         <div>
           <Button variant="contained" onClick={handleOpen}>
             Request PTO
@@ -152,6 +149,7 @@ export default function RequestForm({
                 <input
                   className="form input"
                   type="text"
+                  defaultValue = "May I please take PTO on this day?"
                   onChange={(event) => setRequestText(event.target.value)}
                   required
                   value={request_text}
@@ -159,7 +157,7 @@ export default function RequestForm({
                 <label>Day</label>
                 <input
                   className="form input"
-                  // default = '{{currentDate}}'
+                  defaultValue = '{{currentDate}}'
                   type="date"
                   // onKeyDown={(e) => e.preventDefault()}
                   onChange={(event) => setDay(event.target.value)}

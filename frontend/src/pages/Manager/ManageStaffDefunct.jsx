@@ -5,7 +5,6 @@ import { Button } from '@mui/material'
 import AdjustTenure from '../components/AdjustTenure'
 import axios from 'axios'
 import useAuth from '../../hooks/useAuth'
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
 
@@ -37,7 +36,6 @@ export default function ManageStaff() {
         } catch (error) {
           console.log(error);
           toast("Sorry! We have encountered an error getting all the requests!");
-          // TODO: change alert
         }
       }
 

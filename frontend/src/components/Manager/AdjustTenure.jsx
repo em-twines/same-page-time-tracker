@@ -5,10 +5,8 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import ToggleSwitch from "./ToggleSwitch";
-// import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const style = {
   position: "absolute",
