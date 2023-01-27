@@ -4,6 +4,8 @@ import CalendarEmployee from "../../components/Employee/CalendarEmployee";
 import RequestForm from "../../components/Employee/RequestForm";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
+import Mail from "../../components/Employee/Mail";
+
 
 const HomePageEmployee = ({ decision, setDecision }) => {
   const [user, token] = useAuth();
@@ -55,7 +57,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
 
   return (
     <div className="container">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <div className="title">Home Page for {user.username}!</div>
       <div className="calendar-and-form-container">
@@ -72,6 +74,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
             setHoursRequested ={setHoursRequested}
           />
         </div>
+        <Mail/>
         <CalendarEmployee
           decision={decision}
           setDecision={setDecision}

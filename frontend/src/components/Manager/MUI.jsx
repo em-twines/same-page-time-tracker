@@ -38,8 +38,8 @@ export default function MUI({
   const [user, token] = useAuth();
   const [pto, setPTO] = useState();
   const [clicked, setClicked] = useState(false);
-  const [response, setResponse] = useState('Your request has been denied.')
-
+  const [response, setResponse] = useState('Your request has been denied.');
+  const [message_text, setMessage] = useState('');
 
   const handleClose = () => setOpen(false);
 
@@ -54,7 +54,6 @@ export default function MUI({
           },
         }
       );
-      console.log(res.data)
       // setDecision(res.data.decision);
     } catch (error) {
       console.log(error);
@@ -81,9 +80,26 @@ export default function MUI({
     }
   }
 
-  function sendMessage() {
-    console.log(message);
+
+  async function sendMessage(newMessage) {
+    try {
+      let res = await axios.post(
+        `http://127.0.0.1:8000/api/message/`,
+        newMessage,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setMessage(res.data);
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error in managing your pto bank!");
+    }
   }
+
+
 
   function approvePTO() {
     setDecision(true);
@@ -92,7 +108,15 @@ export default function MUI({
     };
     RespondToRequest(newDecision);
     // setClicked(true);
-    sendMessage(defaultMessage);
+
+    let newMessage ={
+      sender: user.id,
+      recipient: userId,
+      message_text: defaultMessage,
+      is_read: false
+    }
+    sendMessage(newMessage);
+    console.log(newMessage)
 
     handleClose();
     toast(`You approved ${personName}'s request for PTO!`);
@@ -114,7 +138,14 @@ export default function MUI({
   }
 
   function handleSubmit() {
-    sendMessage(response);
+    let newMessage ={
+      sender: user.id,
+      recipient: userId,
+      message_text: response,
+      is_read: false
+    }
+    sendMessage(newMessage);
+    console.log(newMessage)
     if (decision === false) {
       toast(`You denied ${personName}'s request for PTO.`);
     }
