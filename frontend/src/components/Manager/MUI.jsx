@@ -91,8 +91,12 @@ export default function MUI({
       decision: true,
     };
     RespondToRequest(newDecision);
-    setClicked(true);
-    
+    // setClicked(true);
+    sendMessage(defaultMessage);
+
+    handleClose();
+    toast(`You approved ${personName}'s request for PTO!`);
+
   }
 
   function denyPTO() {
@@ -110,14 +114,10 @@ export default function MUI({
   }
 
   function handleSubmit() {
-    sendMessage();
-    console.log('decision' , decision )
-    if (decision === true) {
-      toast(`You approved ${personName}'s request for PTO!`);
-    } else if (decision === false) {
+    sendMessage(response);
+    if (decision === false) {
       toast(`You denied ${personName}'s request for PTO.`);
     }
-
     handleClose();
   }
 
@@ -142,11 +142,12 @@ export default function MUI({
            {clicked ? (
             <div>
               {decision ? (
-                <form onSubmit={handleSubmit}>
-                  <lable>Send a Response</lable>
-                  <textarea type="text" defaultValue={defaultMessage}></textarea>
-                  <Button type = 'submit' variant = 'contained'>Submit</Button>
-                </form>
+                <div></div>
+                // <form onSubmit={handleSubmit}>
+                //   <lable>Send a Response</lable>
+                //   <textarea type="text" defaultValue={defaultMessage}></textarea>
+                //   <Button type = 'submit' variant = 'contained'>Submit</Button>
+                // </form>
               ) : (
                 <form onSubmit={handleSubmit}>
                   <label>Message:</label>
