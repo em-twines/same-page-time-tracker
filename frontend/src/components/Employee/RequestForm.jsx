@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { Modal, ToggleButton } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -28,6 +28,8 @@ export default function RequestForm({
   getRequests,
   employee,
   getUserInfo,
+  hours_requested,
+  setHoursRequested,
 }) {
   let currentDate = new Date();
   let cDay = currentDate.getDate();
@@ -36,17 +38,16 @@ export default function RequestForm({
 
   const [request_text, setRequestText] = useState("");
   const [day, setDay] = useState();
-  const [hours_requested, setHoursRequested] = useState();
   const [open, setOpen] = useState(false);
   const [pto, setPTO] = useState();
 
-
   useEffect(() => {
     getUserInfo();
+    // setPTO(employee.pto)
   }, []);
 
   function handleOpen() {
-    console.log(employee);
+    // console.log(pto);
 
     setOpen(true);
   }
@@ -62,21 +63,22 @@ export default function RequestForm({
       decision: false,
       is_pending: true,
     };
-    console.log (newRequest.hours_requested , employee.pto)
+    console.log(newRequest.hours_requested, employee.pto);
     if (newRequest.hours_requested <= employee.pto) {
+      console.log(newRequest.hours_requested <= employee.pto);
       postRequest(newRequest);
       let newHours = {
         pto: parseInt(-Math.abs(hours_requested)),
-      }
+      };
+      console.log("preflight pto", employee.pto);
       affectPTO(newHours);
+      console.log("postflight pto", employee.pto);
       setRequestText("");
       setDay();
       setHoursRequested(0);
       handleClose();
-
     } else {
       toast("Insufficient PTO Remaining", { autoClose: 3000 });
-
     }
   }
 
@@ -91,23 +93,18 @@ export default function RequestForm({
           },
         }
       );
-      if (res.status === 201) {
-      } else {
-        console.log(`else statement for not 201 ${res}`);
-      }
       setRequest(requests_for_pto, newRequest);
       getRequests();
     } catch (error) {
       console.log(error, newRequest);
-      toast("Sorry! We have encountered an error processing your submission request!");
+      toast(
+        "Sorry! We have encountered an error processing your submission request!"
+      );
       // TODO: change alert.
     }
   }
 
-
-
-
-  async function affectPTO(hours){
+  async function affectPTO(hours) {
     try {
       let res = await axios.patch(
         `http://127.0.0.1:8000/api/requests_for_pto/staff/pto/${employee.id}/`,
@@ -118,24 +115,14 @@ export default function RequestForm({
           },
         }
       );
-      setPTO(res.data)
-      console.log('res.data' , res.data)
+      getUserInfo();
       getRequests();
     } catch (error) {
       console.log(error);
-      console.log(hours)
       toast("Sorry! We have encountered an error in managing your pto bank!");
       // TODO: change alert.
     }
   }
-
-
-
-
-
-
-
-
 
   return (
     <div className="form-container ">

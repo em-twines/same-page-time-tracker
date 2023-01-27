@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -81,6 +81,21 @@ export default function AddManagers({getAllEmployees, users, toggle, setToggle})
     }
   }
 
+  
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: '25%',
+  height: '50%',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  overflowY: 'scroll'
+};
+
   return (
     <div>
       <Button variant="contained" onClick={handleOpen}>Add Managers</Button>
@@ -101,7 +116,7 @@ export default function AddManagers({getAllEmployees, users, toggle, setToggle})
             return (
               <Typography
                 id="modal-modal-description"
-                sx={{ mt: 1 }}
+                sx={{ mt: 1, fontSize: 15}}
                 key={index}
 
               >

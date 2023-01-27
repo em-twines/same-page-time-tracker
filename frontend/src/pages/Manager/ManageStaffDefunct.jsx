@@ -4,7 +4,7 @@ import AddManagers from '../components/AddManagers'
 import { Button } from '@mui/material'
 import AdjustTenure from '../components/AdjustTenure'
 import axios from 'axios'
-import useAuth from '../hooks/useAuth'
+import useAuth from '../../hooks/useAuth'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 

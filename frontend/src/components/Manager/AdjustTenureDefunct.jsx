@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -27,54 +27,93 @@ export default function AdjustTenure({ getAllEmployees, users }) {
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const [tenure, setTenure] = useState([]);
-
+  const [changes, setChanges] = useState(0);
+  const [events, setEvents] = useState([]);
+  const [elements, setElements] = useState([]);
+  const [indices, setIndices] = useState([]);
 
   function handleOpen() {
     setOpen(true);
     getAllEmployees();
   }
 
+//   //   function handleSubmit(event, el, e){
+//   //   function handleSubmit(){
+//   //     for (let i =0; i < events.length; i++){
+//   //         let newTenure ={
+//   //         tenure: parseInt(tenure)
+//   //         }
+//   //         setTenure([...tenure, newTenure])
+//   //         console.log('tenure from handlechange :', [...tenure, newTenure])
+//   //     }
+//   //     UpdateTenure(tenure, elements)
 
+//   //   }
 
+//   //   function handleSubmit(){
+//   //     console.log(changes);
+//   //     let i = 0;
+//   //     while (changes.length < i)
+//   //         prepareSubmit();
+//   //         i++
+//   //     }
 
+// //   function SettingStates(e, el, index) {
+// //     setEvents([...events, e]);
+// //     setElements([...elements, el]);
+// //     setIndices([...indices, index]);
+// //   }
 
-  async function UpdateTenure(tenure, employee) {
-    try {
-      let res = await axios.patch(
-        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/tenure/${employee.id}/`,
-        tenure,
+// //   function handleChange(e, employee, index) {
+// //     employee.tenure = e.target.value;
+// //     if (employee.tenure > null){
+// //          setTenure([...tenure, employee.tenure]);
+// //     console.log([...tenure, employee.tenure]);
+// //     }
+   
+// //   }
 
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );        
+//   async function UpdateTenure(e, el, index) {
+//     setEvents([...events, e]);
+//     setElements([...elements, el]);
+//     setIndices([...indices, index]);
 
-    } catch (error) {
-      console.log(error);
-      toast("Sorry! We have encountered an error making your requests!");
-    }
+//     //tenure/employee
+//     await Promise.all(elements.map((el) => {
+//       try {
+//         let res = axios.patch(
+//           `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/tenure/${el.id}/`,
+//           el.tenure,
+//           {
+//             headers: {
+//               Authorization: "Bearer " + token,
+//             },
+//           }
+//         );
+  
+//         // setTenure(tenure);
+//         // console.log(tenure);
+//         console.log(res.data);
+//       } catch (error) {
+//         console.log(error);
+//         toast("Sorry! We have encountered an error making your requests!");
+//       }
+//     }))
+
     
-    getAllEmployees();
-  }
+
+//     getAllEmployees();
+//   }
 
 
-  function handleSubmit(event, el){
-    event.preventDefault();
-    console.log('tenure from handlechange :', tenure)
-    let newTenure = {
-        tenure: parseInt(tenure)
-    }
-    console.log(newTenure)
-    UpdateTenure(newTenure, el);
-}
 
 
-function handleChange(e, employee, index){
-    employee.tenure = e.target.value;
-    setTenure(employee.tenure)
-  }
+
+
+
+
+
+
 
 
 
@@ -104,7 +143,6 @@ function handleChange(e, employee, index){
                 <th>Name</th>
                 <th></th>
                 <th>Tenure in Years</th>
-                <th>Current Tenure</th>
               </tr>
             </thead>
             <tbody>
@@ -114,20 +152,21 @@ function handleChange(e, employee, index){
                     {/* {index + 1} */}
                     <td>{el.first_name}</td>
                     <td>{el.last_name}</td>
-                    <td>{el.tenure}</td>
                     <td>
                       <form
-                        onSubmit={(event)=>{handleSubmit(event,el)}}
+                        id="submit-int"
+                        onSubmit={(event) => {
+                          UpdateTenure(event, el, index);
+                        }}
                       >
                         <label>Adjust Tenure</label>
                         <input
                           type="number"
+                          defaultValue={el.tenure}
                           onChange={(e) => {
                             handleChange(e, el, index);
                           }}
-                        ></input>                      
-                        <button type = "submit">Submit</button>
-
+                        ></input>
                       </form>
                     </td>
                   </tr>
@@ -136,9 +175,9 @@ function handleChange(e, employee, index){
             </tbody>
           </table>
 
-          {/* <Button variant="contained" form="submit-int" type="submit">
+          <Button variant="contained" form="submit-int" type="submit">
             Submit
-          </Button> */}
+          </Button>
 
           <Button variant="contained" onClick={handleClose}>
             Close

@@ -35,11 +35,15 @@ export default function MUI({
   eventsDefined,
   decision,
   setDecision,
+  hours_requested, 
+  setHoursRequested,
+  setEventInQuestionEmployee,
+  userId,
 }) {
-  //   const [open, setOpen] = React.useState(false);
-  //   const handleOpen = () => setOpen(true);
+
   const [user, token] = useAuth();
-//   const [decision, setDecision] = useState();
+  const [pto, setPTO] = useState();
+
 
   const handleClose = () => setOpen(false);
 
@@ -55,6 +59,7 @@ export default function MUI({
         }
       );
       setDecision(res.data); 
+    
 
     } catch (error) {
       console.log(error);
@@ -65,20 +70,62 @@ export default function MUI({
 
   }
 
+
+
+
+
+  async function refundPTO(time, id){
+    try {
+      let res = await axios.patch(
+        `http://127.0.0.1:8000/api/requests_for_pto/staff/pto/${id}/`,
+        time,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log(res.data)
+      setPTO(res.data)
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error in managing your pto bank!");
+    }
+  }
+
+
+
+
+
+
+
+
   function approvePTO() {
     let newDecision = {
       decision: true,
     };
     toast(`You approved ${personName}'s request for PTO!`);
     RespondToRequest(newDecision);
-
+    handleClose();
   }
-  function denyPTO() {
+
+
+  function denyPTO() {    
+
+    let newHours = {
+      pto: parseInt(hours),
+    };    
+    refundPTO(newHours, userId)
+    console.log('newhours' , newHours, 'userId', userId)
+    
     let newDecision = {
       decision: false,
-    };
-    toast(`You denied ${personName}'s request for PTO.`);
+    };    
     RespondToRequest(newDecision);
+    
+    handleClose();
+    toast(`You denied ${personName}'s request for PTO.`);
+    
 
 
   }
@@ -115,7 +162,6 @@ export default function MUI({
             variant="contained"
             onClick={() => {
               approvePTO();
-              handleClose();
             }}
           >
             Approve
@@ -125,7 +171,6 @@ export default function MUI({
             color="error"
             onClick={() => {
               denyPTO();
-              handleClose();
             }}
           >
             Deny

@@ -6,11 +6,10 @@ import "./App.css";
 
 
 // Pages Imports
-import HomePage_employee from "./pages/HomePage/HomePageEmployee";
-import HomePage_manager from "./pages/HomePage/HomePageManager";
+import HomePageEmployee from "./pages/Employee/HomePageEmployee";
+import HomePageManager from "./pages/Manager/HomePageManager";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import ManageStaff from "./pages/ManageStaff";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -44,21 +43,21 @@ const [decision, setDecision] = useState();
           path="/manager"
           element={
             <PrivateRoute>
-              <HomePage_manager decision = {decision} setDecision = {setDecision}/>
+              <HomePageManager decision = {decision} setDecision = {setDecision}/>
             </PrivateRoute>} 
         />         
-         <Route
+         {/* <Route
           path="/manager/manage-staff"
           element={
             <PrivateRoute>
               <ManageStaff/>
             </PrivateRoute>} 
-        />         
+        />          */}
         <Route
           path="/employee"
           element={
             <PrivateRoute>
-              <HomePage_employee decision = {decision} setDecision = {setDecision}/>
+              <HomePageEmployee decision = {decision} setDecision = {setDecision}/>
             </PrivateRoute> } 
           />  
         

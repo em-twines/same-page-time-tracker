@@ -71,6 +71,7 @@ button:hover {
   display: flex; 
   justify-content: center;
   margin: auto;
+  gap: 8rem;
   width: 100vw;
 }
 
@@ -131,4 +132,11 @@ button:hover {
 .pto{
   display: flex; 
   justify-content: space-around;
+}
+
+.button-containter-manager{
+  display: flex; 
+  flex-direction: column;
+  gap: 4rem;
+  justify-content: center;
 }

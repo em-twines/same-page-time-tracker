@@ -1,52 +1,60 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import "./Calendar.css"
-import listPlugin from '@fullcalendar/list'
+import Calendar from '../Calendar/Calendar.css'
+
+import listPlugin from "@fullcalendar/list";
 import MUI from "./MUI";
 
-export default function CalendarManager({ requests, getAllRequests , setEvents, eventsDefined, decision, setDecision}) {
+export default function CalendarManager({
+  requests,
+  getAllRequests,
+  setEvents,
+  eventsDefined,
+  decision,
+  setDecision,
+}) {
   // const[weekendsVisible, setWeekendsVisible] = useState(true);
   // const [eventsDefined, setEvents] = useState();
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
   const [eventInQuestion, setEventInQuestion] = useState({});
-  const [personName, setPersonName] = useState('');
+  const [personName, setPersonName] = useState("");
   const [hours, setHours] = useState(0);
+  const [userId, setUserId] = useState();
+
   const handleOpen = () => setOpen(true);
 
   const handleEventClick = (clickInfo) => {
     handleOpen();
-      setEventInQuestion(clickInfo.event)
-      setTitle(clickInfo.event.title);
-      setMessage(clickInfo.event.extendedProps.details);
-      setPersonName(clickInfo.event.extendedProps.name)
-      setHours(clickInfo.event.extendedProps.hours)
+    setEventInQuestion(clickInfo.event);
+    setTitle(clickInfo.event.title);
+    setMessage(clickInfo.event.extendedProps.details);
+    setPersonName(clickInfo.event.extendedProps.name);
+    setHours(clickInfo.event.extendedProps.hours);
+    setUserId(clickInfo.event.extendedProps.user_id);
   };
-
-
 
   function getEventsObjects() {
     let events = requests.map((el) => {
       // '#CFC5CE';
-      let eventColor = '#383be0'; 
+      let eventColor = "#383be0";
 
-      if (el.request_for_pto.is_pending === false){
-      
+      if (el.request_for_pto.is_pending === false) {
         //if denied
-        if (el.request_for_pto.decision === false){
-          eventColor = '#e0384675';    
-        }    
-        else{
-        //if approved
-          eventColor = '#52ab6275';           
+        if (el.request_for_pto.decision === false) {
+          eventColor = "#e0384675";
+        } else {
+          //if approved
+          eventColor = "#52ab6275";
         }
       }
+
       // TODO: Add a past events color here
 
       return {
@@ -59,8 +67,9 @@ export default function CalendarManager({ requests, getAllRequests , setEvents, 
           details: el.request_for_pto.request_text,
           hours: el.request_for_pto.hours_requested,
           status: el.request_for_pto.is_pending,
-          response: el.request_for_pto.decision, 
+          response: el.request_for_pto.decision,
           name: el.user.first_name,
+          user_id: el.user.id,
         },
       };
     });
@@ -76,20 +85,27 @@ export default function CalendarManager({ requests, getAllRequests , setEvents, 
   //   let calendarApi = selectInfo.view.calendar
   // }
 
-
-
-
-
-
-
-
-  
   return (
     <div className="demo-app">
-      <MUI requests ={requests} open ={open} handleOpen = {handleOpen} setOpen = {setOpen} title = {title} message = {message} eventInQuestion = {eventInQuestion} personName = {personName} hours = {hours} getAllRequests = {getAllRequests} getEventsObjects = {getEventsObjects} eventsDefined = {eventsDefined} decision = {decision} setDecision = {setDecision}/>
-     
+      <MUI
+        requests={requests}
+        open={open}
+        handleOpen={handleOpen}
+        setOpen={setOpen}
+        title={title}
+        message={message}
+        eventInQuestion={eventInQuestion}
+        personName={personName}
+        hours={hours}
+        getAllRequests={getAllRequests}
+        getEventsObjects={getEventsObjects}
+        eventsDefined={eventsDefined}
+        decision={decision}
+        setDecision={setDecision}
+        userId={userId}
+      />
+
       <div className="demo-app-main">
-        
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
@@ -97,7 +113,6 @@ export default function CalendarManager({ requests, getAllRequests , setEvents, 
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          
           // events = {addeventSource(events)}
           initialView="dayGridMonth"
           editable={true}

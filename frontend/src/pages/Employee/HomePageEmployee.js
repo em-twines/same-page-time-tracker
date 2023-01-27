@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CalendarEmployee from "../../components/Calendar/CalendarEmployee";
-import RequestForm from "../../components/RequestForm";
+import CalendarEmployee from "../../components/Employee/CalendarEmployee";
+import RequestForm from "../../components/Employee/RequestForm";
 import useAuth from "../../hooks/useAuth";
-import PTO from "../../components/PTO";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -13,6 +12,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   const [requests_for_pto, setRequests] = useState([]);
   const [deletion, setDeletion] = useState(false);
   const [employee, setEmployee] = useState({});
+  const [hours_requested, setHoursRequested] = useState();
 
   async function getRequests() {
     try {
@@ -70,6 +70,8 @@ const HomePageEmployee = ({ decision, setDecision }) => {
             getRequests={getRequests}
             getUserInfo={getUserInfo}
             employee={employee}
+            hours_requested={hours_requested}
+            setHoursRequested ={setHoursRequested}
           />
         </div>
         <CalendarEmployee
@@ -79,6 +81,9 @@ const HomePageEmployee = ({ decision, setDecision }) => {
           deletion={deletion}
           setDeletion={setDeletion}
           getRequests={getRequests}
+          hours_requested={hours_requested}
+          setHoursRequested ={setHoursRequested}
+
         />
       </div>
     </div>
