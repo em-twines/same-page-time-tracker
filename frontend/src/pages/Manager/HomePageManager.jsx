@@ -19,7 +19,7 @@ export default function HomePageManager({ decision, setDecision }) {
   const [users, setUsers] = useState([]);
   const [managers, setManagers] = useState([]);
   const [toggle, setToggle] = useState([]);
-  const [defaultMessage, setDefaultMesssage] = useState('');
+  const [defaultMessage, setDefaultMesssage] = useState("Your PTO request has been approved!");
 
 
   

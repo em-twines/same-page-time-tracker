@@ -32,10 +32,14 @@ export default function MUI({
   setDecision,
   userId,
   defaultMessage,
+  message
+
 }) {
   const [user, token] = useAuth();
   const [pto, setPTO] = useState();
-  const [message, setMessage] = useState(defaultMessage);
+  const [clicked, setClicked] = useState(false);
+  const [response, setResponse] = useState('Your request has been denied.')
+
 
   const handleClose = () => setOpen(false);
 
@@ -50,7 +54,8 @@ export default function MUI({
           },
         }
       );
-      setDecision(res.data);
+      console.log(res.data)
+      // setDecision(res.data.decision);
     } catch (error) {
       console.log(error);
       toast("Sorry! We have encountered an error getting your requests!");
@@ -69,7 +74,6 @@ export default function MUI({
           },
         }
       );
-      console.log(res.data);
       setPTO(res.data);
     } catch (error) {
       console.log(error);
@@ -82,30 +86,35 @@ export default function MUI({
   }
 
   function approvePTO() {
+    setDecision(true);
     let newDecision = {
       decision: true,
     };
     RespondToRequest(newDecision);
+    setClicked(true);
+    
   }
 
   function denyPTO() {
+    setDecision(false);
+
     let newHours = {
       pto: parseInt(hours),
     };
     refundPTO(newHours, userId);
-
     let newDecision = {
       decision: false,
     };
     RespondToRequest(newDecision);
+    setClicked(true);
   }
 
   function handleSubmit() {
     sendMessage();
-
+    console.log('decision' , decision )
     if (decision === true) {
       toast(`You approved ${personName}'s request for PTO!`);
-    } else {
+    } else if (decision === false) {
       toast(`You denied ${personName}'s request for PTO.`);
     }
 
@@ -116,7 +125,7 @@ export default function MUI({
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -130,6 +139,30 @@ export default function MUI({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Message: {message}
           </Typography>
+           {clicked ? (
+            <div>
+              {decision ? (
+                <form onSubmit={handleSubmit}>
+                  <lable>Send a Response</lable>
+                  <textarea type="text" defaultValue={defaultMessage}></textarea>
+                  <Button type = 'submit' variant = 'contained'>Submit</Button>
+                </form>
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <label>Message:</label>
+                  <textarea
+                    type="text"
+                    defaultValue={response}
+                    onChange={(event) => setResponse(event.target.value)}
+                    required
+                    value={response }
+                  ></textarea>
+                  <Button type = 'submit' variant = 'contained'>Submit</Button>
+                </form>
+              )}
+            </div>
+          ) : (
+            <div>
           <Button
             variant="contained"
             onClick={() => {
@@ -147,22 +180,7 @@ export default function MUI({
           >
             Deny
           </Button>
-          {decision === true ? (
-            <form onSubmit={handleSubmit}>
-              <label>Message</label>
-              <input type="text" default={defaultMessage}></input>
-            </form>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <label>Message</label>
-              <p>Please supply a response.</p>
-              <input
-                type="text"
-                onChange={(event) => setMessage(event.target.value)}
-                required
-                value={message}
-              ></input>
-            </form>
+         </div>
           )}
         </Box>
       </Modal>
