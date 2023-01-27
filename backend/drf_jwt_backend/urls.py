@@ -20,4 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('authentication.urls')),
     path('api/requests_for_pto/', include('requests_for_pto.urls')),
+    path('api/message/', include('message.urls')),
+
 ]
