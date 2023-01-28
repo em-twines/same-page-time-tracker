@@ -11,9 +11,14 @@ const Navbar = () => {
     <div className="navBar">
       <ul>
         <li className="brand">
-          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          {user?.is_manager?(
+          <Link to="/manager" style={{ textDecoration: "none", color: "white" }}>
+            <b>Same Page Time Tracker</b>
+          </Link>):(  
+          <Link to="/employee" style={{ textDecoration: "none", color: "white" }}>
             <b>Same Page Time Tracker</b>
           </Link>
+          )}
         </li>
         <li>
           {user ? (
