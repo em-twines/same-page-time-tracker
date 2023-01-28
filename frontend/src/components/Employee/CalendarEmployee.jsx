@@ -50,22 +50,22 @@ export default function CalendarEmployee({
         if (el.decision === false) {
           if (today > el.day) {
             eventColor = "#e0384650";
+          } else {
+            eventColor = "#e0384698";
           }
-        } else {
-          eventColor = "#e0384698";
+        } else if (el.decision === true) {
+          if (today > el.day) {
+            eventColor = "#52ab6250";
+          } else {
+            eventColor = "#52ab6298";
+          }
         }
-      } else if (el.decision === true) {
-        if (today > el.day) {
-          eventColor = "#52ab6250";
-        } else eventColor = "#52ab6298";
       } else {
         if (today > el.day) {
           eventColor = "#383be090";
+        } else {
+          eventColor = "#383be0";
         }
-          else{
-             eventColor = "#383be0";
-          }
-       
       }
 
       return {

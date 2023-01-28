@@ -48,7 +48,7 @@ export default function MUI({
 
   useEffect(() => {
     setSender(user.id)
-    setRecipient(userId)
+    // setRecipient(userId)
   }, [])
   
 
@@ -119,16 +119,21 @@ export default function MUI({
       decision: true,
     };
     RespondToRequest(newDecision);
+    // setClicked(true);
+
     let newMessage ={
       sender: sender,
-      recipient: recipient,
-      message_text: response,
+      recipient: userId,
+      message_text: defaultMessage,
       is_read: false
     }
-
     sendMessage(newMessage);
     console.log('newMessage', newMessage)
+    //!recipient is undefined in both instances
 
+
+    // console.log('user.id, userId', user.id, userId)
+    console.log('user.id, recipient', sender, recipient)
     handleClose();
     toast(`You approved ${personName}'s request for PTO!`);
 
@@ -152,13 +157,12 @@ export default function MUI({
   function handleSubmit() {
     let newMessage ={
       sender: sender,
-      recipient: recipient,
+      recipient: userId,
       message_text: response,
       is_read: false
     }
     sendMessage(newMessage);
-    console.log('user.id, userId', user.id, userId)
-    console.log('sender, recipient', sender, recipient)
+
     if (decision === false) {
       toast(`You denied ${personName}'s request for PTO.`);
     }
