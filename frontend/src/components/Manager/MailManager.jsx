@@ -18,7 +18,6 @@ export default function MailManager({ requests }) {
         }
         return pending;
       });
-      console.log(pending);
       setPendingRequests(pending);
     }
   }

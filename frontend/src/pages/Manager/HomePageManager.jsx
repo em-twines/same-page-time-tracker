@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import AdjustTenure from "../../components/Manager/AdjustTenure";
 import MessageManager from "../../components/Manager/MessageManager";
 import MailManager from "../../components/Manager/MailManager";
+import ManageStaffList from "../../components/Manager/ManageStaffList";
 
 export default function HomePageManager({ decision, setDecision }) {
   const [user, token] = useAuth();
@@ -69,6 +70,7 @@ export default function HomePageManager({ decision, setDecision }) {
 
   useEffect(() => {
     getAllRequests();
+    getAllEmployees();
   }, [decision]);
 
   return (
@@ -78,6 +80,8 @@ export default function HomePageManager({ decision, setDecision }) {
       <div className="title">Home Page for {user.username}!</div>
       <div className="calendar-and-form-container">
         <div className="button-containter-manager">
+        {users.length > 0 ? (
+        <ManageStaffList users = {users} setUsers = {setUsers} getAllEmployees = {getAllEmployees}/>) : null}
           <AddManagers
             getAllEmployees={getAllEmployees}
             users={users}
