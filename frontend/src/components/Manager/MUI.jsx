@@ -119,14 +119,13 @@ export default function MUI({
       decision: true,
     };
     RespondToRequest(newDecision);
-    // setClicked(true);
-
     let newMessage ={
       sender: sender,
       recipient: recipient,
-      message_text: defaultMessage,
+      message_text: response,
       is_read: false
     }
+
     sendMessage(newMessage);
     console.log('newMessage', newMessage)
 

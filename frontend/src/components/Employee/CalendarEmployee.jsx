@@ -5,6 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import MuiEmployee from "./MuiEmployee";
+import moment from "moment";
 
 export default function CalendarEmployee({
   requests_for_pto,
@@ -19,7 +20,6 @@ export default function CalendarEmployee({
   hours_requested,
   setHoursRequested,
   getUserInfo,
-
 }) {
   const [open, setOpen] = useState(false);
   const [eventInQuestionEmployee, setEventInQuestionEmployee] = useState({});
@@ -33,32 +33,41 @@ export default function CalendarEmployee({
   const [hours, setHours] = useState(0);
   const [date, setDate] = useState();
 
-
   const handleEventClick = (clickInfo) => {
     handleOpen();
     setMessage(clickInfo.event.extendedProps.details);
     setDate(clickInfo.event.start);
     setHours(clickInfo.event.extendedProps.hours);
     setEventInQuestionEmployee(clickInfo.event);
-
-    
-    console.log(clickInfo.event);
   };
 
   function getEventsObjectsEmployee() {
+    let today = moment().format("YYYY-MM-DD");
     let events = requests_for_pto.map((el) => {
-      // '#CFC5CE';
       let eventColor = "#383be0";
       if (el.is_pending === false) {
         //if denied
         if (el.decision === false) {
-          eventColor = "#e0384675";
+          if (today > el.day) {
+            eventColor = "#e0384650";
+          }
         } else {
-          //if approved
-          eventColor = "#52ab6275";
+          eventColor = "#e0384698";
         }
+      } else if (el.decision === true) {
+        if (today > el.day) {
+          eventColor = "#52ab6250";
+        } else eventColor = "#52ab6298";
+      } else {
+        if (today > el.day) {
+          eventColor = "#383be090";
+        }
+          else{
+             eventColor = "#383be0";
+          }
+       
       }
-      // TODO: Add a past events color here
+
       return {
         id: el.id,
         title: `PTO Request`,
@@ -98,10 +107,9 @@ export default function CalendarEmployee({
         getRequests={getRequests}
         hours_requested={hours_requested}
         setHoursRequested={setHoursRequested}
-        hours = {hours}
-        message = {message}      
-        date = {date}  
-        
+        hours={hours}
+        message={message}
+        date={date}
       />
 
       <div className="demo-app-main">

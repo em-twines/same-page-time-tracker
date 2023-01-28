@@ -4,8 +4,8 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import Calendar from '../Calendar/Calendar.css'
-
+import Calendar from "../Calendar/Calendar.css";
+import moment from "moment";
 import listPlugin from "@fullcalendar/list";
 import MUI from "./MUI";
 
@@ -41,21 +41,32 @@ export default function CalendarManager({
   };
 
   function getEventsObjects() {
+    let eventColor = "#383be0";
+    let today = moment().format("YYYY-MM-DD");
     let events = requests.map((el) => {
-      // '#CFC5CE';
-      let eventColor = "#383be0";
-
       if (el.request_for_pto.is_pending === false) {
         //if denied
         if (el.request_for_pto.decision === false) {
-          eventColor = "#e0384675";
+          if (today > el.request_for_pto.day) {
+            eventColor = "#e0384650";
+          }
         } else {
-          //if approved
-          eventColor = "#52ab6275";
+          eventColor = "#e0384698";
         }
-      }
-
-      // TODO: Add a past events color here
+      } else if (el.request_for_pto.decision === true) {
+        if (today > el.request_for_pto.day) {
+          eventColor = "#52ab6250";
+        } else eventColor = "#52ab6298";
+      } else {
+        if (today > el.request_for_pto.day) {
+          eventColor = "#383be090";
+        }
+          else{
+             eventColor = "#383be0";
+          }
+       
+       }
+ 
 
       return {
         id: el.request_for_pto.id,
@@ -103,7 +114,7 @@ export default function CalendarManager({
         decision={decision}
         setDecision={setDecision}
         userId={userId}
-        defaultMessage = {defaultMessage}
+        defaultMessage={defaultMessage}
       />
 
       <div className="demo-app-main">
