@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -40,8 +40,17 @@ export default function MUI({
   const [clicked, setClicked] = useState(false);
   const [response, setResponse] = useState('Your request has been denied.');
   const [message_text, setMessage] = useState('');
+  const [recipient, setRecipient] = useState();
+  const [sender, setSender] = useState();
+
 
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    setSender(user.id)
+    setRecipient(userId)
+  }, [])
+  
 
   async function RespondToRequest(newDecision) {
     try {
@@ -82,6 +91,7 @@ export default function MUI({
 
 
   async function sendMessage(newMessage) {
+    console.log('newMessage in async' , newMessage)
     try {
       let res = await axios.post(
         `http://127.0.0.1:8000/api/message/`,
@@ -91,11 +101,13 @@ export default function MUI({
             Authorization: "Bearer " + token,
           },
         }
-      );
+      );      
+      console.log('res.data' ,res.data)
+
       setMessage(res.data);
     } catch (error) {
       console.log(error);
-      toast("Sorry! We have encountered an error in managing your pto bank!");
+      toast("Sorry! We have encountered an error in sending your message!");
     }
   }
 
@@ -110,13 +122,13 @@ export default function MUI({
     // setClicked(true);
 
     let newMessage ={
-      sender: user.id,
-      recipient: userId,
+      sender: sender,
+      recipient: recipient,
       message_text: defaultMessage,
       is_read: false
     }
     sendMessage(newMessage);
-    console.log(newMessage)
+    console.log('newMessage', newMessage)
 
     handleClose();
     toast(`You approved ${personName}'s request for PTO!`);
@@ -133,19 +145,21 @@ export default function MUI({
     let newDecision = {
       decision: false,
     };
+    console.log('newDecision', newDecision)
     RespondToRequest(newDecision);
     setClicked(true);
   }
 
   function handleSubmit() {
     let newMessage ={
-      sender: user.id,
-      recipient: userId,
+      sender: sender,
+      recipient: recipient,
       message_text: response,
       is_read: false
     }
     sendMessage(newMessage);
-    console.log(newMessage)
+    console.log('user.id, userId', user.id, userId)
+    console.log('sender, recipient', sender, recipient)
     if (decision === false) {
       toast(`You denied ${personName}'s request for PTO.`);
     }
