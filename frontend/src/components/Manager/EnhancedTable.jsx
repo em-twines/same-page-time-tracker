@@ -69,13 +69,13 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "first",
+    id: "firstName",
     numeric: false,
     disablePadding: true,
     label: "First",
   },
   {
-    id: "last",
+    id: "lastName",
     numeric: false,
     disablePadding: true,
     label: "Last",
@@ -322,9 +322,10 @@ export default function EnhancedTable({
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState();
   useEffect(() => {
     getAllEmployees();
+    setRowsPerPage(rows.length)
   }, []);
 
   function createData(
@@ -414,9 +415,9 @@ export default function EnhancedTable({
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
 
   // const handleChangeRowsPerPage = (event) => {
   //   setRowsPerPage(parseInt(event.target.value, 10));
@@ -430,15 +431,15 @@ export default function EnhancedTable({
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  // const emptyRows =
-  //   page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
  
   return (
     <div >
       <div className="flex-for-table">
         <Box sx={{ width: "85" }}>
-          <Paper  elevation={3} sx={{ width: "80", mb: 2 ,height: 550,
+          <Paper  elevation={3} sx={{ width: "80", mb: 2 ,height: 500,
             overflowY: "scroll"}}>
             <EnhancedTableToolbar numSelected={selected.length} />
             <TableContainer>
@@ -457,7 +458,7 @@ export default function EnhancedTable({
                 />
                 <TableBody >
                   {stableSort(rows, getComparator(order, orderBy))
-                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -502,7 +503,7 @@ export default function EnhancedTable({
                         </TableRow>
                       );
                     })}
-                  {/* {emptyRows > 0 && (
+                  {emptyRows > 0 && (
                     <TableRow
                       style={{
                         height: (dense ? 33 : 53) * emptyRows,
@@ -510,12 +511,12 @@ export default function EnhancedTable({
                     >
                       <TableCell colSpan={2} />
                     </TableRow>
-                  )} */}
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
             {/* <TablePagination
-              // rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={rows.length}
               rowsPerPage={rowsPerPage}
