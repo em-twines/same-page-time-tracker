@@ -34,17 +34,7 @@ import StateManger from "./StateManger";
 import Del from "./Del";
 
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+
 
 
 function descendingComparator(a, b, orderBy) {
@@ -129,6 +119,12 @@ const headCells = [
     numeric: true,
     disablePadding: true,
     label: "PTO (hrs)",
+  },
+  {
+    id: "del",
+    numeric: true,
+    disablePadding: true,
+    label: "Delete Employee",
   },
 ];
 
@@ -432,32 +428,11 @@ export default function EnhancedTable({
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  // function handleOpen() {
-  //   setOpen(true);
-  //   getAllEmployees();
-  // }
-  
-
-  //async function getEmployee(employee) {
-
-  // function handleFormSubmit(e){
-  //   e.preventDefault();
-  //   let employees = [...employees];
-  //   employees.push({firstName: firstName, last_Name: lastName, tenure: 0, isManager : isManager});
-
-  // };
-
-  // function handleInputChange(e){
-  //   let input = e.target;
-  //   let name = e.target.name;
-  //   let value = input.value;
-  //   setName(value);
-  // };
-
+ 
   return (
     <div className="table-form">
       <div className="flex-for-table">
-        <Box sx={{ width: "80%" }}>
+        <Box sx={{ width: "85%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
             <EnhancedTableToolbar numSelected={selected.length} />
             <TableContainer>

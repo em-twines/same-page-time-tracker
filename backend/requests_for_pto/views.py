@@ -128,7 +128,8 @@ def returnEmployeeByID(request, pk):
     elif request.method == 'PUT':
         serializer = RegistrationSerializer(employee, data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(collection_id=cpk)
+        # serializer.save(collection_id=cpk)
+        serializer.save()
         return Response(serializer.data)
     elif request.method == 'DELETE':
         employee.delete()

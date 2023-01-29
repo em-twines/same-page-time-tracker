@@ -1,11 +1,34 @@
-import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import React, { useState } from "react";
+import { Button } from "@mui/material";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 
-export default function Del() {
+export default function Del({ el, getAllEmployees }) {
+    const [user, token] = useAuth();
+
+    async function deleteEmployee() {
+        try {
+          let res = await axios.delete(
+            `http://127.0.0.1:8000/api/requests_for_pto/staff/${el.id}/`,
+            {
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            }
+          );
+    
+          getAllEmployees();
+        } catch (error) {
+          console.log(error);
+          toast("Sorry! We have encountered an error getting all the requests!");
+        }
+      }
+    
+
   return (
     <div>
-
-<Button variant = 'contained'>Delete</Button>
+      <Button onClick={() => deleteEmployee()} variant="contained">Delete</Button>
     </div>
-  )
+  );
 }
