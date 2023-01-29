@@ -10,36 +10,6 @@ from django.shortcuts import get_object_or_404
 from authentication.serializers import RegistrationSerializer
 
 
-#Manager
-
-#view all requests
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-
-def view_all_requests(request):
-
-    requests_pto = Employee_Request.objects.all()
-    serializer = CombineSerializer(requests_pto, many = True)
-    return Response(serializer.data)
-
-    
-    # requests_pto = Employee_Request.objects.filter(user = request.user)
-
-
-#Approve requests
-@api_view(['PATCH'])
-@permission_classes([IsAuthenticated])
-
-def approve_or_deny(request, pk):
-    request_for_pto = get_object_or_404(Request, pk = pk)
-    request.data['is_pending'] = False
-    serializer = RequestSerializer(request_for_pto, data = request.data, partial = True)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data, status.HTTP_200_OK)
-
-
-
 #Employee
 
 #view all their own requests
@@ -85,7 +55,7 @@ def submit_request(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
-    
+#edit pto request
 @api_view(['PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 
@@ -105,18 +75,55 @@ def modify_request(request, pk):
 
 
 
+#Manager
 
+#view all requests
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+
+def view_all_requests(request):
+
+    requests_pto = Employee_Request.objects.all()
+    serializer = CombineSerializer(requests_pto, many = True)
+    return Response(serializer.data)
+
+    
+    # requests_pto = Employee_Request.objects.filter(user = request.user)
+
+
+#Approve requests
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+
+def approve_or_deny(request, pk):
+    request_for_pto = get_object_or_404(Request, pk = pk)
+    request.data['is_pending'] = False
+    serializer = RequestSerializer(request_for_pto, data = request.data, partial = True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status.HTTP_200_OK)
+
+
+#get all employees
 @api_view(['GET'])
 def returnAllEmployees(request):
     if request.method == 'GET':
         employees = User.objects.all()
         serializer = RegistrationSerializer(employees, many=True)
         return Response(serializer.data)
+
+#Manually Add an employee
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+
+def addEmployee(request):
+        serializer = RegistrationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    
 
-
-
+#create, (edit), or delete employee
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def returnEmployeeByID(request, pk):
@@ -136,7 +143,7 @@ def returnEmployeeByID(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
+#change manager status of employee
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 
@@ -149,6 +156,7 @@ def makeManager(request, pk):
     return Response(serializer.data, status.HTTP_200_OK)
 
 
+#set tenure to input
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 
@@ -160,6 +168,7 @@ def adjustTenure(request, pk):
     return Response(serializer.data, status.HTTP_200_OK)
 
 
+#change user's state of residence
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 
@@ -171,6 +180,7 @@ def adjustState(request, pk):
     return Response(serializer.data, status.HTTP_200_OK)
 
 
+#change pto according to a value
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 
@@ -184,7 +194,7 @@ def affectPTO(request, pk):
     return Response(serializer.data, status.HTTP_200_OK)
 
 
-
+#set pto to input
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 

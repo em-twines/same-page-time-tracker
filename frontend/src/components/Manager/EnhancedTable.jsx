@@ -33,6 +33,7 @@ import TableTenure from "./TableTenure";
 import StateManger from "./StateManger";
 import Del from "./Del";
 import AdjustPTO from "./AdjustPTO";
+import { sizing } from '@mui/system';
 
 
 
@@ -225,6 +226,8 @@ function EnhancedTableToolbar(props) {
           variant="h6"
           id="tableTitle"
           component="div"
+          paddingTop="2rem"
+          paddingLeft= '3rem'
         >
           My Team
         </Typography>
@@ -319,7 +322,7 @@ export default function EnhancedTable({
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
   useEffect(() => {
     getAllEmployees();
   }, []);
@@ -415,10 +418,10 @@ export default function EnhancedTable({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
@@ -427,15 +430,16 @@ export default function EnhancedTable({
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  // const emptyRows =
+  //   page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
  
   return (
-    <div className="table-form">
+    <div >
       <div className="flex-for-table">
-        <Box sx={{ width: "85%" }}>
-          <Paper sx={{ width: "100%", mb: 2 }}>
+        <Box sx={{ width: "85" }}>
+          <Paper  elevation={3} sx={{ width: "80", mb: 2 ,height: 550,
+            overflowY: "scroll"}}>
             <EnhancedTableToolbar numSelected={selected.length} />
             <TableContainer>
               <Table
@@ -451,9 +455,9 @@ export default function EnhancedTable({
                   onRequestSort={handleRequestSort}
                   rowCount={rows.length}
                 />
-                <TableBody>
+                <TableBody >
                   {stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.name);
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -498,7 +502,7 @@ export default function EnhancedTable({
                         </TableRow>
                       );
                     })}
-                  {emptyRows > 0 && (
+                  {/* {emptyRows > 0 && (
                     <TableRow
                       style={{
                         height: (dense ? 33 : 53) * emptyRows,
@@ -506,19 +510,19 @@ export default function EnhancedTable({
                     >
                       <TableCell colSpan={2} />
                     </TableRow>
-                  )}
+                  )} */}
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+            {/* <TablePagination
+              // rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+            /> */}
           </Paper>
 
           {/* <FormControlLabel

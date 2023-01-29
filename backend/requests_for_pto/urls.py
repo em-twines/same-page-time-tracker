@@ -11,6 +11,7 @@ urlpatterns = [
     path('staff/<int:pk>/', views.returnEmployeeByID),
     path('staff/pto/<int:pk>/', views.affectPTO),
     path('staff/pto-set/<int:pk>/', views.setPTO),
+    path('manager/staff/manage/add/', views.addEmployee),
     path('manager/staff/manage/<int:pk>/', views.makeManager),
     path('manager/staff/manage/tenure/<int:pk>/', views.adjustTenure),
     path('manager/staff/manage/state/<int:pk>/', views.adjustState),

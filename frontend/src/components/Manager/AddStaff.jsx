@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { Paper, Box , Button} from "@mui/material";
+import { Paper, Box , Button, Typography} from "@mui/material";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -17,13 +17,13 @@ export default function AddStaff({getAllEmployees}) {
   const [email, setEmail] = useState("");
   const [tenure, setTenure] = useState(0);
   const [state, setState] = useState("");
-  const [pto, setPto] = useState(0);
+  const [pto, setPto] = useState(80);
 
 
   async function addEmployee(employee) {
         try {
           let res = await axios.post(
-            `http://127.0.0.1:8000/api/requests_for_pto/submit/`,
+            `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/add/`,
             employee,
             {
               headers: {
@@ -31,7 +31,7 @@ export default function AddStaff({getAllEmployees}) {
               },
             }
           );
-          setEmployee(employee);
+          console.log(res.data)
           getAllEmployees();
         } catch (error) {
           console.log(error, employee);
@@ -43,27 +43,19 @@ export default function AddStaff({getAllEmployees}) {
       }
     
 
-
-
-
-
-  async function deleteEmployee(employee) {}
-
-  async function editEmployee(employee) {}
-
-
-
   function handleSubmit(event){
     event.preventDefault();
     let newEmployee = {
-        firstName: firstName,
-        lastName: lastName,
         username: username,
+        password: 'welcome!23',
         email: email,
-        isManager: isManager,
+        first_name: firstName,
+        last_name: lastName,
+        is_manager: isManager,
         tenure: tenure,
         state: state,
         pto: pto,
+      
     }
     console.log (newEmployee);
     addEmployee(newEmployee);
@@ -73,7 +65,17 @@ export default function AddStaff({getAllEmployees}) {
   return (
     <Box className  ='box' >
         {/* sx={{ width: "60%" }} */}
-      <Paper >
+      <Paper elevation={3} >
+      <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle"
+          component="div"
+          paddingTop="2rem"
+          paddingLeft= '3rem'
+        >
+          Add Employee
+        </Typography>
         <form id="form" onSubmit ={handleSubmit}>
           <div >
             <label className="label-columns">First</label>
