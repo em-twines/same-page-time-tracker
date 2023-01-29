@@ -106,7 +106,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "name",
+    id: "first",
     numeric: false,
     disablePadding: true,
     label: "First",
@@ -310,11 +310,7 @@ EnhancedTableToolbar.propTypes = {
   useEffect(() => {
     getAllEmployees();
   }, []);
-  //   useEffect(() => {
-  //     // findRows();
-  //     // tryRows();
-  //     // createData();
-  //   }, [users]);
+
 
   function createData(
     firstName,
@@ -346,14 +342,13 @@ EnhancedTableToolbar.propTypes = {
           Object.values(el.last_name),
           Object.values(el.username),
           Object.values(el.email),
-          Object.values(el.is_manager),
-          Object.values(el.tenure),
+          (Object.values(el.is_manager.toString())),
+          (Object.values(el.tenure.toString())),
           Object.values(el.state),
-          Object.values(el.pto)
+          Object.values(el.pto.toString())
         ),
       };
     });
-    console.log(finalArray);
     return finalArray;
   }
 
@@ -483,17 +478,17 @@ EnhancedTableToolbar.propTypes = {
                             }}
                           />
                         </TableCell>
-                        <TableCell
+                        {/* <TableCell
                           component="th"
                           id={labelId}
                           scope="row"
                           padding="none"
                         >
                           {row.name}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell align="right">{row.firstName}</TableCell>
                         <TableCell align="right">{row.lastName}</TableCell>
-                        <TableCell align="right">{row.userName}</TableCell>
+                        <TableCell align="right">{row.username}</TableCell>
                         <TableCell align="right">{row.email}</TableCell>
                         <TableCell align="right">{row.isManager}</TableCell>
                         <TableCell align="right">{row.tenure}</TableCell>

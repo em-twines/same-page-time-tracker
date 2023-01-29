@@ -26,6 +26,8 @@ export default function ManageStaff() {
           );
     
           setUsers(res.data);
+          console.log(res.data)
+
           let managers = res.data.map((el) => {
             return el.is_manager === true;
           });
