@@ -129,7 +129,7 @@ export default function MUI({
     }
     sendMessage(newMessage);
     console.log('newMessage', newMessage)
-    //!recipient is undefined in both instances
+    //!recipient is undefined in both instances -- check if this is still true
 
 
     // console.log('user.id, userId', user.id, userId)

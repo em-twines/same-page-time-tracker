@@ -32,6 +32,7 @@ import ToggleSwitch from "./ToggleSwitch";
 import TableTenure from "./TableTenure";
 import StateManger from "./StateManger";
 import Del from "./Del";
+import AdjustPTO from "./AdjustPTO";
 
 
 
@@ -363,7 +364,8 @@ export default function EnhancedTable({
           // Object.values(el.tenure.toString()),
            Object.values(el.state),
            <StateManger el = {el} getAllEmployees={getAllEmployees}/>,
-           Object.values(el.pto.toString()),
+          //  Object.values(el.pto.toString()),
+          <AdjustPTO el={el} getAllEmployees={getAllEmployees}/>,
            <Del el ={el} getAllEmployees={getAllEmployees}/>
         ),
       };

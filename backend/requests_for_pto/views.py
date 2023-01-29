@@ -182,3 +182,17 @@ def affectPTO(request, pk):
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response(serializer.data, status.HTTP_200_OK)
+
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+
+def setPTO(request, pk):
+    user_pto = get_object_or_404(User, pk = pk)
+    serializer = RegistrationSerializer(user_pto, data = request.data, partial = True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status.HTTP_200_OK)
+
+    
