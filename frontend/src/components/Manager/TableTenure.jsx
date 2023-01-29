@@ -54,10 +54,11 @@ function handleChange(e, employee){
   }
 return(
 
-                      <form
+                      <form className = 'tenure-form'
                         onSubmit={(event)=>{handleSubmit(event,el)}}
                       >
                        <input
+                       className = 'input-form'
                           type="number"
                           defaultValue = {el.tenure}
                           onChange={(e) => {

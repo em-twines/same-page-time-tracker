@@ -62,7 +62,7 @@ export default function ManageStaff() {
             toggle={toggle}
             setToggle={setToggle}
           /> */}
-        
+          {/* <AdjustTenure getAllEmployees={getAllEmployees} users={users} /> */}
         </div>
         <AddStaff getAllEmployees={getAllEmployees}/>
       </div>

@@ -225,3 +225,25 @@ button:hover {
   grid-column: 4;
   grid-row: 3;
 }
+
+.input-form{
+  display: flex;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  max-width: 4rem;
+  text-align: center;
+}
+
+
+.input-form-text{
+  display: flex;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  max-width: 8rem;
+  text-align: center;
+}
+
+.tenure-form{
+  display: flex; 
+  justify-content: flex-end;
+}

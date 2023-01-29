@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -29,6 +30,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import ToggleSwitch from "./ToggleSwitch";
 import TableTenure from "./TableTenure";
+import StateManger from "./StateManger";
+import Del from "./Del";
+
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -79,7 +84,7 @@ const headCells = [
   },
   {
     id: "last",
-    numeric: true,
+    numeric: false,
     disablePadding: true,
     label: "Last",
   },
@@ -97,7 +102,7 @@ const headCells = [
   },
   {
     id: "isManager",
-    numeric: false,
+    numeric: true,
     disablePadding: true,
     label: "Manager Status",
   },
@@ -112,6 +117,12 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: "State",
+  },
+  {
+    id: "changeState",
+    numeric: false,
+    disablePadding: true,
+    label: "Change State",
   },
   {
     id: "pto",
@@ -324,7 +335,9 @@ export default function EnhancedTable({
     isManager,
     tenure,
     state,
-    pto
+    changeState,
+    pto,
+    del
   ) {
     return {
       firstName,
@@ -334,7 +347,9 @@ export default function EnhancedTable({
       isManager,
       tenure,
       state,
+      changeState,
       pto,
+      del
     };
   }
   function findRows() {
@@ -350,8 +365,10 @@ export default function EnhancedTable({
           // Object.values(el.is_manager.toString()),
           <TableTenure el = {el} getAllEmployees={getAllEmployees}/>,
           // Object.values(el.tenure.toString()),
-          Object.values(el.state),
-          Object.values(el.pto.toString())
+           Object.values(el.state),
+           <StateManger el = {el} getAllEmployees={getAllEmployees}/>,
+           Object.values(el.pto.toString()),
+           <Del el ={el} getAllEmployees={getAllEmployees}/>
         ),
       };
     });
@@ -361,6 +378,7 @@ export default function EnhancedTable({
   const rows = findRows();
 
   const handleRequestSort = (event, property) => {
+    
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
@@ -497,7 +515,9 @@ export default function EnhancedTable({
                           <TableCell align="right">{row.isManager}</TableCell>
                           <TableCell align="right">{row.tenure}</TableCell>
                           <TableCell align="right">{row.state}</TableCell>
+                          <TableCell align="right">{row.changeState}</TableCell>
                           <TableCell align="right">{row.pto}</TableCell>
+                          <TableCell align="right">{row.del}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -507,7 +527,7 @@ export default function EnhancedTable({
                         height: (dense ? 33 : 53) * emptyRows,
                       }}
                     >
-                      <TableCell colSpan={6} />
+                      <TableCell colSpan={2} />
                     </TableRow>
                   )}
                 </TableBody>
