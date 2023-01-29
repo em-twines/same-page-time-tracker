@@ -1,16 +1,19 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import useAuth from "./hooks/useAuth";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
 
 // Pages Imports
 import HomePageEmployee from "./pages/Employee/HomePageEmployee";
 import HomePageManager from "./pages/Manager/HomePageManager";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import ManageStaff from "./pages/Manager/ManageStaff";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -33,7 +36,7 @@ function App() {
 
 const [user, token] = useAuth();
 const [decision, setDecision] = useState();
-
+const navigate = useNavigate();
 
 
 
@@ -62,13 +65,13 @@ const [decision, setDecision] = useState();
               <HomePageManager decision = {decision} setDecision = {setDecision}/>
             </PrivateRoute>} 
         />         
-         {/* <Route
+         <Route
           path="/manager/manage-staff"
           element={
             <PrivateRoute>
               <ManageStaff/>
             </PrivateRoute>} 
-        />          */}
+        />         
         <Route
           path="/employee"
           element={

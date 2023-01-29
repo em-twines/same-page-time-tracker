@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import CalendarManager from "../../components/Manager/CalendarManger";
-import AddManagers from "../../components/Manager/AddManagers";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import AdjustTenure from "../../components/Manager/AdjustTenure";
 import MessageManager from "../../components/Manager/MessageManager";
 import MailManager from "../../components/Manager/MailManager";
-import ManageStaffList from "../../components/Manager/ManageStaffList";
+import ManageStaff from "./ManageStaff.jsx";
 
 export default function HomePageManager({ decision, setDecision }) {
   const [user, token] = useAuth();
@@ -80,7 +78,7 @@ export default function HomePageManager({ decision, setDecision }) {
       <div className="title">Home Page for {user.username}!</div>
       <div className="calendar-and-form-container">
         <div className="button-containter-manager">
-        {users.length > 0 ? (
+        {/* {users.length > 0 ? (
         <ManageStaffList users = {users} setUsers = {setUsers} getAllEmployees = {getAllEmployees}/>) : null}
           <AddManagers
             getAllEmployees={getAllEmployees}
@@ -89,12 +87,13 @@ export default function HomePageManager({ decision, setDecision }) {
             setToggle={setToggle}
           />
           <AdjustTenure getAllEmployees={getAllEmployees} users={users} />
-          {/* <div className="calendar-and-button-container"> */}
-
+          <div className="calendar-and-button-container"> */}
+          <Button variant = 'contained' onClick={() => navigate("/manager/manage-staff")}>Manage Staff</Button>
           <MessageManager
             defaultMessage={defaultMessage}
             setDefaultMessage={setDefaultMesssage}
           />
+          {/* <ManageStaff/> */}
         </div>
 
         {requests.length > 0 ? (

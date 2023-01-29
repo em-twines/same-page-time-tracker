@@ -145,3 +145,16 @@ button:hover {
   justify-content: space-between;
   padding-top: 2rem;
 }
+
+.buttons-horizontal{
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.flex-for-table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

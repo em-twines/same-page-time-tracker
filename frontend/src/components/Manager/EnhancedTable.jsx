@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
 import "react-toggle/style.css";
 import useAuth from "../../hooks/useAuth";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import ToggleSwitch from "./ToggleSwitch";
+
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -109,7 +106,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "first",
+    id: "name",
     numeric: false,
     disablePadding: true,
     label: "First",
@@ -117,43 +114,43 @@ const headCells = [
   {
     id: "last",
     numeric: true,
-    disablePadding: false,
+    disablePadding: true,
     label: "Last",
   },
   {
     id: "username",
-    numeric: true,
-    disablePadding: false,
+    numeric: false,
+    disablePadding: true,
     label: "Username",
   },
   {
     id: "email",
     numeric: false,
-    disablePadding: false,
+    disablePadding: true,
     label: "Email",
   },
   {
     id: "isManager",
     numeric: false,
-    disablePadding: false,
+    disablePadding: true,
     label: "Manager Status",
   },
   {
     id: "tenure",
     numeric: true,
-    disablePadding: false,
+    disablePadding: true,
     label: "Tenure (yrs)",
   },
   {
     id: "state",
-    numeric: true,
-    disablePadding: false,
+    numeric: false,
+    disablePadding: true,
     label: "State",
   },
   {
     id: "pto",
     numeric: true,
-    disablePadding: false,
+    disablePadding: true,
     label: "PTO (hrs)",
   },
 ];
@@ -172,7 +169,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead >
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
@@ -181,15 +178,17 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all desserts",
+              "aria-label": "select all employees",
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
+            // align={headCell.numeric ? "right" : "left"}
+            align= "right" 
+            // padding={headCell.disablePadding ? "none" : "normal"}
+            padding="normal"
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -278,28 +277,14 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function ManageStaffList({
-  // export default function EnhancedTable({
+// export default function ManageStaffList({
+  export default function EnhancedTable({
   getAllEmployees,
   toggle,
   setToggle,
   users,
   setUsers,
 }) {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "75%",
-    height: "75%",
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-    overflowY: "scroll",
-  };
-
   const handleClose = () => setOpen(false);
   const [user, token] = useAuth();
   const [open, setOpen] = useState(false);
@@ -325,11 +310,11 @@ export default function ManageStaffList({
   useEffect(() => {
     getAllEmployees();
   }, []);
-//   useEffect(() => {
-//     // findRows();
-//     // tryRows();
-//     // createData();
-//   }, [users]);
+  //   useEffect(() => {
+  //     // findRows();
+  //     // tryRows();
+  //     // createData();
+  //   }, [users]);
 
   function createData(
     firstName,
@@ -352,281 +337,27 @@ export default function ManageStaffList({
       pto,
     };
   }
-  //   let mappedUsers = [];
-  //   mappedUsers = users?.map(
-  //     (el) => {
-  //       return (
-  //         Object.values([
-  //           el.first_name,
-  //           el.last_name,
-  //           el.username,
-  //           el.email,
-  //           el.is_manager,
-  //           el.tenure,
-  //           el.state,
-  //           el.pto,
-  //         ])
-  //       );
-  //     })
-//   const rows = [
-//     users?.map((el) => {
-//       return (Object.values([
-//         el.first_name,
-//         el.last_name,
-//         el.username,
-//         el.email,
-//         el.is_manager,
-//         el.tenure,
-//         el.state,
-//         el.pto,
-//       ]))
-//     }),
-//   ];
+  function findRows() {
+    let finalArray = [];
+    finalArray = users.map((el) => {
+      return {
+        ...createData(
+          Object.values(el.first_name),
+          Object.values(el.last_name),
+          Object.values(el.username),
+          Object.values(el.email),
+          Object.values(el.is_manager),
+          Object.values(el.tenure),
+          Object.values(el.state),
+          Object.values(el.pto)
+        ),
+      };
+    });
+    console.log(finalArray);
+    return finalArray;
+  }
 
-  // createData(users?.map(
-  //   (el) => {
-  //     return (
-  //       Object.values([
-  //         el.first_name,
-  //         el.last_name,
-  //         el.username,
-  //         el.email,
-  //         el.is_manager,
-  //         el.tenure,
-  //         el.state,
-  //         el.pto,
-  //       ])
-  //     );
-  //   })
-  //   setRows([mappedUsers, ...rows]),
-function findRows(){
-
-let finalArray = []
-    finalArray=users.map((el => {
-        return {
-            ...createData((Object.values(el.first_name)),
-            (Object.values(el.last_name)),
-           (Object.values(el.username)),
-            (Object.values(el.email)),
-            (Object.values(el.is_manager)),
-            (Object.values(el.tenure)),
-            (Object.values(el.state)),
-            (Object.values(el.pto)))
-        }}))
-        console.log(finalArray)
-return finalArray
-    // const initialValue = 0;
-    // let newList= [];
-    // newList = users.map((el=> {
-    // return (Object.values(el))}))
-    // debugger
-    // return newList
-    }
-
-        const rows = findRows();
-
-
-// const rows =  [
-    // users.map((el => {
-    //     return {
-    //         ...createData((Object.values(el.first_name)),
-    //         (Object.values(el.last_name)),
-    //        (Object.values(el.username)),
-    //         (Object.values(el.email)))
-    //         // (Object.values(el.is_manager)),
-    //         // (Object.values(el.tenure)),
-    //         // (Object.values(el.state)),
-    //         // (Object.values(el.pto)))
-    //     }}))
-
-    
-// ]
-// console.log(rows)
-
-
-
-
-
-// const rows =  [...((findRows()).map(
-    
-//             (el) => { 
-//               return ({
-//                 ...             
-//                  el.map((element)=> {
-//                     return{
-//                     ...
-//             createData((element))}})})}))]
-            // (el)=> {
-                // return(
-                   
-                    // return( ..., createData(el))})))]
-                        
-            // ... [Object.values(el.last_name)],
-            // ... [Object.values(el.username)]
-
-                            // createData(Object.values(el.username)),
-                // createData(Object.values(el.email))
-                // createData(Object.values(el.is_manager)),
-                // createData(Object.values(el.tenure)),
-                // createData(Object.values(el.state)),
-                // createData(Object.values(el.pto)))}))]
-               //   el.last_name,
-                //   el.username,
-                //   el.email,
-                //   el.is_manager,
-                //   el.tenure,
-                //   el.state,
-                //   el.pto
-         
-    
-//RETURNS FIRST NAMES
-// const rows =  [...(users?.map(
-//             (el) => { 
-//               return (
-//                 createData(Object.values(
-//                   el.first_name,
-//                   el.last_name,
-//                   el.username,
-//                   el.email,
-//                   el.is_manager,
-//                   el.tenure,
-//                   el.state,
-//                   el.pto
-//                 ))
-//               )
-//             }))]
-
-        
-
-
-
-
-  //THIS RETRNS A STRING
-//     const rows = [
-//       createData(users?.map(
-//         (el) => {
-//           return (
-//             Object.values([
-//               el.first_name,
-//               el.last_name,
-//               el.username,
-//               el.email,
-//               el.is_manager,
-//               el.tenure,
-//               el.state,
-//               el.pto,
-//             ])
-//           );
-//         })
-//   //       //   setRows([mappedUsers, ...rows]),
-//       ),
-//     ];
-//   console.log(rows);
-
-
-
-
-  //    let mappedUsers = [];
-  //     users?.map((el)=> {
-  //             return(mappedUsers.push(Object.values(([el.first_name,
-  //                     el.last_name,
-  //                     el.username,
-  //                     el.email,
-  //                     el.is_manager,
-  //                     el.tenure,
-  //                     el.state,
-  //                     el.pto]))))},
-  //                     setRows([mappedUsers, ...rows])   ,
-  //                     console.log([mappedUsers, ...rows])
-
-  //     return {
-  //       firstName,
-  //       lastName,
-  //       username,
-  //       email,
-  //       isManager,
-  //       tenure,
-  //       state,
-  //       pto,
-  //     };
-  //   }
-
-  //   function generateRows() {
-  //    let mappedUsers=[];
-  // //    mappedUsers=
-  // let finalArray = [];
-  // users?.map((el)=> {
-  //     return( createData(mappedUsers.push([el.first_name,
-  //             el.last_name,
-  //             el.username,
-  //             el.email,
-  //             el.is_manager,
-  //             el.tenure,
-  //             el.state,
-  //             el.pto])))
-  // })
-  // finalArray = (Object.values(mappedUsers))
-  // setRows(finalArray)
-  // console.log(finalArray)
-
-  // let mappedUsers = users?.map((el) => {
-  //         return (
-  //         //   createData(
-  //             el.first_name,
-  //             el.last_name,
-  //             el.username,
-  //             el.email,
-  //             el.is_manager,
-  //             el.tenure,
-  //             el.state,
-  //             el.pto
-  //           ))}
-  //         )
-  // let finalArray = [];
-  // mappedUsers.map(el => {
-  //     console.log(el.firstName)
-  //         return ( finalArray.push(
-  //         createData(el.firstName,
-  //         el.lastName,
-  //         el.username,
-  //         el.email,
-  //         el.isManager,
-  //         el.tenure,
-  //         el.state,
-  //         el.pto)))
-  // })
-
-  //     return (mappedUsers.push(
-  //       createData(
-  //         el.first_name,
-  //         el.last_name,
-  //         el.username,
-  //         el.email,
-  //         el.is_manager,
-  //         el.tenure,
-  //         el.state,
-  //         el.pto
-  //       ))
-  //     )
-  //   })
-
-  // )})
-  //     console.log(mappedUsers)
-  // let finalArray = _.flatten(mappedUsers);
-  //  console.log(finalArray)
-
-  //  let finalMap=[];
-
-  //   mappedUsers.map((el)=>{
-  //     return finalMap.push(el)
-  //  })
-  //  console.log('finalMAP',finalMap)
-  //  setRows(mappedUsers)
-
-  // ))
-
-  // return rows;
-  // }
+  const rows = findRows();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -708,95 +439,98 @@ return finalArray
   // };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+    <div className="flex-for-table">
+      <Box sx={{ width: "80%" }}>
+        <Paper sx={{ width: "100%", mb: 2 }}>
+          <EnhancedTableToolbar numSelected={selected.length} />
+          <TableContainer>
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              size={dense ? "small" : "medium"}
+            >
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.name);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row.name)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.name}
+                        selected={isItemSelected}
                       >
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">{row.firstName}</TableCell>
-                      <TableCell align="right">{row.lastName}</TableCell>
-                      <TableCell align="right">{row.userName}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.isManager}</TableCell>
-                      <TableCell align="right">{row.tenure}</TableCell>
-                      <TableCell align="right">{row.state}</TableCell>
-                      <TableCell align="right">{row.pto}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </Box>
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              "aria-labelledby": labelId,
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.firstName}</TableCell>
+                        <TableCell align="right">{row.lastName}</TableCell>
+                        <TableCell align="right">{row.userName}</TableCell>
+                        <TableCell align="right">{row.email}</TableCell>
+                        <TableCell align="right">{row.isManager}</TableCell>
+                        <TableCell align="right">{row.tenure}</TableCell>
+                        <TableCell align="right">{row.state}</TableCell>
+                        <TableCell align="right">{row.pto}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: (dense ? 33 : 53) * emptyRows,
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+
+        {/* <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        /> */}
+      </Box>
+    </div>
   );
 }
 
