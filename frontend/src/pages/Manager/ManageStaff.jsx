@@ -56,13 +56,13 @@ export default function ManageStaff() {
       </div>
       <div className="buttons-table">
         <div className="buttons-vertical-close">
-          <AddManagers
+          {/* <AddManagers
             getAllEmployees={getAllEmployees}
             users={users}
             toggle={toggle}
             setToggle={setToggle}
-          />
-          <AdjustTenure getAllEmployees={getAllEmployees} users={users} />
+          /> */}
+        
         </div>
         <AddStaff getAllEmployees={getAllEmployees}/>
       </div>

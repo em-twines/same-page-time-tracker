@@ -25,7 +25,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { findDOMNode } from "preact/compat";
-
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import ToggleSwitch from "./ToggleSwitch";
+import TableTenure from "./TableTenure";
 const style = {
   position: "absolute",
   top: "50%",
@@ -247,8 +250,61 @@ export default function EnhancedTable({
   setUsers,
 }) {
 
-  const _ = require("lodash");
+  // const _ = require("lodash");
   //   const [rows, setRows] = useState([]);
+  const handleClose = () => setOpen(false);
+  const [manager, setManager] = useState();
+  const [managers, setManagers] = useState([]);
+  const [user, token] = useAuth();
+  const [open, setOpen] = useState(false);
+
+
+
+  async function makeManager(newManager, employee) {
+   
+    try {
+      let res = await axios.patch(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/${employee.id}/`,
+        newManager,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setManager(res.data);
+      console.log(newManager)
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error making your requests!");
+    }
+    getAllEmployees();
+  }
+
+  function managerTrue(employee) {
+    let newManager = {
+      is_manager: true,
+    };
+    makeManager(newManager, employee);
+  }
+  function managerFalse(employee) {
+    let newManager = {
+      is_manager: false,
+    };
+    makeManager(newManager, employee);
+  }
+
+  function handleToggle(toggleValue, employee) {
+    if (toggleValue) {
+      managerTrue(employee);
+    //   setToggle(toggle);
+    } else {
+      managerFalse(employee);
+    //   setToggle(!toggle);
+    }
+  }
+
+
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
@@ -290,8 +346,10 @@ export default function EnhancedTable({
           Object.values(el.last_name),
           Object.values(el.username),
           Object.values(el.email),
-          Object.values(el.is_manager.toString()),
-          Object.values(el.tenure.toString()),
+          <ToggleSwitch toggle={toggle} setToggle={handleToggle} element={el} />,
+          // Object.values(el.is_manager.toString()),
+          <TableTenure el = {el} getAllEmployees={getAllEmployees}/>,
+          // Object.values(el.tenure.toString()),
           Object.values(el.state),
           Object.values(el.pto.toString())
         ),

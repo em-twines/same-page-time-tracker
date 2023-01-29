@@ -134,6 +134,8 @@ def returnEmployeeByID(request, pk):
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 
@@ -146,21 +148,8 @@ def makeManager(request, pk):
     return Response(serializer.data, status.HTTP_200_OK)
 
 
-
-
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
-
-# def adjustTenure(request):
-    # employees = User.objects.all()
-    # i=0
-    # for user in employees:
-    #     # user_tenure = get_object_or_404(User, pk = pk)
-    #     serializer = RegistrationSerializer(user, data = request.data[i], partial = True)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     i+=1
-    #     return Response(serializer.data, status.HTTP_200_OK)
 
 def adjustTenure(request, pk):
     user_tenure = get_object_or_404(User, pk = pk)
@@ -179,11 +168,6 @@ def adjustState(request, pk):
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response(serializer.data, status.HTTP_200_OK)
-
-
-
-
-
 
 
 @api_view(['PATCH'])
