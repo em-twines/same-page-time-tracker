@@ -22,7 +22,7 @@ import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
+// import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { findDOMNode } from "preact/compat";
 
@@ -38,43 +38,6 @@ const style = {
   p: 4,
 };
 
-// function createData(
-//   firstName,
-//   lastName,
-//   username,
-//   email,
-//   isManager,
-//   tenure,
-//   state,
-//   pto
-// ) {
-//   return {
-//     firstName,
-//     lastName,
-//     username,
-//     email,
-//     isManager,
-//     tenure,
-//     state,
-//     pto,
-//   };
-// }
-
-// const rows = [
-//   users?.map((el, index) => {
-//     console.log(el);
-//     return createData(
-//       el.first_name,
-//       el.last_name,
-//       el.username,
-//       el.email,
-//       el.is_manager,
-//       el.tenure,
-//       el.state,
-//       el.pto
-//     );
-//   }),
-// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -169,9 +132,9 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead >
+    <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -181,12 +144,12 @@ function EnhancedTableHead(props) {
               "aria-label": "select all employees",
             }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             // align={headCell.numeric ? "right" : "left"}
-            align= "right" 
+            align="right"
             // padding={headCell.disablePadding ? "none" : "normal"}
             padding="normal"
             sortDirection={orderBy === headCell.id ? order : false}
@@ -264,9 +227,7 @@ function EnhancedTableToolbar(props) {
         </Tooltip>
       ) : (
         <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
+          <IconButton>{/* <FilterListIcon /> */}</IconButton>
         </Tooltip>
       )}
     </Toolbar>
@@ -278,26 +239,14 @@ EnhancedTableToolbar.propTypes = {
 };
 
 // export default function ManageStaffList({
-  export default function EnhancedTable({
+export default function EnhancedTable({
   getAllEmployees,
   toggle,
   setToggle,
   users,
   setUsers,
 }) {
-  const handleClose = () => setOpen(false);
-  const [user, token] = useAuth();
-  const [open, setOpen] = useState(false);
-  const [employees, setEmployees] = useState([]);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [isManager, setIsManager] = useState(false);
-  const [name, setName] = useState();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [tenure, setTenure] = useState(0);
-  const [state, setState] = useState("");
-  const [pto, setPto] = useState(0);
+
   const _ = require("lodash");
   //   const [rows, setRows] = useState([]);
 
@@ -310,7 +259,6 @@ EnhancedTableToolbar.propTypes = {
   useEffect(() => {
     getAllEmployees();
   }, []);
-
 
   function createData(
     firstName,
@@ -342,8 +290,8 @@ EnhancedTableToolbar.propTypes = {
           Object.values(el.last_name),
           Object.values(el.username),
           Object.values(el.email),
-          (Object.values(el.is_manager.toString())),
-          (Object.values(el.tenure.toString())),
+          Object.values(el.is_manager.toString()),
+          Object.values(el.tenure.toString()),
           Object.values(el.state),
           Object.values(el.pto.toString())
         ),
@@ -408,15 +356,12 @@ EnhancedTableToolbar.propTypes = {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  function handleOpen() {
-    setOpen(true);
-    getAllEmployees();
-  }
-  async function addEmployee(employee) {}
+  // function handleOpen() {
+  //   setOpen(true);
+  //   getAllEmployees();
+  // }
+  
 
-  async function deleteEmployee(employee) {}
-
-  async function editEmployee(employee) {}
   //async function getEmployee(employee) {
 
   // function handleFormSubmit(e){
@@ -434,51 +379,52 @@ EnhancedTableToolbar.propTypes = {
   // };
 
   return (
-    <div className="flex-for-table">
-      <Box sx={{ width: "80%" }}>
-        <Paper sx={{ width: "100%", mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={dense ? "small" : "medium"}
-            >
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-              <TableBody>
-                {stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+    <div className="table-form">
+      <div className="flex-for-table">
+        <Box sx={{ width: "80%" }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
+            <EnhancedTableToolbar numSelected={selected.length} />
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size={dense ? "small" : "medium"}
+              >
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={rows.length}
+                />
+                <TableBody>
+                  {stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.name);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, row.name)}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.name}
-                        selected={isItemSelected}
-                      >
-                        <TableCell padding="checkbox">
+                      return (
+                        <TableRow
+                        // hover
+                        // onClick={(event) => handleClick(event, row.name)}
+                        // role="checkbox"
+                        // aria-checked={isItemSelected}
+                        // tabIndex={-1}
+                        // key={row.name}
+                        // selected={isItemSelected}
+                        >
+                          {/* <TableCell padding="checkbox">
                           <Checkbox
                             color="primary"
                             checked={isItemSelected}
                             inputProps={{
                               "aria-labelledby": labelId,
                             }}
-                          />
-                        </TableCell>
-                        {/* <TableCell
+                          /> */}
+                          {/* </TableCell> */}
+                          {/* <TableCell
                           component="th"
                           id={labelId}
                           scope="row"
@@ -486,192 +432,46 @@ EnhancedTableToolbar.propTypes = {
                         >
                           {row.name}
                         </TableCell> */}
-                        <TableCell align="right">{row.firstName}</TableCell>
-                        <TableCell align="right">{row.lastName}</TableCell>
-                        <TableCell align="right">{row.username}</TableCell>
-                        <TableCell align="right">{row.email}</TableCell>
-                        <TableCell align="right">{row.isManager}</TableCell>
-                        <TableCell align="right">{row.tenure}</TableCell>
-                        <TableCell align="right">{row.state}</TableCell>
-                        <TableCell align="right">{row.pto}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow
-                    style={{
-                      height: (dense ? 33 : 53) * emptyRows,
-                    }}
-                  >
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
+                          <TableCell align="right">{row.firstName}</TableCell>
+                          <TableCell align="right">{row.lastName}</TableCell>
+                          <TableCell align="right">{row.username}</TableCell>
+                          <TableCell align="right">{row.email}</TableCell>
+                          <TableCell align="right">{row.isManager}</TableCell>
+                          <TableCell align="right">{row.tenure}</TableCell>
+                          <TableCell align="right">{row.state}</TableCell>
+                          <TableCell align="right">{row.pto}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow
+                      style={{
+                        height: (dense ? 33 : 53) * emptyRows,
+                      }}
+                    >
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
 
-        {/* <FormControlLabel
+          {/* <FormControlLabel
           control={<Switch checked={dense} onChange={handleChangeDense} />}
           label="Dense padding"
         /> */}
-      </Box>
+        </Box>{" "}
+      </div>
     </div>
   );
 }
-
-//   return (
-//     <div>
-//       <Button variant="contained" onClick={handleOpen}>
-//         Update Staff
-//       </Button>
-//       <Modal
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby="modal-modal-title"
-//         aria-describedby="modal-modal-description"
-//       >
-//         <Box sx={style}>
-//           <Typography id="modal-modal-title" variant="h6" component="h2">
-
-//           </Typography>
-
-//           <table >
-//             <thead>
-//               <tr>
-//                 <th>First </th>
-//                 <th>Last </th>
-//                 <th>Username </th>
-//                 <th>Email</th>
-//                 <th>Manager Status</th>
-//                 <th>Tenure (yrs)</th>
-//                 <th>State</th>
-//                 <th>PTO</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {users?.map((el, index) => {
-//                 console.log(el)
-//                 return (
-//                   <tr key={index}>
-//                     {/* {index + 1} */}
-//                     <td>{el.first_name}</td>
-//                     <td>{el.last_name}</td>
-//                     <td>{el.username}</td>
-//                     <td>{el.email}</td>
-//                     <td>{el.is_manager}</td>
-//                     <td>{el.tenure}</td>
-//                     <td>{el.state}</td>
-//                     <td>{el.pto}</td>
-//                     <td><button>Delete</button></td>
-//                     <td>
-//                       <form
-//                         // onSubmit={(event) => {
-//                         //   handleSubmit(event, el);
-//                         // }}
-//                       >
-//                         <label>
-//                           First Name:
-//                           <input
-//                             id="first_name"
-//                             value={firstName}
-//                             type="text"
-//                             name="first_name"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <label>
-//                         Last Name:
-//                           <input
-//                             id="last_name"
-//                             value={lastName}
-//                             type="text"
-//                             name="last_name"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <label>
-//                         Username:
-//                           <input
-//                             id="username"
-//                             value={username}
-//                             type="text"
-//                             name="username"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <label>
-//                           Email:
-//                           <input
-//                             id="email"
-//                             value={email}
-//                             type="email"
-//                             name="email"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <label>
-//                         Manager Status:
-//                           <input
-//                             id="is_manager"
-//                             value={isManager}
-//                             type="text"
-//                             name="is_manager"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <label>
-//                         Tenure:
-//                           <input
-//                             id="tenure"
-//                             value={tenure}
-//                             type="text"
-//                             name="tenure"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <label>
-//                           State:
-//                           <input
-//                             id="state"
-//                             value={email}
-//                             type="text"
-//                             name="state"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <label>
-//                         PTO:
-//                           <input
-//                             id="pto"
-//                             value={pto}
-//                             type="text"
-//                             name="pto"
-//                             onChange={handleInputChange}
-//                           />
-//                         </label>
-//                         <button type="submit" value="Submit">
-//                           Add Team Member
-//                         </button>
-//                       </form>
-//                     </td>
-//                   </tr>
-//                 );
-//               })}
-//             </tbody>
-//           </table>
-//           <Button onClick={handleClose}>Close</Button>
-//         </Box>
-//       </Modal>
-//     </div>
-//   );
-// }

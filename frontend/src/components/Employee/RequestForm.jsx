@@ -99,7 +99,6 @@ export default function RequestForm({
       toast(
         "Sorry! We have encountered an error processing your submission request!"
       );
-      // TODO: change alert.
     }
   }
 
