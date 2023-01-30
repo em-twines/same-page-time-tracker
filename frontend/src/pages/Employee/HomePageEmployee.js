@@ -5,7 +5,7 @@ import RequestForm from "../../components/Employee/RequestForm";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import Mail from "../../components/Employee/Mail";
-
+import moment from "moment";
 
 const HomePageEmployee = ({ decision, setDecision }) => {
   const [user, token] = useAuth();
@@ -14,6 +14,134 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   const [deletion, setDeletion] = useState(false);
   const [employee, setEmployee] = useState({});
   const [hours_requested, setHoursRequested] = useState();
+  const [allPtoHoursPerYear, setAllPtoHoursPerYear] = useState([]);
+  const [newYearPto, setNewYearPto] = useState(0);
+  const [allPtoFrequenciesPerYear, setAllPtoFrequenciesPerYear] = useState([]);
+
+  async function getAllPtoHoursPerYear() {
+    try {
+      let res = await axios.get(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/hours/
+        `,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setAllPtoHoursPerYear(res.data);
+    } catch (error) {
+      console.log(error);
+      toast(
+        "Sorry! We have encountered an error getting your pto hours allowance per year!"
+      );
+    }
+  }
+
+  async function getAllPtoFrequenciesPerYear() {
+    try {
+      let res = await axios.get(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/frequencies/
+        `,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setAllPtoFrequenciesPerYear(res.data);
+    } catch (error) {
+      console.log(error);
+      toast(
+        "Sorry! We have encountered an error getting your pto hours allowance per year!"
+      );
+    }
+  }
+
+  async function UpdateTenureEmployee(tenure) {
+    try {
+      let res = await axios.patch(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/tenure/${user.id}/`,
+        tenure,
+
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error updating your tenure!");
+    }
+  }
+
+  async function setPTO(time) {
+    console.log("pre setPTO", user.pto);
+
+    try {
+      let res = await axios.patch(
+        `http://127.0.0.1:8000/api/requests_for_pto/staff/pto-set/${user.id}/`,
+        time,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log("post setPTO", res.data);
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error in adjusting your pto bank!");
+    }
+  }
+
+  function CalculateTenure() {
+    getAllPtoHoursPerYear();
+    getAllPtoFrequenciesPerYear();
+
+    let today = moment().format("YYYY-MM-DD");
+    let joined = user.date_joined.toString().slice(0, 10);
+    console.log("joined", joined);
+    if ((today - joined) % 365 === 1) {
+      let newTenure = {
+        tenure: user.tenure + 1,
+      };
+      UpdateTenureEmployee(newTenure);
+      if (user.state == !"CA") {
+        setPTO(CalculatePTO());
+      }
+    } else {
+      setPTO(user.pto + CalculatePTO());
+    }
+  }
+
+  function CalculatePTO() {
+    console.log(allPtoFrequenciesPerYear)
+    for (let i = 0; i < allPtoFrequenciesPerYear.length; i++) {
+        if (allPtoFrequenciesPerYear[0]/365 < user.tenure) {
+          console.log('if 1 hit')
+          if (
+            allPtoFrequenciesPerYear[i - 1]/365 <
+            user.tenure <=
+            allPtoFrequenciesPerYear[i]
+          ) {console.log(
+              "i, allPtoFrequenciesPerYear[i], allPtoHoursPerYear[i]",
+              i,
+              allPtoFrequenciesPerYear[i],
+              allPtoHoursPerYear[i])
+            return setNewYearPto(allPtoHoursPerYear[i]);
+            
+            
+          } else {
+            return setNewYearPto(allPtoHoursPerYear[0]);
+          }
+        }
+      }
+    
+  }
 
   async function getRequests() {
     try {
@@ -53,6 +181,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
 
   useEffect(() => {
     getRequests();
+    CalculateTenure();
   }, [decision, deletion]);
 
   return (
@@ -71,10 +200,10 @@ const HomePageEmployee = ({ decision, setDecision }) => {
             getUserInfo={getUserInfo}
             employee={employee}
             hours_requested={hours_requested}
-            setHoursRequested ={setHoursRequested}
+            setHoursRequested={setHoursRequested}
           />
         </div>
-        <Mail/>
+        <Mail />
         <CalendarEmployee
           decision={decision}
           setDecision={setDecision}
@@ -83,8 +212,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
           setDeletion={setDeletion}
           getRequests={getRequests}
           hours_requested={hours_requested}
-          setHoursRequested ={setHoursRequested}
-
+          setHoursRequested={setHoursRequested}
         />
       </div>
     </div>

@@ -16,6 +16,7 @@ function setUserObject(user) {
     username: user.username,
     first_name: user.first_name,
     is_manager: user.is_manager,
+    date_joined: user.date_joined,
   };
 }
 

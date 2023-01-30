@@ -4,11 +4,13 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from .models import Request, Employee_Request, Manager_Employee, User
-from .serializers import RequestSerializer, Employee_Request_Serializer,CombineSerializer, Manager_Employee_Serializer
+from .models import Request, Employee_Request, Manager_Employee, User, Hour, Frequency
+from .serializers import RequestSerializer, Employee_Request_Serializer, CombineSerializer, Manager_Employee_Serializer, HourSerializer, FrequencySerializer
 from django.shortcuts import get_object_or_404
 from authentication.serializers import RegistrationSerializer
-
+from datetime import datetime, timedelta
+from django.utils import timezone
+from django.utils.timezone import localdate
 
 #Employee
 
@@ -206,3 +208,45 @@ def setPTO(request, pk):
     return Response(serializer.data, status.HTTP_200_OK)
 
     
+
+#get date joined over one year ago
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def getUserJoinedDate(request, pk):
+
+    # user = get_object_or_404(User, pk=pk)
+    # if (timezone.now()-user.date_joined ) > timedelta(days=365):
+    #     return True
+
+
+#get Hours tiers to modify them
+
+@api_view(['GET', 'POST'])
+def getHourTiers(request):
+    if request.method == 'GET':
+        hours = Hour.objects.all()
+        serializer = HourSerializer(hours, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+    elif request.method == 'POST':
+        serializer = HourSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+#get Frequency tiers to modify them
+
+@api_view(['GET', 'POST'])
+def getFrequencyTiers(request):
+    if request.method == 'GET':
+        frequencies = Hour.objects.all()
+        serializer = FrequencySerializer(frequencies, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+    elif request.method == 'POST':
+        serializer = FrequencySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+

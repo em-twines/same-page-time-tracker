@@ -16,3 +16,14 @@ class Employee_Request(models.Model):
 class Manager_Employee(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name="manager_emplyee")
     employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employee")
+
+class Hour(models.Model):
+    hours = models.IntegerField(default=(8*10))
+    # hours2 = models.IntegerField(default=(8*15))
+    # hours3  = models.IntegerField(default=(8*20))
+
+class Frequency(models.Model):
+    frequency = models.IntegerField(default=365)
+    # frequency2 = models.IntegerField(default=(365*3))
+    # frequency3 = models.IntegerField(default=(365*5))
+

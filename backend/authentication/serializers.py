@@ -12,10 +12,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # for any additional fields you'd like to add to the JWT sent back in response
         # add below using the token["field name"] = user.name_of_property
         # token["is_student"] = user.is_student
-
         token["username"] = user.username
         token["first_name"] = user.first_name
         token["is_manager"] = user.is_manager
+        token["date_joined"] = str(user.date_joined)
         return token
 
 

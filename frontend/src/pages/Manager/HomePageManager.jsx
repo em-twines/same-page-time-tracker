@@ -18,6 +18,8 @@ export default function HomePageManager({ decision, setDecision }) {
   const [users, setUsers] = useState([]);
   const [managers, setManagers] = useState([]);
   const [toggle, setToggle] = useState([]);
+
+
   const [defaultMessage, setDefaultMesssage] = useState(
     "Your PTO request has been approved!"
   );
@@ -45,6 +47,7 @@ export default function HomePageManager({ decision, setDecision }) {
     }
   }
 
+
   async function getAllRequests() {
     try {
       let res = await axios.get(
@@ -62,6 +65,9 @@ export default function HomePageManager({ decision, setDecision }) {
     }
   }
 
+
+
+  
   function handleSubmit(event) {
     getAllRequests();
   }
@@ -89,6 +95,10 @@ export default function HomePageManager({ decision, setDecision }) {
           <AdjustTenure getAllEmployees={getAllEmployees} users={users} />
           <div className="calendar-and-button-container"> */}
           <Button variant = 'contained' onClick={() => navigate("/manager/manage-staff")}>Manage Staff</Button>
+          <Button variant = 'contained' onClick={() => navigate("/manager/settings")}>PTO Settings</Button>
+
+
+
           <MessageManager
             defaultMessage={defaultMessage}
             setDefaultMessage={setDefaultMesssage}

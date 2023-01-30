@@ -21,7 +21,6 @@ export default function Mail() {
       });
 
       setMail(res.data);
-      console.log('mail' , res.data);
     } catch (error) {
       console.log(error);
       toast("Sorry! We have encountered an error getting all the requests!");
@@ -43,7 +42,6 @@ export default function Mail() {
           }}
         >
           {mail?.map((el) => {
-            console.log(el);
             return (
               <Box
                 sx={{

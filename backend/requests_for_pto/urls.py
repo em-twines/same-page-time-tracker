@@ -15,11 +15,15 @@ urlpatterns = [
     path('manager/staff/manage/<int:pk>/', views.makeManager),
     path('manager/staff/manage/tenure/<int:pk>/', views.adjustTenure),
     path('manager/staff/manage/state/<int:pk>/', views.adjustState),
+    path('manager/settings/hours/', views.getHourTiers),
+    path('manager/settings/frequencies/', views.getFrequencyTiers),
     path('manager/<int:pk>/', views.approve_or_deny),
+
+
 
     #Employee:
     path('employee/', views.view_all_requests_by_employee),
     path('submit/', views.submit_request),
     path('submit/<int:pk>', views.modify_request),
-
+    # path('employee/purchase/<int:pk>/', views.getUserJoinedDate),
 ]

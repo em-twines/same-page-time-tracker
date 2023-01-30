@@ -28,6 +28,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import SettingsPage from "./pages/Manager/SettingsPage";
 
 
 
@@ -70,6 +71,13 @@ const navigate = useNavigate();
           element={
             <PrivateRoute>
               <ManageStaff/>
+            </PrivateRoute>} 
+        />         
+         <Route
+          path="/manager/settings"
+          element={
+            <PrivateRoute>
+              <SettingsPage/>
             </PrivateRoute>} 
         />         
         <Route
