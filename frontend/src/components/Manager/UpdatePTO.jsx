@@ -1,0 +1,185 @@
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { AlertTitle, paperClasses } from "@mui/material";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+
+export default function UpdatePTO({}) {
+  const [user, token] = useAuth();
+  const [pto, setPTO] = useState();
+  const [hours, setHours] = useState();
+  const [frequency, setFrequency] = useState();
+  const [allPtoFrequenciesPerYear, setAllPtoFrequenciesPerYear] = useState([]);
+  const [allPtoHoursPerYear, setAllPtoHoursPerYear] = useState([]);
+
+  async function getAllPtoHoursPerYear() {
+    try {
+      let res = await axios.get(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/hours/
+        `,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setAllPtoHoursPerYear(res.data);
+    } catch (error) {
+      console.log(error);
+      toast(
+        "Sorry! We have encountered an error getting your pto hours allowance per year!"
+      );
+    }
+  }
+
+  async function getAllPtoFrequenciesPerYear() {
+    try {
+      let res = await axios.get(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/frequencies/
+        `,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      setAllPtoFrequenciesPerYear(res.data);
+      console.log(res.data)
+    } catch (error) {
+      console.log(error);
+      toast(
+        "Sorry! We have encountered an error getting your pto rate allowance per year!"
+      );
+    }
+  }
+
+  async function getAllEmployeesCheckPTO() {
+    try {
+      let res = await axios.get(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error getting all the requests!");
+    }
+  }
+
+  async function patchNewHours(time, el) {
+    try {
+      let res = await axios.patch(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/hours/update/${el.id}/`,
+        time,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      getAllEmployeesCheckPTO();
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error in adjusting your pto bank!");
+    }
+  }
+
+  async function patchNewFrequency(time, el) {
+    try {
+      let res = await axios.patch(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/frequencies/update/${el.id}/`,
+        time,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log(res.data);
+      getAllEmployeesCheckPTO();
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error in adjusting your pto bank!");
+    }
+  }
+
+  function handleSubmit1(event, el) {
+    event.preventDefault();
+   
+    let newPTOHours = {
+      hours: hours,
+    };
+    
+    patchNewHours(newPTOHours, el);
+    
+  }
+
+  function handleSubmit(event, el) {
+    event.preventDefault();
+    let newPTOFrequency = {
+      frequency: frequency,
+    };
+    
+    console.log(newPTOFrequency)
+    patchNewFrequency(newPTOFrequency, el);
+  }
+
+  useEffect(() => {
+    getAllPtoFrequenciesPerYear();
+    getAllPtoHoursPerYear();
+  }, []);
+
+  return (
+    <div>
+      <h3>Hours</h3>
+ 
+
+      {allPtoHoursPerYear.map((el, index) => {
+        return (
+          <form onSubmit={(event) => {handleSubmit1(event, el)}}>
+            <label>Tier {index+1}:</label>
+            <input
+              type="number"
+              onChange={(event) => setHours(event.target.value)}
+              required
+              value={hours}
+              defaultValue={el.hours}
+            ></input>
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </form>
+        );
+      })}
+
+<h3>Years</h3>
+{allPtoFrequenciesPerYear.map((el, index) => {
+
+        return (
+          <form onSubmit={(event) => {handleSubmit(event, el)}}>
+            <label>Tier {index+1} (yrs):</label>
+            <input
+              type="number"
+              onChange={(event) => setFrequency(event.target.value)}
+              required
+              value={frequency}
+              defaultValue={el.frequency}
+            ></input>
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </form>
+        );
+      })}
+    </div>
+  );
+}

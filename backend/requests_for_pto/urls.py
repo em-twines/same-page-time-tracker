@@ -17,6 +17,8 @@ urlpatterns = [
     path('manager/staff/manage/state/<int:pk>/', views.adjustState),
     path('manager/settings/hours/', views.getHourTiers),
     path('manager/settings/frequencies/', views.getFrequencyTiers),
+    path('manager/settings/hours/update/<int:pk>/', views.setHours),
+    path('manager/settings/frequencies/update/<int:pk>/', views.setFrequency),
     path('manager/<int:pk>/', views.approve_or_deny),
 
 

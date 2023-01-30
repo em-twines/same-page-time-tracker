@@ -14,6 +14,7 @@ import HomePageManager from "./pages/Manager/HomePageManager";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ManageStaff from "./pages/Manager/ManageStaff";
+import SettingsPage from "./pages/Manager/SettingsPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -28,7 +29,6 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import SettingsPage from "./pages/Manager/SettingsPage";
 
 
 

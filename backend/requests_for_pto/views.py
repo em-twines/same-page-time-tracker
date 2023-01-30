@@ -222,6 +222,7 @@ def setPTO(request, pk):
 #get Hours tiers to modify them
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def getHourTiers(request):
     if request.method == 'GET':
         hours = Hour.objects.all()
@@ -238,9 +239,10 @@ def getHourTiers(request):
 #get Frequency tiers to modify them
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def getFrequencyTiers(request):
     if request.method == 'GET':
-        frequencies = Hour.objects.all()
+        frequencies = Frequency.objects.all()
         serializer = FrequencySerializer(frequencies, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
@@ -250,3 +252,34 @@ def getFrequencyTiers(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+
+#set hours to input
+@api_view(['PATCH', "DELETE"])
+@permission_classes([IsAuthenticated])
+
+def setHours(request, pk):
+    hours = get_object_or_404(Hour, pk = pk)
+    if request.method =="PATCH":
+        serializer = HourSerializer(hours, data = request.data, partial = True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status.HTTP_200_OK)
+    elif request.method =="DELETE":
+            hours.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+#set frequency to input
+@api_view(['PATCH', 'DELETE'])
+@permission_classes([IsAuthenticated])
+
+def setFrequency(request, pk):
+    frequency = get_object_or_404(Frequency, pk = pk)
+    if request.method =="PATCH":
+        serializer = FrequencySerializer(frequency, data = request.data, partial = True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status.HTTP_200_OK)
+    elif request.method =="DELETE":
+        frequency.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
