@@ -30,7 +30,6 @@ export default function AdjustPTO({ getAllEmployees, el }) {
         getAllEmployees();
       } catch (error) {
         console.log(error);
-        toast("Sorry! We have encountered an error in adjusting your pto bank!");
       }
     }
 

@@ -50,7 +50,7 @@ export default function UpdatePTO({}) {
       );
 
       setAllPtoFrequenciesPerYear(res.data);
-      console.log(res.data)
+      console.log(res.data);
     } catch (error) {
       console.log(error);
       toast(
@@ -89,7 +89,6 @@ export default function UpdatePTO({}) {
       getAllEmployeesCheckPTO();
     } catch (error) {
       console.log(error);
-      toast("Sorry! We have encountered an error in adjusting your pto bank!");
     }
   }
 
@@ -108,75 +107,86 @@ export default function UpdatePTO({}) {
       getAllEmployeesCheckPTO();
     } catch (error) {
       console.log(error);
-      toast("Sorry! We have encountered an error in adjusting your pto bank!");
     }
   }
 
-  function handleSubmit1(event, el) {
-    event.preventDefault();
-   
-    let newPTOHours = {
-      hours: hours,
-    };
-    
-    patchNewHours(newPTOHours, el);
-    
-  }
 
-  function handleSubmit(event, el) {
-    event.preventDefault();
-    let newPTOFrequency = {
-      frequency: frequency,
-    };
-    
-    console.log(newPTOFrequency)
-    patchNewFrequency(newPTOFrequency, el);
-  }
+
 
   useEffect(() => {
     getAllPtoFrequenciesPerYear();
     getAllPtoHoursPerYear();
   }, []);
 
+  function handleChange(e, el) {
+    e.preventDefault();
+    el.hours = e.target.value;
+
+    let newPTO = {
+      hours: el.hours,
+    };
+    console.log("newPTO", newPTO, el);
+    patchNewHours(newPTO, el);
+  }
+
+  function handleChange1(e, el) {
+    e.preventDefault();
+    el.frequency = e.target.value;
+
+    let newFreq = {
+      frequency: el.frequency,
+    };
+    console.log("newFreq", newFreq, el);
+    patchNewFrequency(newFreq, el);
+  }
+
   return (
     <div>
       <h3>Hours</h3>
- 
 
       {allPtoHoursPerYear.map((el, index) => {
         return (
-          <form onSubmit={(event) => {handleSubmit1(event, el)}}>
-            <label>Tier {index+1}:</label>
+          <form
+            // onSubmit={(event) => {
+            //   handleSubmit1(event, el);
+            // }}
+          >
+            <label>Tier {index + 1}:</label>
             <input
               type="number"
-              onChange={(event) => setHours(event.target.value)}
+              onChange={(e) => {
+                handleChange(e, el);
+              }}
               required
               value={hours}
               defaultValue={el.hours}
             ></input>
-            <Button type="submit" variant="contained">
+            {/* <Button type="submit" variant="contained">
               Submit
-            </Button>
+            </Button> */}
           </form>
         );
       })}
 
-<h3>Years</h3>
-{allPtoFrequenciesPerYear.map((el, index) => {
-
+      <h3>Years</h3>
+      {allPtoFrequenciesPerYear.map((el, index) => {
         return (
-          <form onSubmit={(event) => {handleSubmit(event, el)}}>
-            <label>Tier {index+1} (yrs):</label>
+          <form
+            // onSubmit={(event) => {
+            //   handleSubmit(event, el);
+            // }}
+          >
+            <label>Tier {index + 1} (yrs):</label>
             <input
               type="number"
-              onChange={(event) => setFrequency(event.target.value)}
+              onChange={(event) => {handleChange1(event, el)}}
               required
               value={frequency}
               defaultValue={el.frequency}
             ></input>
-            <Button type="submit" variant="contained">
+            {/* <Button type="submit" variant="contained">
               Submit
-            </Button>
+            </Button> */}
           </form>
         );
       })}

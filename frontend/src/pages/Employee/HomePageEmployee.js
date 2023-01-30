@@ -81,7 +81,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   }
 
   async function PatchPTO(time) {
-    console.log(time)
+    console.log(time);
     try {
       let res = await axios.patch(
         `http://127.0.0.1:8000/api/requests_for_pto/staff/pto-set/${employee.id}/`,
@@ -100,7 +100,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   }
 
   function CalculateTenure() {
-     let today = moment().format("YYYY-MM-DD").toString();
+    let today = moment().format("YYYY-MM-DD").toString();
     today = new Date(today).toISOString().split("T")[0];
     console.log("today", today);
 
@@ -114,7 +114,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
     let diff = today - joined;
 
     let final_diff = diff / 1000 / 60 / 60 / 24;
-   
+
     if (final_diff % 365 === 1) {
       let newTenure = {
         tenure: parseInt(employee.tenure) + 1,
@@ -123,9 +123,9 @@ const HomePageEmployee = ({ decision, setDecision }) => {
       UpdateTenureEmployee(newTenure);
       if (employee.state == !"CA") {
         PatchPTO(CalculatePTO());
+      } else {
+        PatchPTO(employee.pto + CalculatePTO());
       }
-    } else {
-      PatchPTO(employee.pto + CalculatePTO());
     }
   }
 
@@ -139,22 +139,20 @@ const HomePageEmployee = ({ decision, setDecision }) => {
     let hr = allPtoHoursPerYear.map((el) => {
       return el.hours;
     });
-      while (employee.tenure > Math.floor(freq[i] / 365)) {
-        console.log('while')
-        if (
-          Math.floor(freq[i]) / 365 <= employee.tenure
-        ) {
-          console.log(i)
-          i++
-          }
-      }      
-      
-      let newPTOHrs = {
-        pto: hr[i-1]
+    while (employee.tenure > Math.floor(freq[i] / 365)) {
+      console.log("while");
+      if (Math.floor(freq[i]) / 365 <= employee.tenure) {
+        console.log(i);
+        i++;
       }
-      return newPTOHrs
     }
-  
+
+    let newPTOHrs = {
+      pto: hr[i - 1],
+    };
+    return newPTOHrs;
+  }
+
   async function getRequests() {
     try {
       let res = await axios.get(
@@ -226,9 +224,8 @@ const HomePageEmployee = ({ decision, setDecision }) => {
           getRequests={getRequests}
           hours_requested={hours_requested}
           setHoursRequested={setHoursRequested}
-        />     
+        />
       </div>
-
     </div>
   );
 };
