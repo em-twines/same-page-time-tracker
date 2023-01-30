@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import Mail from "../../components/Employee/Mail";
 import moment from "moment";
+import { Button } from "@mui/material";
 
 const HomePageEmployee = ({ decision, setDecision }) => {
   const [user, token] = useAuth();
@@ -17,6 +18,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   const [allPtoHoursPerYear, setAllPtoHoursPerYear] = useState([]);
   const [newYearPto, setNewYearPto] = useState(0);
   const [allPtoFrequenciesPerYear, setAllPtoFrequenciesPerYear] = useState([]);
+  const [today, setToday] = useState();
 
   async function getAllPtoHoursPerYear() {
     try {
@@ -52,6 +54,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
       );
 
       setAllPtoFrequenciesPerYear(res.data);
+      console.log(res.data);
     } catch (error) {
       console.log(error);
       toast(
@@ -59,11 +62,10 @@ const HomePageEmployee = ({ decision, setDecision }) => {
       );
     }
   }
-
   async function UpdateTenureEmployee(tenure) {
     try {
       let res = await axios.patch(
-        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/tenure/${user.id}/`,
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/manage/tenure/${employee.id}/`,
         tenure,
 
         {
@@ -78,12 +80,11 @@ const HomePageEmployee = ({ decision, setDecision }) => {
     }
   }
 
-  async function setPTO(time) {
-    console.log("pre setPTO", user.pto);
-
+  async function PatchPTO(time) {
+    console.log(time)
     try {
       let res = await axios.patch(
-        `http://127.0.0.1:8000/api/requests_for_pto/staff/pto-set/${user.id}/`,
+        `http://127.0.0.1:8000/api/requests_for_pto/staff/pto-set/${employee.id}/`,
         time,
         {
           headers: {
@@ -99,50 +100,61 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   }
 
   function CalculateTenure() {
-    getAllPtoHoursPerYear();
-    getAllPtoFrequenciesPerYear();
+     let today = moment().format("YYYY-MM-DD").toString();
+    today = new Date(today).toISOString().split("T")[0];
+    console.log("today", today);
 
-    let today = moment().format("YYYY-MM-DD");
     let joined = user.date_joined.toString().slice(0, 10);
+    joined = new Date(joined).toISOString().split("T")[0];
     console.log("joined", joined);
-    if ((today - joined) % 365 === 1) {
+
+    today = Date.parse(today);
+    joined = Date.parse(joined);
+
+    let diff = today - joined;
+
+    let final_diff = diff / 1000 / 60 / 60 / 24;
+   
+    if (final_diff % 365 === 1) {
       let newTenure = {
-        tenure: user.tenure + 1,
+        tenure: parseInt(employee.tenure) + 1,
       };
+      console.log(employee.tenure);
       UpdateTenureEmployee(newTenure);
-      if (user.state == !"CA") {
-        setPTO(CalculatePTO());
+      if (employee.state == !"CA") {
+        PatchPTO(CalculatePTO());
       }
     } else {
-      setPTO(user.pto + CalculatePTO());
+      PatchPTO(employee.pto + CalculatePTO());
     }
   }
 
   function CalculatePTO() {
-    console.log(allPtoFrequenciesPerYear)
-    for (let i = 0; i < allPtoFrequenciesPerYear.length; i++) {
-        if (allPtoFrequenciesPerYear[0]/365 < user.tenure) {
-          console.log('if 1 hit')
-          if (
-            allPtoFrequenciesPerYear[i - 1]/365 <
-            user.tenure <=
-            allPtoFrequenciesPerYear[i]
-          ) {console.log(
-              "i, allPtoFrequenciesPerYear[i], allPtoHoursPerYear[i]",
-              i,
-              allPtoFrequenciesPerYear[i],
-              allPtoHoursPerYear[i])
-            return setNewYearPto(allPtoHoursPerYear[i]);
-            
-            
-          } else {
-            return setNewYearPto(allPtoHoursPerYear[0]);
+    getAllPtoHoursPerYear();
+    getAllPtoFrequenciesPerYear();
+    let i = 0;
+    let freq = allPtoFrequenciesPerYear.map((el) => {
+      return el.frequency;
+    });
+    let hr = allPtoHoursPerYear.map((el) => {
+      return el.hours;
+    });
+      while (employee.tenure > Math.floor(freq[i] / 365)) {
+        console.log('while')
+        if (
+          Math.floor(freq[i]) / 365 <= employee.tenure
+        ) {
+          console.log(i)
+          i++
           }
-        }
+      }      
+      
+      let newPTOHrs = {
+        pto: hr[i-1]
       }
-    
-  }
-
+      return newPTOHrs
+    }
+  
   async function getRequests() {
     try {
       let res = await axios.get(
@@ -181,6 +193,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
 
   useEffect(() => {
     getRequests();
+    getUserInfo();
     CalculateTenure();
   }, [decision, deletion]);
 
@@ -213,8 +226,9 @@ const HomePageEmployee = ({ decision, setDecision }) => {
           getRequests={getRequests}
           hours_requested={hours_requested}
           setHoursRequested={setHoursRequested}
-        />
+        />     
       </div>
+
     </div>
   );
 };
