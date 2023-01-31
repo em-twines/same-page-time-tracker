@@ -62,11 +62,9 @@ export default function AdjustTenure({ getAllEmployees, users }) {
 
   function handleSubmit(event, el){
     event.preventDefault();
-    console.log('tenure from handlechange :', tenure)
     let newTenure = {
         tenure: parseInt(tenure)
     }
-    console.log(newTenure)
     UpdateTenure(newTenure, el);
 }
 

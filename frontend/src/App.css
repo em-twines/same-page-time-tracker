@@ -175,7 +175,6 @@ button:hover {
   grid-template-rows: auto;
   justify-items: center;
   align-content: center;
-  align-items: top;
   row-gap: 1rem;
   justify-content: center;
   margin-bottom: 10rem;
@@ -187,8 +186,7 @@ button:hover {
 
 .label-columns{
   display: flex;
-  flex-basis: 1; 
-  flex-shrink: 2;
+
  grid-column: 1/4;
  grid-row: 1;
 }
@@ -216,7 +214,8 @@ button:hover {
 
 .buttons-vertical-close{
     display: flex; 
-    justify-content: baseline;
+    /* justify-content: baseline; */
+    align-items: baseline;
     margin-top: 2rem;
     flex-direction: column;
     gap: 1rem;
@@ -247,4 +246,96 @@ button:hover {
 .tenure-form{
   display: flex; 
   justify-content: flex-end;
+}
+.settings-container{
+  display: flex; 
+  width: 80%; 
+}
+
+
+.title1{
+  grid-column: 1;
+  grid-row: 1/5;
+}
+.title2{
+  grid-column: 2;
+  grid-row: 1/5;
+}
+.column1{
+  display: flex; 
+  flex-direction: column;
+  padding-top: 2rem;
+  grid-column: 1;
+  grid-row: 2/5;
+
+}
+.column2{
+  display: flex; 
+  flex-direction: column;
+  padding-top: 2rem;
+  grid-column: 2;
+  grid-row: 2/5;
+
+}
+.update-forms1{
+  display: flex; 
+  flex-direction: column;
+  padding-top: 2rem;
+  grid-column: 2;
+  grid-row: 2/5;
+}
+
+.input-for-update{
+  width: 6rem;
+  margin: 1rem;
+  
+}
+
+.input-for-new{
+  display: flex;
+  margin: auto;
+  width:6rem;
+  
+}
+
+.update-pto-form{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  row-gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+} 
+
+
+.new-pto-form{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  row-gap: 2rem;
+  padding: 2rem;
+  justify-content: center;
+  text-align: center;
+} 
+
+
+.onSubmit{
+  padding-top: 2rem;
+  grid-column: 1/2;
+  justify-content: center;
+}
+
+.button-container-post{
+  display: flex; 
+  margin: auto; 
+  justify-content: flex-end;
+  align-items: center;
+  height: 4rem;
+  width: 70%;;
 }

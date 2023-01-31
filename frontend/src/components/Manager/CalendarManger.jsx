@@ -27,7 +27,6 @@ export default function CalendarManager({
   const [personName, setPersonName] = useState("");
   const [hours, setHours] = useState(0);
   const [userId, setUserId] = useState();
-
   const handleOpen = () => setOpen(true);
 
   const handleEventClick = (clickInfo) => {
@@ -90,10 +89,7 @@ export default function CalendarManager({
     getEventsObjects();
   }, [requests]);
 
-  // function handleDateSelect(selectInfo) {
-  //   let title = prompt('Please enter a new title for your event')
-  //   let calendarApi = selectInfo.view.calendar
-  // }
+
 
   return (
     <div className="demo-app">
@@ -114,6 +110,9 @@ export default function CalendarManager({
         setDecision={setDecision}
         userId={userId}
         defaultMessage={defaultMessage}
+
+
+
       />
 
       <div className="demo-app-main">

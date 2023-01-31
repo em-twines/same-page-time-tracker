@@ -32,7 +32,8 @@ export default function MUI({
   setDecision,
   userId,
   defaultMessage,
-  message
+  message,
+
 
 }) {
   const [user, token] = useAuth();
@@ -43,11 +44,11 @@ export default function MUI({
   const [recipient, setRecipient] = useState();
   const [sender, setSender] = useState();
 
-
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
     setSender(user.id)
+
     // setRecipient(userId)
   }, [])
   
@@ -119,21 +120,16 @@ export default function MUI({
       decision: true,
     };
     RespondToRequest(newDecision);
-    // setClicked(true);
-
+   
     let newMessage ={
       sender: sender,
       recipient: userId,
       message_text: defaultMessage,
       is_read: false
-    }
+    } 
     sendMessage(newMessage);
     console.log('newMessage', newMessage)
-    //!recipient is undefined in both instances -- check if this is still true
 
-
-    // console.log('user.id, userId', user.id, userId)
-    console.log('user.id, recipient', sender, recipient)
     handleClose();
     toast(`You approved ${personName}'s request for PTO!`);
 
@@ -152,6 +148,7 @@ export default function MUI({
     console.log('newDecision', newDecision)
     RespondToRequest(newDecision);
     setClicked(true);
+
   }
 
   function handleSubmit() {
@@ -187,16 +184,11 @@ export default function MUI({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Message: {message}
           </Typography>
-           {clicked ? (
+           
+       {
+       clicked ? (
             <div>
-              {decision ? (
-                <div></div>
-                // <form onSubmit={handleSubmit}>
-                //   <lable>Send a Response</lable>
-                //   <textarea type="text" defaultValue={defaultMessage}></textarea>
-                //   <Button type = 'submit' variant = 'contained'>Submit</Button>
-                // </form>
-              ) : (
+             
                 <form onSubmit={handleSubmit}>
                   <label>Message:</label>
                   <textarea
@@ -208,10 +200,12 @@ export default function MUI({
                   ></textarea>
                   <Button type = 'submit' variant = 'contained'>Submit</Button>
                 </form>
-              )}
+              
             </div>
           ) : (
-            <div>
+            
+            
+            <div> 
           <Button
             variant="contained"
             onClick={() => {
@@ -230,7 +224,11 @@ export default function MUI({
             Deny
           </Button>
          </div>
-          )}
+
+   
+     )}
+
+
         </Box>
       </Modal>
     </div>

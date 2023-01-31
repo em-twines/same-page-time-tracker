@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -46,6 +46,13 @@ export default function MuiEmployee({
   const [day, setDay] = useState();
   const [hours_requested, setHoursRequested] = useState();
 
+
+  useEffect(() => {
+    getRequests();
+
+  }, [])
+  
+
   async function deleteRequest() {
     try {
       let res = await axios.delete(
@@ -68,7 +75,7 @@ export default function MuiEmployee({
   function handleSubmit(event) {
     event.preventDefault();
     let editedRequest = {
-      request_text: request_text,
+      request_text: message,
       day: day,
       hours_requested: hours_requested,
       decision: false,
@@ -92,6 +99,7 @@ export default function MuiEmployee({
           },
         }
       );
+      console.log(res.data)
       getRequests();
     } catch (error) {
       console.log(error, editedRequest);

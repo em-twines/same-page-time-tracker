@@ -140,7 +140,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
       return el.hours;
     });
     while (employee.tenure > Math.floor(freq[i] / 365)) {
-      console.log("while");
+
       if (Math.floor(freq[i]) / 365 <= employee.tenure) {
         console.log(i);
         i++;

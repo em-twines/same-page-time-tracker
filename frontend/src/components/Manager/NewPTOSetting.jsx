@@ -11,31 +11,28 @@ export default function NewPTOSetting({}) {
   const [hours, setHours] = useState();
   const [frequency, setFrequency] = useState();
 
-  
-
-    async function getAllEmployeesCheckPTO() {
-      try {
-        let res = await axios.get(
-          `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-  
-       } catch (error) {
-        console.log(error);
-        toast("Sorry! We have encountered an error getting all the requests!");
-      }
+  async function getAllEmployeesCheckPTO() {
+    try {
+      let res = await axios.get(
+        `http://127.0.0.1:8000/api/requests_for_pto/manager/staff/`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      toast("Sorry! We have encountered an error getting all the requests!");
     }
+  }
 
-async function postAPtoFrequency(frequency) {
+  async function postAPtoFrequency(frequency) {
     try {
       let res = await axios.post(
         `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/frequencies/
           `,
-          frequency,
+        frequency,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -44,7 +41,7 @@ async function postAPtoFrequency(frequency) {
       );
 
       setPtoFrequencyPerYear(res.data);
-      getAllEmployeesCheckPTO()
+      getAllEmployeesCheckPTO();
     } catch (error) {
       console.log(error);
       toast(
@@ -54,12 +51,11 @@ async function postAPtoFrequency(frequency) {
   }
 
   async function postAPtoHourRate(hours) {
-
     try {
       let res = await axios.post(
         `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/hours/
           `,
-          hours,
+        hours,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -71,14 +67,12 @@ async function postAPtoFrequency(frequency) {
       getAllEmployeesCheckPTO();
     } catch (error) {
       console.log(error);
-      toast(
-        "Sorry! We have encountered an error posting your pto frequency!"
-      );
+      toast("Sorry! We have encountered an error posting your pto frequency!");
     }
   }
 
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     let newPTOFrequency = {
       frequency: parseInt(frequency),
     };
@@ -91,25 +85,40 @@ async function postAPtoFrequency(frequency) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>Set New Yearly Allowance (hrs):</label>
-        <input
-          type="number"
-          onChange={(event) => setHours(event.target.value)}
-          required
-          // value={response }
-        ></input>
-        <label>Set New Tenure Tier (yrs):</label>
-        <input
-          type="number"
-          onChange={(event) => setFrequency(event.target.value)}
-          required
-          // value={response }
-        ></input>
-        <Button type="submit" variant="contained">
-          Submit
-        </Button>
+      <form onSubmit={handleSubmit} id="post-pto" className="new-pto-form">
+        <div>
+          <label>Set New Yearly Allowance (hrs):</label>
+          <hr></hr>
+          <br></br>
+          <input
+            type="number"
+            onChange={(event) => setHours(event.target.value)}
+            required
+            // value={response }
+          ></input>
+        </div>
+        <div>
+          <label>Set New Tenure Tier (days):</label>
+          <hr></hr>
+          <br></br>
+
+          <input
+            type="number"
+            onChange={(event) => setFrequency(event.target.value)}
+            required
+            // value={response }
+          ></input>
+        </div>
       </form>
-    </div>
+      <div className = 'button-container-post'>
+      <Button
+        form="post-pto"
+        className="post-button"
+        type="submit"
+        variant="contained"
+      >
+        Submit
+      </Button>
+    </div></div>
   );
 }
