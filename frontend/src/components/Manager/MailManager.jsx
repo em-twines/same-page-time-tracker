@@ -66,10 +66,10 @@ export default function MailManager({
           //   });
         })}
       </Box>{" "}
-      <MessageManager
+      {/* <MessageManager
         defaultMessage={defaultMessage}
         setDefaultMesssage={setDefaultMesssage}
-      />
+      /> */}
     </div>
   );
 }

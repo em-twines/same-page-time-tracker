@@ -113,8 +113,6 @@ export default function CalendarEmployee({
         message={message}
         date={date}
       />
-      <div className="title">Welcome {user.username}!</div>
-
       <div className="demo-app-main">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

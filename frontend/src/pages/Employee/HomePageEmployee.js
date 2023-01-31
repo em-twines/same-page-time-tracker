@@ -198,6 +198,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   return (
     <div className="container">
       {/* <ToastContainer /> */}
+      <div className="title">Welcome {user.username}!</div>
 
       
       <div className="calendar-and-form-container">

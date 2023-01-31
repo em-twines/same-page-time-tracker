@@ -174,7 +174,7 @@ export default function RequestForm({
                 <button className = 'same-page-button-green' type="submit">Submit Request</button>
               </form>
 
-              <button className = 'same-page-button' onClick={handleClose}>Close</button>
+              {/* <button className = 'same-page-button' onClick={handleClose}>Close</button> */}
             </Box>
           </Modal>
         </div>

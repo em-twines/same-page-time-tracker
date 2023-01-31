@@ -76,6 +76,7 @@ export default function HomePageManager({ decision, setDecision }) {
     <div >
       <div className="container">
         {/* <ToastContainer /> */}
+        <div className="title">Welcome {user.username}!</div>
 
         <div className="calendar-and-form-container">
           {requests.length > 0 ? (
