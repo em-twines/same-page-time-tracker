@@ -1,12 +1,13 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
-import React, { useState} from 'react';
+import React, { useState } from "react";
 import useAuth from "./hooks/useAuth";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+
 
 // Pages Imports
 import HomePageEmployee from "./pages/Employee/HomePageEmployee";
@@ -24,29 +25,24 @@ import Footer from "./components/Footer/Footer";
 import PrivateRoute from "./utils/PrivateRoute";
 import axios from "axios";
 
-
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import './media/PTSans-BoldItalic.ttf';
-import './media/PTSans-Regular.ttf';
-
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import "./media/PTSans-BoldItalic.ttf";
+import "./media/PTSans-Regular.ttf";
+import AddEmployeePage from "./pages/Manager/AddEmployeePage";
 
 function App() {
-
-
-const [user, token] = useAuth();
-const [decision, setDecision] = useState();
-const navigate = useNavigate();
-
-
-
+  const [user, token] = useAuth();
+  const [decision, setDecision] = useState();
+  const navigate = useNavigate();
 
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
+
       <ToastContainer
         autoClose={2500}
         newestOnTop
@@ -54,41 +50,53 @@ const navigate = useNavigate();
         rtl={false}
         pauseOnFocusLoss
         draggable
-        theme="dark"/>
+        theme="dark"
+      />
 
-      <Routes >
+      <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-       
+
         <Route
           path="/manager"
           element={
             <PrivateRoute>
-              <HomePageManager decision = {decision} setDecision = {setDecision}/>
-            </PrivateRoute>} 
-        />         
-         <Route
+              <HomePageManager decision={decision} setDecision={setDecision} />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/manager/manage-staff"
           element={
             <PrivateRoute>
-              <ManageStaff/>
-            </PrivateRoute>} 
-        />         
-         <Route
+              <ManageStaff />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/manager/add-employee"
+          element={
+            <PrivateRoute>
+              <AddEmployeePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/manager/settings"
           element={
             <PrivateRoute>
-              <SettingsPage/>
-            </PrivateRoute>} 
-        />         
+              <SettingsPage />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/employee"
           element={
             <PrivateRoute>
-              <HomePageEmployee decision = {decision} setDecision = {setDecision}/>
-            </PrivateRoute> } 
-          />  
-        
+              <HomePageEmployee decision={decision} setDecision={setDecision} />
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <Footer />
     </div>

@@ -54,11 +54,11 @@ export default function ManageStaff() {
           />
         ) : null}
       </div>
-      <div className="buttons-table">
+      {/* <div className="buttons-table">
         <div className="buttons-vertical-close">
         </div>
         <AddStaff getAllEmployees={getAllEmployees}/>
-      </div>
+      </div> */}
     </div>
   );
 }

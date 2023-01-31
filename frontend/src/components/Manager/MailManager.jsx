@@ -43,7 +43,8 @@ export default function MailManager({
           height: 400,
           overflowY: "scroll",
         }}
-      >
+      
+      >  Inbox
         {pendingRequests?.map((el) => {
           //   return el.map((element) => {
           return (

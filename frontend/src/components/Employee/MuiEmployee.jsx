@@ -152,11 +152,11 @@ export default function MuiEmployee({
                 value={hours_requested}
               ></input>
               <div className="align-buttons-horizontal">
-                <Button variant="contained" type="submit" size="small">
+                <button className = 'same-page-button-green' type="submit" size="small">
                   Submit Edits
-                </Button>
-                <Button
-                  variant="contained"
+                </button>
+                <button
+                  className = 'same-page-button-mauve'
                   size="small"
                   color="error"
                   onClick={() => {
@@ -166,7 +166,7 @@ export default function MuiEmployee({
                 >
                   Delete
                   {/* !! TODO: add 'are you sure popover' !*/}
-                </Button>
+                </button>
               </div>
             </form>
           </Typography>

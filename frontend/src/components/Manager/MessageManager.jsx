@@ -65,7 +65,7 @@ export default function MessageManager({ defaultMessage, setDefaultMessage }) {
                   onChange={(event) => setText(event.target.value)} value = {text}
                 ></textarea>
            
-              <Button
+              <button className = 'same-page-button'
                 type="submit"
                 variant="contained"
                 onClick={() => {
@@ -73,7 +73,7 @@ export default function MessageManager({ defaultMessage, setDefaultMessage }) {
                 }}
               >
                 Set Message
-              </Button> 
+              </button> 
               
                 </form>
             </Box>

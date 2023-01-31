@@ -121,9 +121,9 @@ export default function AdjustTenure({ getAllEmployees, users }) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
+      <button className = 'same-page-button' onClick={handleOpen}>
         Adjust Staff Tenure
-      </Button>
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -173,13 +173,13 @@ export default function AdjustTenure({ getAllEmployees, users }) {
             </tbody>
           </table>
 
-          <Button variant="contained" form="submit-int" type="submit">
+          <button  className = 'same-page-button-green' form="submit-int" type="submit">
             Submit
-          </Button>
+          </button>
 
-          <Button variant="contained" onClick={handleClose}>
+          <button className = 'same-page-button'  onClick={handleClose}>
             Close
-          </Button>
+          </button>
         </Box>
       </Modal>
     </div>

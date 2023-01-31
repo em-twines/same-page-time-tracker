@@ -41,7 +41,7 @@ export default function Mail() {
             overflowY: "scroll",
 
           }}
-        >
+        >Inbox
           {mail?.map((el) => {
             return (
               <Box

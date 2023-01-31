@@ -82,9 +82,9 @@ function handleChange(e, employee, index){
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
+      <button className = 'same-page-button' onClick={handleOpen}>
         Adjust Staff Tenure
-      </Button>
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -138,9 +138,9 @@ function handleChange(e, employee, index){
             Submit
           </Button> */}
 
-          <Button variant="contained" onClick={handleClose}>
+          <button className = 'same-page-button' onClick={handleClose}>
             Close
-          </Button>
+          </button>
         </Box>
       </Modal>
     </div>

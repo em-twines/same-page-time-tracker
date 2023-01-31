@@ -33,25 +33,22 @@ export default function MUI({
   userId,
   defaultMessage,
   message,
-
-
 }) {
   const [user, token] = useAuth();
   const [pto, setPTO] = useState();
   const [clicked, setClicked] = useState(false);
-  const [response, setResponse] = useState('Your request has been denied.');
-  const [message_text, setMessage] = useState('');
+  const [response, setResponse] = useState("Your request has been denied.");
+  const [message_text, setMessage] = useState("");
   const [recipient, setRecipient] = useState();
   const [sender, setSender] = useState();
 
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    setSender(user.id)
+    setSender(user.id);
 
     // setRecipient(userId)
-  }, [])
-  
+  }, []);
 
   async function RespondToRequest(newDecision) {
     try {
@@ -90,9 +87,8 @@ export default function MUI({
     }
   }
 
-
   async function sendMessage(newMessage) {
-    console.log('newMessage in async' , newMessage)
+    console.log("newMessage in async", newMessage);
     try {
       let res = await axios.post(
         `http://127.0.0.1:8000/api/message/`,
@@ -102,8 +98,8 @@ export default function MUI({
             Authorization: "Bearer " + token,
           },
         }
-      );      
-      console.log('res.data' ,res.data)
+      );
+      console.log("res.data", res.data);
 
       setMessage(res.data);
     } catch (error) {
@@ -112,27 +108,24 @@ export default function MUI({
     }
   }
 
-
-
   function approvePTO() {
     setDecision(true);
     let newDecision = {
       decision: true,
     };
     RespondToRequest(newDecision);
-   
-    let newMessage ={
+
+    let newMessage = {
       sender: sender,
       recipient: userId,
       message_text: defaultMessage,
-      is_read: false
-    } 
+      is_read: false,
+    };
     sendMessage(newMessage);
-    console.log('newMessage', newMessage)
+    console.log("newMessage", newMessage);
 
     handleClose();
     toast(`You approved ${personName}'s request for PTO!`);
-
   }
 
   function denyPTO() {
@@ -145,19 +138,18 @@ export default function MUI({
     let newDecision = {
       decision: false,
     };
-    console.log('newDecision', newDecision)
+    console.log("newDecision", newDecision);
     RespondToRequest(newDecision);
     setClicked(true);
-
   }
 
   function handleSubmit() {
-    let newMessage ={
+    let newMessage = {
       sender: sender,
       recipient: userId,
       message_text: response,
-      is_read: false
-    }
+      is_read: false,
+    };
     sendMessage(newMessage);
 
     if (decision === false) {
@@ -184,51 +176,45 @@ export default function MUI({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Message: {message}
           </Typography>
-           
-       {
-       clicked ? (
+
+          {clicked ? (
             <div>
-             
-                <form onSubmit={handleSubmit}>
-                  <label>Message:</label>
-                  <textarea
-                    type="text"
-                    defaultValue={response}
-                    onChange={(event) => setResponse(event.target.value)}
-                    required
-                    value={response }
-                  ></textarea>
-                  <Button type = 'submit' variant = 'contained'>Submit</Button>
-                </form>
-              
+              <form onSubmit={handleSubmit}>
+                <label>Message:</label>
+                <textarea
+                  type="text"
+                  defaultValue={response}
+                  onChange={(event) => setResponse(event.target.value)}
+                  required
+                  value={response}
+                ></textarea>
+                <button className="same-page-button-green" type="submit">
+                  Submit
+                </button>
+              </form>
             </div>
           ) : (
-            
-            
-            <div> 
-          <Button
-            variant="contained"
-            onClick={() => {
-              approvePTO();
-            }}
-          >
-            Approve
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              denyPTO();
-            }}
-          >
-            Deny
-          </Button>
-         </div>
-
-   
-     )}
-
-
+            <div>
+              <button
+                className="same-page-button-green"
+                variant="contained"
+                onClick={() => {
+                  approvePTO();
+                }}
+              >
+                Approve
+              </button>
+              <button
+                className="same-page-button-mauve"
+                color="error"
+                onClick={() => {
+                  denyPTO();
+                }}
+              >
+                Deny
+              </button>
+            </div>
+          )}
         </Box>
       </Modal>
     </div>

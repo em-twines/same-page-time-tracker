@@ -440,7 +440,7 @@ export default function EnhancedTable({
     <div >
       <div className="flex-for-table">
         <Box sx={{ width: "85" }}>
-          <Paper  elevation={3} sx={{ width: "80", mb: 2 ,height: 500,
+          <Paper  elevation={3} sx={{ width: "80", mb: 2 ,height: 550,
             overflowY: "scroll"}}>
             <EnhancedTableToolbar numSelected={selected.length} />
             <TableContainer>

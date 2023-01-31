@@ -99,7 +99,7 @@ const style = {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>Add Managers</Button>
+      <button className = 'same-page-button' onClick={handleOpen}>Add Managers</button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -128,7 +128,7 @@ const style = {
               </Typography>
             );
           })}        
-          <Button onClick={handleClose}>Close</Button>
+          <button className = 'same-page-button' onClick={handleClose}>Close</button>
 
         </Box>
       </Modal>

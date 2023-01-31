@@ -25,10 +25,13 @@
     #85DCB = blue
     #E27D60 = orange
   
- 
- 
+
  */
 
+
+.body{
+  height: 100vh;
+}
 
 .same-page-button{
   margin: 1rem;
@@ -446,4 +449,28 @@ button:hover {
   align-items: center;
   height: 4rem;
   width: 50%;;
+}
+
+
+
+.grid-for-app{
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+} 
+
+.sidebar{
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.content{
+  grid-column: 2/4;
+  grid-row: 1;
 }

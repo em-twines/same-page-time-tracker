@@ -33,6 +33,7 @@ const Navbar = () => {
             <ul>
               
               <button className = 'nav-button' onClick={() => navigate("/manager/manage-staff")}>Manage Staff</button>
+              <button className = 'nav-button' onClick={() => navigate("/manager/add-employee")}>Add Employee</button>
               <button className = 'nav-button' onClick={() => navigate("/manager/settings")}>Settings</button>
               <button className = 'nav-button' onClick={logoutUser}>Logout</button>
             </ul>):(

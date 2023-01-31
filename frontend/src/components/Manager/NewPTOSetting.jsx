@@ -111,14 +111,14 @@ export default function NewPTOSetting({}) {
         </div>
       </form>
       <div className = 'button-container-post'>
-      <Button
+      <button
         form="post-pto"
-        className="post-button"
+        className="post-button same-page-button"
         type="submit"
         variant="contained"
       >
         Submit
-      </Button>
+      </button>
     </div></div>
   );
 }
