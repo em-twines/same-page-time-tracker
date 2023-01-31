@@ -362,6 +362,7 @@ export default function EnhancedTable({
           Object.values(el.last_name),
           Object.values(el.username),
           Object.values(el.email),
+      
           <ToggleSwitch toggle={toggle} setToggle={handleToggle} element={el} />,
           // Object.values(el.is_manager.toString()),
           <TableTenure el = {el} getAllEmployees={getAllEmployees}/>,

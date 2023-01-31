@@ -56,7 +56,7 @@ const navigate = useNavigate();
         draggable
         theme="dark"/>
 
-      <Routes>
+      <Routes >
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
        

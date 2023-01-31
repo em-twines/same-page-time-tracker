@@ -57,11 +57,7 @@ export default function RequestForm({
   function handleSubmit(event) {
     event.preventDefault();
     let newRequest = {
-      request_text: request_text,
-      day: day,
       hours_requested: hours_requested,
-      decision: false,
-      is_pending: true,
     };
     console.log(newRequest.hours_requested, employee.pto);
     if (newRequest.hours_requested <= employee.pto) {
@@ -105,9 +101,9 @@ export default function RequestForm({
     <div className="form-container ">
       <div>
         <div>
-          <Button variant="contained" onClick={handleOpen}>
+          <button className = 'same-page-button'  onClick={handleOpen}>
             Purchase PTO        
-          </Button>
+          </button>
           <Modal
             open={open}
             onClose={handleClose}
@@ -135,7 +131,7 @@ export default function RequestForm({
                 <button type="submit">Submit Request</button>
               </form>
 
-              <Button onClick={handleClose}>Close</Button>
+              <button className = 'same-page-button' onClick={handleClose}>Close</button>
             </Box>
           </Modal>
         </div>

@@ -1,16 +1,19 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Switch from "react-switch";
-import "react-toggle/style.css" 
-
 
 export default function ToggleSwitch({toggle, setToggle, element}) {
 
     const [checked, setChecked] = useState(toggle)
 
-  return (
-    <div>
-    <label>
-        <Switch checked={element.is_manager} onChange={(event)=>setToggle(event,element)}/>
+    // onTintColor= '#41B3A3' tintColor='#41B3A3'
+
+    return (
+    <div >
+    <label >
+        <Switch     
+        onColor = '#41B3A3'
+        offColor = '#C38D9E'
+           checked={element.is_manager} onChange={(event)=>setToggle(event,element)}/>
       </label>
     </div>
   )

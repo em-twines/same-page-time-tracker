@@ -80,6 +80,8 @@ export default function AddManagers({getAllEmployees, users, toggle, setToggle})
     }
   }
 
+
+
   
 const style = {
   position: "absolute",
@@ -121,7 +123,7 @@ const style = {
               >
                 {" "}
                 {`${el.first_name} `} {el.last_name} <br></br>Make Manager
-                <ToggleSwitch toggle={toggle} setToggle={handleToggle} element={el} />
+                <ToggleSwitch  toggle={toggle} setToggle={handleToggle} element={el} />
 
               </Typography>
             );
