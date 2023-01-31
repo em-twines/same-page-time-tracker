@@ -24,7 +24,7 @@ export default function TableTenure({ getAllEmployees, users, el }) {
       );
     } catch (error) {
       console.log(error);
-      toast("Sorry! We have encountered an error making your requests!");
+      // toast("Sorry! We have encountered an error making your requests!");
     }
 
     getAllEmployees();

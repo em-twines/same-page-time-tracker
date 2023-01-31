@@ -102,11 +102,9 @@ const HomePageEmployee = ({ decision, setDecision }) => {
   function CalculateTenure() {
     let today = moment().format("YYYY-MM-DD").toString();
     today = new Date(today).toISOString().split("T")[0];
-    console.log("today", today);
 
     let joined = user.date_joined.toString().slice(0, 10);
     joined = new Date(joined).toISOString().split("T")[0];
-    console.log("joined", joined);
 
     today = Date.parse(today);
     joined = Date.parse(joined);
@@ -119,7 +117,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
       let newTenure = {
         tenure: parseInt(employee.tenure) + 1,
       };
-      console.log(employee.tenure);
+
       UpdateTenureEmployee(newTenure);
       if (employee.state == !"CA") {
         PatchPTO(CalculatePTO());
@@ -140,7 +138,6 @@ const HomePageEmployee = ({ decision, setDecision }) => {
       return el.hours;
     });
     while (employee.tenure > Math.floor(freq[i] / 365)) {
-
       if (Math.floor(freq[i]) / 365 <= employee.tenure) {
         console.log(i);
         i++;
@@ -200,7 +197,6 @@ const HomePageEmployee = ({ decision, setDecision }) => {
       {/* <ToastContainer /> */}
       <div className="title">Welcome {user.username}!</div>
 
-      
       <div className="calendar-and-form-container">
         <div className="vertical-flex">
           {/* <PTO getUserInfo = {getUserInfo} employee = {employee}/> */}

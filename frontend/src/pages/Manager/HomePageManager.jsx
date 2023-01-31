@@ -8,6 +8,8 @@ import { Button } from "@mui/material";
 import MessageManager from "../../components/Manager/MessageManager";
 import MailManager from "../../components/Manager/MailManager";
 import ManageStaff from "./ManageStaff.jsx";
+import CalendarManagerVoid from "../../components/Manager/CalendarManagerVoid";
+import MailManagerVoid from "../../components/Manager/MailManagerVoid";
 
 export default function HomePageManager({ decision, setDecision }) {
   const [user, token] = useAuth();
@@ -73,7 +75,7 @@ export default function HomePageManager({ decision, setDecision }) {
   }, [decision]);
 
   return (
-    <div >
+    <div>
       <div className="container">
         {/* <ToastContainer /> */}
         <div className="title">Welcome {user.username}!</div>
@@ -94,10 +96,21 @@ export default function HomePageManager({ decision, setDecision }) {
                 decision={decision}
                 setDecision={setDecision}
                 defaultMessage={defaultMessage}
-                user = {user}
+                user={user}
               />
             </>
-          ) : null}
+          ) : (
+            <div className="calendar-and-form-container">
+              <MailManagerVoid
+                
+                defaultMessage={defaultMessage}
+                setDefaultMesssage={setDefaultMesssage}
+              />
+              <CalendarManagerVoid
+               
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -53,7 +53,7 @@ export default function AdjustTenure({ getAllEmployees, users }) {
 
     } catch (error) {
       console.log(error);
-      toast("Sorry! We have encountered an error making your requests!");
+      // toast("Sorry! We have encountered an error making your requests!");
     }
     
     getAllEmployees();
