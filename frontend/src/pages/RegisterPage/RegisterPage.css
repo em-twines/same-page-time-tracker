@@ -1,0 +1,24 @@
+.container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+  }
+  .form-container{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    max-width: 20rem;
+  }
+  
+  .item{
+    padding: 1rem;
+  }
+  .item-input{
+    display: flex;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    max-width: 4rem;
+    text-align: center;
+  }

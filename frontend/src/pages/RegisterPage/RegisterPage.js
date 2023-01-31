@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
+import './RegisterPage.css'
 
 const RegisterPage = () => {
   const { registerUser } = useContext(AuthContext);
@@ -10,6 +11,7 @@ const RegisterPage = () => {
     password: "",
     firstName: "",
     lastName: "",
+    state: "",
   };
   const [formData, handleInputChange, handleSubmit] = useCustomForm(
     defaultValues,
@@ -18,8 +20,8 @@ const RegisterPage = () => {
 
   return (
     <div className="container">
-      <form className="form" onSubmit={handleSubmit}>
-        <label>
+      <form className="form-container" onSubmit={handleSubmit}>
+        <label className = 'item'>
           Username:{" "}
           <input
             type="text"
@@ -28,7 +30,7 @@ const RegisterPage = () => {
             onChange={handleInputChange}
           />
         </label>
-        <label>
+        <label className = 'item'>
           First Name:{" "}
           <input
             type="text"
@@ -37,7 +39,7 @@ const RegisterPage = () => {
             onChange={handleInputChange}
           />
         </label>
-        <label>
+        <label className = 'item'>
           Last Name:{" "}
           <input
             type="text"
@@ -46,16 +48,25 @@ const RegisterPage = () => {
             onChange={handleInputChange}
           />
         </label>
-        <label>
-          Email:{" "}
+        <label className = 'item'>
+          State:{" "}
           <input
+            type="text"
+            name="state"
+            value={formData.state}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label className = 'item'>
+          Email:{" "}
+          <input 
             type="text"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
           />
         </label>
-        <label>
+        <label className = 'item'>
           Password:{" "}
           <input
             type="text"
