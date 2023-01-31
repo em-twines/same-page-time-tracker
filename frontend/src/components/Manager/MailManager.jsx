@@ -3,8 +3,13 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
+import MessageManager from "./MessageManager";
 
-export default function MailManager({ requests }) {
+export default function MailManager({
+  requests,
+  defaultMessage,
+  setDefaultMesssage,
+}) {
   const [mail, setMail] = useState([]);
   const [user, token] = useAuth();
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -40,26 +45,30 @@ export default function MailManager({ requests }) {
         }}
       >
         {pendingRequests?.map((el) => {
-        //   return el.map((element) => {
-            return (
-              <Box
-                sx={{
-                  bgcolor: "background.paper",
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  margin: 2,
-                }}
-                key = {el.id}
-              >
-                {" "}
-                {el.request_text}
-              </Box>
-            );
-        //   });
+          //   return el.map((element) => {
+          return (
+            <Box
+              sx={{
+                bgcolor: "background.paper",
+                boxShadow: 1,
+                borderRadius: 2,
+                p: 2,
+                minWidth: 300,
+                margin: 2,
+              }}
+              key={el.id}
+            >
+              {" "}
+              {el.request_text}
+            </Box>
+          );
+          //   });
         })}
-      </Box>
+      </Box>{" "}
+      <MessageManager
+        defaultMessage={defaultMessage}
+        setDefaultMesssage={setDefaultMesssage}
+      />
     </div>
   );
 }

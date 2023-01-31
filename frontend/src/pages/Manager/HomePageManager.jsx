@@ -19,7 +19,6 @@ export default function HomePageManager({ decision, setDecision }) {
   const [managers, setManagers] = useState([]);
   const [toggle, setToggle] = useState([]);
 
-
   const [defaultMessage, setDefaultMesssage] = useState(
     "Your PTO request has been approved!"
   );
@@ -47,7 +46,6 @@ export default function HomePageManager({ decision, setDecision }) {
     }
   }
 
-
   async function getAllRequests() {
     try {
       let res = await axios.get(
@@ -65,9 +63,6 @@ export default function HomePageManager({ decision, setDecision }) {
     }
   }
 
-
-
-  
   function handleSubmit(event) {
     getAllRequests();
   }
@@ -78,56 +73,32 @@ export default function HomePageManager({ decision, setDecision }) {
   }, [decision]);
 
   return (
-    <div className="container">
-      {/* <ToastContainer /> */}
+    <div >
+      <div className="container">
+        {/* <ToastContainer /> */}
 
-      <div className="title">Home Page for {user.username}!</div>
-      <div className="calendar-and-form-container">
-        <div className="button-containter-manager">
-        {/* {users.length > 0 ? (
-        <ManageStaffList users = {users} setUsers = {setUsers} getAllEmployees = {getAllEmployees}/>) : null}
-          <AddManagers
-            getAllEmployees={getAllEmployees}
-            users={users}
-            toggle={toggle}
-            setToggle={setToggle}
-          />
-          <AdjustTenure getAllEmployees={getAllEmployees} users={users} />
-          <div className="calendar-and-button-container"> */}
-          <Button variant = 'contained' onClick={() => navigate("/manager/manage-staff")}>Manage Staff</Button>
-          <Button variant = 'contained' onClick={() => navigate("/manager/settings")}>PTO Settings</Button>
-
-
-
-          <MessageManager
-            defaultMessage={defaultMessage}
-            setDefaultMessage={setDefaultMesssage}
-          />
-          {/* <ManageStaff/> */}
+        <div className="calendar-and-form-container">
+          {requests.length > 0 ? (
+            <>
+              <MailManager
+                requests={requests}
+                defaultMessage={defaultMessage}
+                setDefaultMesssage={setDefaultMesssage}
+              />
+              <CalendarManager
+                requests={requests}
+                getAllRequests={getAllRequests}
+                eventsDefined={eventsDefined}
+                setEvents={setEvents}
+                decision={decision}
+                setDecision={setDecision}
+                defaultMessage={defaultMessage}
+                user = {user}
+              />
+            </>
+          ) : null}
         </div>
-
-        {requests.length > 0 ? (
-          <>
-            <MailManager requests={requests} />
-            <CalendarManager
-              requests={requests}
-              getAllRequests={getAllRequests}
-              eventsDefined={eventsDefined}
-              setEvents={setEvents}
-              decision={decision}
-              setDecision={setDecision}
-              defaultMessage={defaultMessage}
-            />
-          </>
-        ) : null}
-        {/* <Button
-            variant="contained"
-            onClick={() => navigate("/manager/manage-staff")}
-          >
-            Manage Staff
-          </Button> */}
       </div>
     </div>
-    // </div>
   );
 }

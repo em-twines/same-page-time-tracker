@@ -17,6 +17,7 @@ export default function CalendarManager({
   decision,
   setDecision,
   defaultMessage,
+  user,
 }) {
   // const[weekendsVisible, setWeekendsVisible] = useState(true);
   // const [eventsDefined, setEvents] = useState();
@@ -47,22 +48,22 @@ export default function CalendarManager({
         //if denied
         if (el.request_for_pto.decision === false) {
           if (today > el.request_for_pto.day) {
-            eventColor = "#e0384650";
+            eventColor = "#C38D9E50";
           } else {
-            eventColor = "#e0384698";
+            eventColor = "#C38D9E98";
           }
         } else if (el.request_for_pto.decision === true) {
           if (today > el.request_for_pto.day) {
-            eventColor = "#52ab6250";
+            eventColor = "#41B3A350";
           } else {
-            eventColor = "#52ab6298"
+            eventColor = "#41B3A398"
           }
         }
       } else {
         if (today > el.request_for_pto.day) {
-          eventColor = "#383be090";
+          eventColor = "#85DCB90";
         } else {
-          eventColor = "#383be0";
+          eventColor = "#85DCB";
         }
       }
 
@@ -114,6 +115,7 @@ export default function CalendarManager({
 
 
       />
+      <div className="title">Home Page for {user.username}!</div>
 
       <div className="demo-app-main">
         <FullCalendar

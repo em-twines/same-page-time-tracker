@@ -40,9 +40,9 @@ export default function MessageManager({ defaultMessage, setDefaultMessage }) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
-        Set Default Approval Message
-      </Button>
+      <button className = 'same-page-button' onClick={handleOpen}>
+        Approval Message
+      </button>
       {/* {defaultMessage ==!"Your PTO request has been approved!" ? ( */}
     
         <div>

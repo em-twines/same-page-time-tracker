@@ -1,5 +1,54 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap"); */
 
+@import url('https://fonts.google.com/share?selection.family=PT%20Sans:ital,wght@0,400;1,400;1,700%7CPermanent%20Marker%7CQuicksand:wght@300');
+
+
+@font-face {
+  font-family: "Bold Itlic";   /*Can be any text*/
+  src: local("PTSans-BoldItalic"),
+    url("./media/PTSans-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PTSans";   /*Can be any text*/
+  src: local("PTSans-Regular"),
+    url("./media/PTSans-Regular.ttf") format("truetype");
+}
+
+
+
+
+
+ /* #41B3A3 = dark green
+    #C38D9E = mauve
+    #E8A87C = light orange
+    #85DCB = blue
+    #E27D60 = orange
+  
+ 
+ 
+ */
+
+
+.same-page-button{
+  margin: 1rem;
+  background: #E27D60;
+  border-radius: 20rem;
+  border: 2px solid white;
+  color: white;
+  width: 8rem;
+
+}
+
+.same-page-button-mauve{
+  margin: 1rem;
+  background: #C38D9E;
+  border-radius: 20rem;
+  border: 2px solid white;
+  color: white;
+  width: 8rem;
+
+}
 
 
 *,
@@ -12,7 +61,7 @@
 
 html {
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "PTSans";
 }
 
 p {
@@ -24,7 +73,7 @@ button {
   border: 2px solid steelblue;
   color: steelblue;
   font-size: 1rem;
-  font-family: inherit;
+  font-family: "PTSans";;
   max-width: 100px;
   padding: 0.5rem 0.5rem;
 }
@@ -64,10 +113,11 @@ button:hover {
 .calendar-and-form-container{
   display: flex; 
   justify-content: center;
-  align-items: center;
+  align-items: top;
   gap: 2rem;
   margin: auto;
   width: 100vw;
+  padding-top: 2rem;
 }
 
 .calendar-container{
@@ -90,8 +140,9 @@ button:hover {
 }
 
 .title{
-  font-size: 2rem;
-  padding-bottom: 3rem;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family : "PTSans";
 }
 
 
@@ -287,7 +338,7 @@ button:hover {
 
 .input-for-update{
   width: 6rem;
-  margin: 1rem;
+  margin: .5rem;
   
 }
 
@@ -300,6 +351,8 @@ button:hover {
 
 .update-pto-form{
   display: grid;
+  width: 60%;
+  margin: auto; 
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   justify-items: center;
@@ -307,12 +360,14 @@ button:hover {
   align-items: center;
   row-gap: 2rem;
   justify-content: center;
-  padding: 2rem;
+  padding: rem;
 } 
 
 
 .new-pto-form{
   display: grid;
+  width: 60%;
+  margin: auto; 
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   justify-items: center;
@@ -326,16 +381,17 @@ button:hover {
 
 
 .onSubmit{
-  padding-top: 2rem;
+  padding-top: 0rem;
   grid-column: 1/2;
   justify-content: center;
 }
 
 .button-container-post{
   display: flex; 
-  margin: auto; 
+  margin-left: auto; 
+  margin-right: auto; 
   justify-content: flex-end;
   align-items: center;
   height: 4rem;
-  width: 70%;;
+  width: 50%;;
 }

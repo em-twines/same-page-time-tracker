@@ -28,7 +28,7 @@ export default function Del({ el, getAllEmployees }) {
 
   return (
     <div>
-      <Button onClick={() => deleteEmployee()} variant="contained">Delete</Button>
+      <button className = 'same-page-button-mauve' onClick={() => deleteEmployee()} variant="contained">Delete</button>
     </div>
   );
 }

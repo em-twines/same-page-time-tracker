@@ -11,18 +11,30 @@ const Navbar = () => {
     <div className="navBar">
       <ul>
         <li className="brand">
-          {user?.is_manager?(
-          <Link to="/manager" style={{ textDecoration: "none", color: "white" }}>
-            <b>Same Page Time Tracker</b>
-          </Link>):(  
-          <Link to="/employee" style={{ textDecoration: "none", color: "white" }}>
-            <b>Same Page Time Tracker</b>
-          </Link>
+          {user?.is_manager ? (
+            <Link
+              to="/manager"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <b>Same Page Time Tracker</b>
+            </Link>
+          ) : (
+            <Link
+              to="/employee"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <b>Same Page Time Tracker</b>
+            </Link>
           )}
         </li>
         <li>
           {user ? (
-            <button onClick={logoutUser}>Logout</button>
+            <ul>
+              
+              <button className = 'nav-button' onClick={() => navigate("/manager/manage-staff")}>Manage Staff</button>
+              <button className = 'nav-button' onClick={() => navigate("/manager/settings")}>Settings</button>
+              <button className = 'nav-button' onClick={logoutUser}>Logout</button>
+            </ul>
           ) : (
             <button onClick={() => navigate("/")}>Login</button>
           )}
