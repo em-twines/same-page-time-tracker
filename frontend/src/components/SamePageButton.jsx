@@ -4,7 +4,7 @@ export default function
 
 () {
   return (
-    <button className = 'same-page-button'>
+    <button className = 'same-page-button-fancy'>
 
 
     </button>

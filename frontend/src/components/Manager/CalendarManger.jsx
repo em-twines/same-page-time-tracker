@@ -115,7 +115,7 @@ export default function CalendarManager({
 
 
       />
-      <div className="title">Home Page for {user.username}!</div>
+      <div className="title">Welcome {user.username}!</div>
 
       <div className="demo-app-main">
         <FullCalendar

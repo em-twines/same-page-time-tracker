@@ -199,7 +199,7 @@ const HomePageEmployee = ({ decision, setDecision }) => {
     <div className="container">
       {/* <ToastContainer /> */}
 
-      <div className="title">Home Page for {user.username}!</div>
+      
       <div className="calendar-and-form-container">
         <div className="vertical-flex">
           {/* <PTO getUserInfo = {getUserInfo} employee = {employee}/> */}

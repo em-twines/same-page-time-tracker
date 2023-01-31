@@ -40,6 +40,16 @@
 
 }
 
+.same-page-button-green{
+  margin: 1rem;
+  background: #41B3A3;
+  border-radius: 20rem;
+  border: 2px solid white;
+  color: white;
+  width: 8rem;
+
+}
+
 .same-page-button-mauve{
   margin: 1rem;
   background: #C38D9E;
@@ -110,10 +120,20 @@ button:hover {
   
 }
 
-.calendar-and-form-container{
+.calendar-and-form-container-manager{
   display: flex; 
   justify-content: center;
   align-items: top;
+  gap: 2rem;
+  margin: auto;
+  width: 100vw;
+  padding-top: 2rem;
+}
+
+.calendar-and-form-container{
+  display: flex; 
+  justify-content: center;
+  align-items: center;
   gap: 2rem;
   margin: auto;
   width: 100vw;

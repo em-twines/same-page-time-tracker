@@ -29,6 +29,7 @@ export default function Mail() {
 
   return (
     <div>
+      
         <Box
           sx={{
             bgcolor: "background.paper",

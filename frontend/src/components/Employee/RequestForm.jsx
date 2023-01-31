@@ -125,9 +125,9 @@ export default function RequestForm({
     <div className="form-container ">
       <div>
         <div>
-          <Button variant="contained" onClick={handleOpen}>
+          <button className = 'same-page-button' variant="contained" onClick={handleOpen}>
             Request PTO
-          </Button>
+          </button>
           <Modal
             open={open}
             onClose={handleClose}
@@ -171,10 +171,10 @@ export default function RequestForm({
                   required
                   value={hours_requested}
                 ></input>
-                <button type="submit">Submit Request</button>
+                <button className = 'same-page-button-green' type="submit">Submit Request</button>
               </form>
 
-              <Button onClick={handleClose}>Close</Button>
+              <button className = 'same-page-button' onClick={handleClose}>Close</button>
             </Box>
           </Modal>
         </div>

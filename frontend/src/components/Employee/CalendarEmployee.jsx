@@ -6,6 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import MuiEmployee from "./MuiEmployee";
 import moment from "moment";
+import useAuth from "../../hooks/useAuth";
 
 export default function CalendarEmployee({
   requests_for_pto,
@@ -32,6 +33,7 @@ export default function CalendarEmployee({
   const [eventInQuestion, setEventInQuestion] = useState({});
   const [hours, setHours] = useState(0);
   const [date, setDate] = useState();
+  const [user, token] = useAuth();
 
   const handleEventClick = (clickInfo) => {
     handleOpen();
@@ -111,6 +113,7 @@ export default function CalendarEmployee({
         message={message}
         date={date}
       />
+      <div className="title">Welcome {user.username}!</div>
 
       <div className="demo-app-main">
         <FullCalendar
