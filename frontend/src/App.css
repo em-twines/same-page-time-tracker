@@ -413,9 +413,9 @@ button:hover {
   justify-items: center;
   align-content: center;
   align-items: center;
-  row-gap: 2rem;
+  row-gap: 3rem;
   justify-content: center;
-  padding: rem;
+  padding: 2rem;
 } 
 
 
@@ -429,7 +429,9 @@ button:hover {
   align-content: center;
   align-items: center;
   row-gap: 2rem;
-  padding: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
   justify-content: center;
   text-align: center;
 } 
@@ -473,4 +475,10 @@ button:hover {
 .content{
   grid-column: 2/4;
   grid-row: 1;
+}
+
+.hr-container{
+  display: flex; 
+  margin: auto; 
+  width: 60%;
 }

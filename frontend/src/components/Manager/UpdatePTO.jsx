@@ -136,68 +136,71 @@ export default function UpdatePTO({}) {
   }
 
   return (
-    <div className = 'update-pto-form'>
-      <div classname ='column1'>
-        <h3>Hours</h3>
+    <div>
+      <div className="update-pto-form">
+        <div classname="column1">
+          <h3>Hours</h3>
 
-        {allPtoHoursPerYear.map((el, index) => {
-          return (
-            <div>
-              <form
+          {allPtoHoursPerYear.map((el, index) => {
+            return (
+              <div>
+                <form
 
-              // onSubmit={(event) => {
-              //   handleSubmit1(event, el);
-              // }}
-              >
-                <label>Tier {index + 1} (hrs):</label>
-                <input
-                  className="input-for-update"
-                  type="number"
-                  onChange={(e) => {
-                    handleChange(e, el);
-                  }}
-                  required
-                  value={hours}
-                  defaultValue={el.hours}
-                ></input>
-                {/* <Button type="submit" variant="contained">
+                // onSubmit={(event) => {
+                //   handleSubmit1(event, el);
+                // }}
+                >
+                  <label>Tier {index + 1} (hrs):</label>
+                  <input
+                    className="input-for-update"
+                    type="number"
+                    onChange={(e) => {
+                      handleChange(e, el);
+                    }}
+                    required
+                    value={hours}
+                    defaultValue={el.hours}
+                  ></input>
+                  {/* <Button type="submit" variant="contained">
               Submit
             </Button> */}
-              </form>{" "}
-            </div>
-          );
-        })}
-      </div>
+                </form>{" "}
+              </div>
+            );
+          })}
+        </div>
 
-      <div classname ='column2'>
-        <h3>Years</h3>
-        {allPtoFrequenciesPerYear.map((el, index) => {
-          return (
-            <div>
-              <form
+        <div classname="column2">
+          <h3>Years</h3>
+          {allPtoFrequenciesPerYear.map((el, index) => {
+            return (
+              <div>
+                <form
 
-              // onSubmit={(event) => {
-              //   handleSubmit(event, el);
-              // }}
-              >
-                <label>Tier {index + 1} (days):</label>
-                <input
-                  className="input-for-update"
-                  type="number"
-                  onChange={(event) => {
-                    handleChange1(event, el);
-                  }}
-                  required
-                  value={frequency}
-                  defaultValue={el.frequency}
-                ></input>
-                {/* <Button type="submit" variant="contained">
-              Submit
-            </Button> */}
-              </form>
-            </div>
-          );
-        })}
+                // onSubmit={(event) => {
+                //   handleSubmit(event, el);
+                // }}
+                >
+                  <label>Tier {index + 1} (days):</label>
+                  <input
+                    className="input-for-update"
+                    type="number"
+                    onChange={(event) => {
+                      handleChange1(event, el);
+                    }}
+                    required
+                    value={frequency}
+                    defaultValue={el.frequency}
+                  ></input>
+                </form>
+              </div>
+            );
+          })}
+        </div>
+      </div>{" "}
+        <hr></hr>
+      <div className="button-container-post">
+        {/* <button className="post-button same-page-button">Submit</button> */}
       </div>
     </div>
   );
