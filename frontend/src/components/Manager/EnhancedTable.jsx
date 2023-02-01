@@ -1,39 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "react-toggle/style.css";
 import useAuth from "../../hooks/useAuth";
 
-import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import { alpha } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
 // import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { findDOMNode } from "preact/compat";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import ToggleSwitch from "./ToggleSwitch";
-import TableTenure from "./TableTenure";
-import StateManger from "./StateManger";
-import Del from "./Del";
+import { toast } from "react-toastify";
 import AdjustPTO from "./AdjustPTO";
-import { sizing } from '@mui/system';
+import Del from "./Del";
+import StateManger from "./StateManger";
+import TableTenure from "./TableTenure";
+import ToggleSwitch from "./ToggleSwitch";
 
 
 
