@@ -36,8 +36,9 @@ export default function StateManger({ getAllEmployees, el }) {
     let newResidence = {
       state: selectedState,
     };
-    console.log("newResidence", newResidence);
+    console.log("newResidence", newResidence, el);
     UpdateResidence(newResidence, el);
   };
-  return <SelectUSState devaultValue={el.state} onChange={handleChange} />;
+  return <SelectUSState defaultValue = {el.state} onChange={handleChange} />;
+  // return <SelectUSState devaultValue={el.state} onChange={handleChange} />;
 }
