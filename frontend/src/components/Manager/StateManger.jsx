@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import SelectUSState from "react-select-us-states";
+// import SelectUSState from "react-select-us-states";
+import SelectUsStateNew from "../SelectUsStateNew";
+
+
 
 export default function StateManger({ getAllEmployees, el }) {
   const [user, token] = useAuth();
@@ -39,6 +42,6 @@ export default function StateManger({ getAllEmployees, el }) {
     console.log("newResidence", newResidence, el);
     UpdateResidence(newResidence, el);
   };
-  return <SelectUSState defaultValue = {el.state} onChange={handleChange} />;
+  return <SelectUsStateNew defaultValue = {el.state} onChange={handleChange} />;
   // return <SelectUSState devaultValue={el.state} onChange={handleChange} />;
 }
