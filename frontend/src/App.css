@@ -371,15 +371,17 @@ button:hover {
   flex-direction: column;
   padding-top: 2rem;
   grid-column: 1;
-  grid-row: 2/5;
+  grid-row: 2;
 
 }
 .column2{
   display: flex; 
   flex-direction: column;
   padding-top: 2rem;
+  width: 10rem;
+
   grid-column: 2;
-  grid-row: 2/5;
+  grid-row: 2;
 
 }
 .update-forms1{
@@ -391,10 +393,10 @@ button:hover {
 }
 
 .input-for-update{
-  width: 6rem;
-  margin: .5rem;
-  
-}
+  width: 5rem;
+  padding: .2rem;
+  margin: .3rem;
+ }
 
 .input-for-new{
   display: flex;
