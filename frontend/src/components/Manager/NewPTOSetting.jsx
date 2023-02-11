@@ -4,13 +4,15 @@ import { ToastContainer, toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import { Button } from "@mui/material";
 
-export default function NewPTOSetting({}) {
+export default function NewPTOSetting({getAllPtoHoursPerYear, getAllPtoFrequenciesPerYear}) {
   const [ptoFrequencyPerYear, setPtoFrequencyPerYear] = useState();
   const [ptoHoursPerYear, setPtoHoursPerYear] = useState();
   const [user, token] = useAuth();
-  const [hours, setHours] = useState();
-  const [frequency, setFrequency] = useState();
+  const [hours, setHours] = useState('');
+  const [frequency, setFrequency] = useState('');
 
+
+  //get all employees
   async function getAllEmployeesCheckPTO() {
     try {
       let res = await axios.get(
@@ -27,6 +29,10 @@ export default function NewPTOSetting({}) {
     }
   }
 
+
+
+
+
   async function postAPtoFrequency(frequency) {
     try {
       let res = await axios.post(
@@ -42,6 +48,7 @@ export default function NewPTOSetting({}) {
 
       setPtoFrequencyPerYear(res.data);
       getAllEmployeesCheckPTO();
+      getAllPtoFrequenciesPerYear();
     } catch (error) {
       console.log(error);
       toast(
@@ -65,6 +72,7 @@ export default function NewPTOSetting({}) {
 
       setPtoHoursPerYear(res.data);
       getAllEmployeesCheckPTO();
+      getAllPtoHoursPerYear();
     } catch (error) {
       console.log(error);
       toast("Sorry! We have encountered an error posting your pto frequency!");
@@ -81,6 +89,8 @@ export default function NewPTOSetting({}) {
     };
     postAPtoHourRate(newPTOHours);
     postAPtoFrequency(newPTOFrequency);
+    setFrequency('');
+    setHours('');
   }
 
   return (
@@ -93,8 +103,8 @@ export default function NewPTOSetting({}) {
           <input
             type="number"
             onChange={(event) => setHours(event.target.value)}
+            value = {hours}
             required
-            // value={response }
           ></input>
         </div>
         <div>
@@ -105,8 +115,8 @@ export default function NewPTOSetting({}) {
           <input
             type="number"
             onChange={(event) => setFrequency(event.target.value)}
+            value = {frequency}
             required
-            // value={response }
           ></input>
         </div>
       </form>

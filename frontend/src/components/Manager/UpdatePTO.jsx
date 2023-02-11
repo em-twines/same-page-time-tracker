@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import {toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -8,56 +8,16 @@ import { AlertTitle, paperClasses } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 
-export default function UpdatePTO({}) {
+export default function UpdatePTO({
+  allPtoFrequenciesPerYear,
+  setAllPtoFrequenciesPerYear,
+  allPtoHoursPerYear,
+  setAllPtoHoursPerYear,
+}) {
   const [user, token] = useAuth();
   const [pto, setPTO] = useState();
   const [hours, setHours] = useState();
   const [frequency, setFrequency] = useState();
-  const [allPtoFrequenciesPerYear, setAllPtoFrequenciesPerYear] = useState([]);
-  const [allPtoHoursPerYear, setAllPtoHoursPerYear] = useState([]);
-
-  async function getAllPtoHoursPerYear() {
-    try {
-      let res = await axios.get(
-        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/hours/
-        `,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-
-      setAllPtoHoursPerYear(res.data);
-    } catch (error) {
-      console.log(error);
-      toast(
-        "Sorry! We have encountered an error getting your pto hours allowance per year!"
-      );
-    }
-  }
-
-  async function getAllPtoFrequenciesPerYear() {
-    try {
-      let res = await axios.get(
-        `http://127.0.0.1:8000/api/requests_for_pto/manager/settings/frequencies/
-        `,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-
-      setAllPtoFrequenciesPerYear(res.data);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-      toast(
-        "Sorry! We have encountered an error getting your pto rate allowance per year!"
-      );
-    }
-  }
 
   async function getAllEmployeesCheckPTO() {
     try {
@@ -103,17 +63,16 @@ export default function UpdatePTO({}) {
           },
         }
       );
-      console.log(res.data);
       getAllEmployeesCheckPTO();
     } catch (error) {
       console.log(error);
     }
   }
 
-  useEffect(() => {
-    getAllPtoFrequenciesPerYear();
-    getAllPtoHoursPerYear();
-  }, []);
+  // useEffect(() => {
+  //   getAllPtoFrequenciesPerYear();
+  //   getAllPtoHoursPerYear();
+  // }, []);
 
   function handleChange(e, el) {
     e.preventDefault();
@@ -138,19 +97,22 @@ export default function UpdatePTO({}) {
   return (
     <div>
       <div className="update-pto-form">
-        <div classname="column1">
-          <h3>Hours</h3>
+        <div >
+          <h4>PTO Allowance in Hours</h4>
 
           {allPtoHoursPerYear.map((el, index) => {
+            
             return (
-              <div>
+              
+              <div key = {index}>
                 <form
 
                 // onSubmit={(event) => {
                 //   handleSubmit1(event, el);
                 // }}
                 >
-                  <label>Tier {index + 1} (hrs):</label>
+                  <label>
+                    <span>Tier {index + 1} (hrs): </span></label>
                   <input
                     className="input-for-update"
                     type="number"
@@ -170,18 +132,19 @@ export default function UpdatePTO({}) {
           })}
         </div>
 
-        <div classname="column2">
-          <h3>Years</h3>
+        <div >
+          <h4>Tenure in Years</h4>
           {allPtoFrequenciesPerYear.map((el, index) => {
             return (
-              <div>
+              <div key = {index}>
                 <form
 
                 // onSubmit={(event) => {
                 //   handleSubmit(event, el);
                 // }}
                 >
-                  <label>Tier {index + 1} (days):</label>
+                  <label>
+                    <span>Tier {index + 1} (days): </span></label>
                   <input
                     className="input-for-update"
                     type="number"
@@ -198,7 +161,7 @@ export default function UpdatePTO({}) {
           })}
         </div>
       </div>{" "}
-        <hr></hr>
+      <hr></hr>
       <div className="button-container-post">
         {/* <button className="post-button same-page-button">Submit</button> */}
       </div>

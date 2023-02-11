@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
 const style = {
   position: "absolute",
@@ -30,19 +31,25 @@ export default function RequestForm({
   hours_requested,
   setHoursRequested,
 }) {
-  let currentDate = new Date();
-  let cDay = currentDate.getDate();
-  let cMonth = currentDate.getMonth();
-  let cYear = currentDate.getFullYear();
+  // let currentDate = new Date();
+  // let cDay = currentDate.getDate();
+  // let cMonth = currentDate.getMonth();
+  // let cYear = currentDate.getFullYear();
 
   const [request_text, setRequestText] = useState("");
   const [day, setDay] = useState();
   const [open, setOpen] = useState(false);
   const [pto, setPTO] = useState();
+  // const currentDate = moment().format("DD-MM-YYYY")
+  const [currentTime, setCurrentTime] = useState();
 
   useEffect(() => {
     getUserInfo();
     // setPTO(employee.pto)
+    let currentTime = moment().utcOffset("-5:00").format("YYYY-MM-DD hh:mm");
+
+    setCurrentTime(currentTime);
+    console.log(currentTime)
   }, []);
 
   function handleOpen() {
@@ -60,18 +67,16 @@ export default function RequestForm({
       day: day,
       hours_requested: hours_requested,
       decision: false,
-      is_pending: true,
+      is_pending: true,      
+      submission_time: currentTime,
     };
-    console.log(newRequest.hours_requested, employee.pto);
     if (newRequest.hours_requested <= employee.pto) {
       console.log(newRequest.hours_requested <= employee.pto);
       postRequest(newRequest);
       let newHours = {
         pto: parseInt(-Math.abs(hours_requested)),
       };
-      console.log("preflight pto", employee.pto);
       affectPTO(newHours);
-      console.log("postflight pto", employee.pto);
       setRequestText("");
       setDay();
       setHoursRequested(0);
@@ -94,6 +99,8 @@ export default function RequestForm({
       );
       setRequest(requests_for_pto, newRequest);
       getRequests();
+      console.log(currentTime)
+
     } catch (error) {
       console.log(error, newRequest);
       toast(
@@ -125,7 +132,11 @@ export default function RequestForm({
     <div className="form-container ">
       <div>
         <div>
-          <button className = 'same-page-button' variant="contained" onClick={handleOpen}>
+          <button
+            className="same-page-button"
+            variant="contained"
+            onClick={handleOpen}
+          >
             Request PTO
           </button>
           <Modal
@@ -144,11 +155,12 @@ export default function RequestForm({
               </Typography>
 
               <form onSubmit={handleSubmit} className="form-content">
+
                 <label>Add a Message</label>
                 <input
                   className="form input"
                   type="text"
-                  defaultValue = "May I please take PTO on this day?"
+                  defaultValue="May I please take PTO on this day?"
                   onChange={(event) => setRequestText(event.target.value)}
                   required
                   value={request_text}
@@ -156,7 +168,7 @@ export default function RequestForm({
                 <label>Day</label>
                 <input
                   className="form input"
-                  defaultValue = '{{currentDate}}'
+                  defaultValue="{{currentDate}}"
                   type="date"
                   // onKeyDown={(e) => e.preventDefault()}
                   onChange={(event) => setDay(event.target.value)}
@@ -171,7 +183,9 @@ export default function RequestForm({
                   required
                   value={hours_requested}
                 ></input>
-                <button className = 'same-page-button-green' type="submit">Submit Request</button>
+                <button className="same-page-button-green" type="submit">
+                  Submit Request
+                </button>
               </form>
 
               {/* <button className = 'same-page-button' onClick={handleClose}>Close</button> */}

@@ -1,14 +1,16 @@
 from django.db import models
 from authentication.models import User
-from datetime import date
-
+from datetime import date, datetime
+from django.conf import settings
 class Request(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     request_text = models.CharField(max_length=1000)
     day = models.DateField(default=date.today)
     hours_requested = models.IntegerField(default=8)
     decision = models.BooleanField(default=False)
     is_pending = models.BooleanField(default=True)
+    submission_time = models.DateTimeField(default=datetime.now)
+    # submission_time = models.DateTimeField(format= '%m/%d/%y %H:%M %p', default=datetime.now)
+
 
 class Employee_Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
@@ -19,11 +21,8 @@ class Manager_Employee(models.Model):
 
 class Hour(models.Model):
     hours = models.IntegerField(default=(8*10))
-    # hours2 = models.IntegerField(default=(8*15))
-    # hours3  = models.IntegerField(default=(8*20))
 
 class Frequency(models.Model):
     frequency = models.IntegerField(default=365)
-    # frequency2 = models.IntegerField(default=(365*3))
-    # frequency3 = models.IntegerField(default=(365*5))
+
 
