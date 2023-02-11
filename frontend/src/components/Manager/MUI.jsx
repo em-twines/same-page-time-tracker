@@ -156,6 +156,7 @@ export default function MUI({
       toast(`You denied ${personName}'s request for PTO.`);
     }
     handleClose();
+    setClicked(false)
   }
 
   return (
