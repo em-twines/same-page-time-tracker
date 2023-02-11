@@ -13,7 +13,7 @@ export default function MailManager({
 }) {
   // const [mail, setMail] = useState([]);
   // const [user, token] = useAuth();
-  // const [pendingRequests, setPendingRequests] = useState([]);
+  // const [pending, setPending] = useState([]);
   // const [senders, setSenders] = useState([]);
   const [combinedMessage, setCombinedMessage] = useState([]);
   // const [convertedSubmissionTime, setConvertedSubmissionTime] = useState();
@@ -47,7 +47,7 @@ export default function MailManager({
 
   useEffect(() => {
     setMailbox();
-  }, []);
+  }, [combinedMessage]);
 
   return (
     <div>
