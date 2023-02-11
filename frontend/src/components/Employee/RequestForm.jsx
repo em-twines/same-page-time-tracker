@@ -46,7 +46,7 @@ export default function RequestForm({
   useEffect(() => {
     getUserInfo();
     // setPTO(employee.pto)
-    let currentTime = moment().utcOffset("-05:00").format("MM-DD-YYYY hh:mm a");
+    let currentTime = moment().utcOffset("-5:00").format("YYYY-MM-DD hh:mm");
 
     setCurrentTime(currentTime);
     console.log(currentTime)
@@ -99,7 +99,7 @@ export default function RequestForm({
       );
       setRequest(requests_for_pto, newRequest);
       getRequests();
-      console.log(res.data)
+      console.log(currentTime)
 
     } catch (error) {
       console.log(error, newRequest);

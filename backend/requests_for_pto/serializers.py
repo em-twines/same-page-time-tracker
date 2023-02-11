@@ -5,8 +5,7 @@ from datetime import date
 
 
 class RequestSerializer(serializers.ModelSerializer):
-    submission_time = serializers.DateTimeField(format="%m-%d-%Y %H:%M %p", input_formats=["%m-%d-%Y %H:%M %p",])
-    # day = serializers.DateField(input_formats='%m-%d-%Y')
+    # submission_time = serializers.DateTimeField(format="%m-%d-%Y %H:%M %p", input_formats=["%m-%d-%Y %H:%M %p",])
     class Meta:
         model = Request
         fields = ['id', 'request_text', 'day', 'hours_requested', 'decision', 'is_pending', 'submission_time']

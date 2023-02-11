@@ -4,17 +4,22 @@ import Box from "@mui/material/Box";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import MessageManager from "./MessageManager";
+import moment from "moment";
 
 export default function MailManager({
   requests,
-  defaultMessage,
-  setDefaultMesssage,
+  // defaultMessage,
+  // setDefaultMesssage,
 }) {
-  const [mail, setMail] = useState([]);
-  const [user, token] = useAuth();
-  const [pendingRequests, setPendingRequests] = useState([]);
-  const [senders, setSenders] = useState([]);
+  // const [mail, setMail] = useState([]);
+  // const [user, token] = useAuth();
+  // const [pendingRequests, setPendingRequests] = useState([]);
+  // const [senders, setSenders] = useState([]);
   const [combinedMessage, setCombinedMessage] = useState([]);
+  // const [convertedSubmissionTime, setConvertedSubmissionTime] = useState();
+
+
+
 
   const merge = (arr1, arr2) =>
     (arr1.length > arr2.length ? arr1 : arr2)
@@ -34,8 +39,7 @@ export default function MailManager({
         return pending, senders;
       });
 
-      // setPendingRequests(pending);
-      // setSenders(senders);
+
     }
     let combined = merge(senders, pending);
     setCombinedMessage(combined);
@@ -88,7 +92,9 @@ export default function MailManager({
                 ) : ( 
                   <div>
                     <p style = {{fontSize: '.9rem'}}>{el.request_text}</p>
-                    <p style = {{fontSize: '.8rem'}}>{el.submission_time}</p>
+                    <p style = {{fontSize: '.8rem'}}>{
+                    moment(el.submission_time, "YYYY-MM-DD hh:mm").format('MM/DD/YY h:mm A')}</p>
+                    {/* <p style = {{fontSize: '.8rem'}}>{el.submission_time}</p> */}
                     <br></br>
                     <hr></hr>
 
