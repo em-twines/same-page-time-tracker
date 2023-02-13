@@ -37,7 +37,7 @@ export default function RequestForm({
   // let cYear = currentDate.getFullYear();
 
   const [request_text, setRequestText] = useState("");
-  const [day, setDay] = useState();
+  const [day, setDay] = useState('');
   const [open, setOpen] = useState(false);
   const [pto, setPTO] = useState();
   // const currentDate = moment().format("DD-MM-YYYY")
@@ -46,7 +46,7 @@ export default function RequestForm({
   useEffect(() => {
     getUserInfo();
     // setPTO(employee.pto)
-    let currentTime = moment().utcOffset("-5:00").format("YYYY-MM-DD hh:mm");
+    let currentTime = moment().utcOffset("-5:00").format("YYYY-MM-DD HH:mm");
 
     setCurrentTime(currentTime);
     console.log(currentTime)
@@ -160,7 +160,7 @@ export default function RequestForm({
                 <input
                   className="form input"
                   type="text"
-                  defaultValue="May I please take PTO on this day?"
+                  // defaultValue="May I please take PTO on this day?"
                   onChange={(event) => setRequestText(event.target.value)}
                   required
                   value={request_text}
@@ -168,7 +168,7 @@ export default function RequestForm({
                 <label>Day</label>
                 <input
                   className="form input"
-                  defaultValue="{{currentDate}}"
+                  // defaultValue="{{currentDate}}"
                   type="date"
                   // onKeyDown={(e) => e.preventDefault()}
                   onChange={(event) => setDay(event.target.value)}

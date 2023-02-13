@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -33,6 +33,8 @@ export default function MUI({
   userId,
   defaultMessage,
   message,
+  stateChanger,
+  setStateChanger,
 }) {
   const [user, token] = useAuth();
   const [pto, setPTO] = useState();
@@ -41,7 +43,6 @@ export default function MUI({
   const [message_text, setMessage] = useState("");
   const [recipient, setRecipient] = useState();
   const [sender, setSender] = useState();
-
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
@@ -88,7 +89,6 @@ export default function MUI({
   }
 
   async function sendMessage(newMessage) {
-    console.log("newMessage in async", newMessage);
     try {
       let res = await axios.post(
         `http://127.0.0.1:8000/api/message/`,
@@ -99,7 +99,6 @@ export default function MUI({
           },
         }
       );
-      console.log("res.data", res.data);
 
       setMessage(res.data);
     } catch (error) {
@@ -108,8 +107,22 @@ export default function MUI({
     }
   }
 
+
+  // function Update(changedState) {
+  //   const newState = [...stateChanger]; // spreading operator which doesn't mutate the array and returns new array
+  //   newState.push(changedState);
+
+  //   // const newDeals = deals.concat(deal); // concat merges the passed value to the array and return a new array
+  //   // const newDeals = [...deals, deal] // directly passing the new value and we don't need to use push
+  
+  //   setStateChanger(newState);
+  // }
+
+
   function approvePTO() {
+    console.log('click')
     setDecision(true);
+    setClicked(true);
     let newDecision = {
       decision: true,
     };
@@ -122,15 +135,28 @@ export default function MUI({
       is_read: false,
     };
     sendMessage(newMessage);
-    console.log("newMessage", newMessage);
 
     handleClose();
     toast(`You approved ${personName}'s request for PTO!`);
+    setClicked(false);
+    changeState();
   }
 
-  function denyPTO() {
-    setDecision(false);
+  function changeState(){
+    if (stateChanger ===true){
+      setStateChanger(false);
 
+    }
+    else{
+      setStateChanger(true);
+    }
+  }
+
+
+  function denyPTO() {
+    console.log('click')
+
+    setDecision(false);
     let newHours = {
       pto: parseInt(hours),
     };
@@ -138,9 +164,9 @@ export default function MUI({
     let newDecision = {
       decision: false,
     };
-    console.log("newDecision", newDecision);
     RespondToRequest(newDecision);
     setClicked(true);
+    changeState();
   }
 
   function handleSubmit() {
@@ -158,6 +184,11 @@ export default function MUI({
     handleClose();
     setClicked(false)
   }
+//approve then deny deletes. -- decision is changing
+//Delete then delete does not. 
+//Neither does approve itself. 
+
+//approve approve doesn't change color.
 
   return (
     <div>

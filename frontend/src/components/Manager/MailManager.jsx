@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef} from "react";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import useAuth from "../../hooks/useAuth";
@@ -8,6 +8,8 @@ import moment from "moment";
 
 export default function MailManager({
   requests,
+  decision,
+  stateChanger
   // defaultMessage,
   // setDefaultMesssage,
 }) {
@@ -16,8 +18,9 @@ export default function MailManager({
   // const [pending, setPending] = useState([]);
   // const [senders, setSenders] = useState([]);
   const [combinedMessage, setCombinedMessage] = useState([]);
+  const [newRenderer, setNewRenderer] = useState(false);
   // const [convertedSubmissionTime, setConvertedSubmissionTime] = useState();
-
+  const previousStateChangerValue = useRef(stateChanger);
 
 
 
@@ -27,7 +30,11 @@ export default function MailManager({
       .flat()
       .filter(Boolean);
 
+
+
   function setMailbox() {
+    console.log('mailbox function running')
+    console.log('stateChanger in setMailbox', stateChanger)
     let pending = [];
     let senders = [];
     if (requests.length > 0) {
@@ -38,16 +45,29 @@ export default function MailManager({
         }
         return pending, senders;
       });
-
-
     }
     let combined = merge(senders, pending);
     setCombinedMessage(combined);
+    console.log('combined', combined)
   }
 
   useEffect(() => {
+    console.log('stateChanger before setMailbox', stateChanger);
     setMailbox();
-  }, [combinedMessage]);
+    // console.log('combined Message in useEffect', combinedMessage)
+    console.log('statechanger', stateChanger, Object.values({stateChanger})[0]);
+  }, [requests]);
+
+//if I include decision a dependency:
+  //undefined => false = nothing
+  //false => true = change
+  //false=>false = nothing
+
+
+// useEffect(() => {
+//  setNewRenderer(true);
+// }, [combinedMessage])
+
 
   return (
     <div>
@@ -67,33 +87,22 @@ export default function MailManager({
         <br></br>
         <hr></hr>
         
-
+        {console.log('combinedMessages in return', combinedMessage)}
         {combinedMessage?.map((el, i) => {
-
+          
           return (
-            // <Box
-            //   sx={{
-            //     bgcolor: "background.paper",
-            //     boxShadow: 1,
-            //     borderRadius: 2,
-            //     p: 2,
-            //     minWidth: 300,
-            //     margin: 2,
-            //   }}
-            //   key={el.id}
-            // >
-              // {" "}
-              <div>
+
+              <div key = {i}>
                 {i%2 === 0 ? (
-                  <div>
-                     <br></br>
+                  <div >
+                    <br></br>
                   <p style = {{fontSize: '1rem'}}>{el.first_name} {el.last_name}</p>
                   </div>
                 ) : ( 
                   <div>
                     <p style = {{fontSize: '.9rem'}}>{el.request_text}</p>
                     <p style = {{fontSize: '.8rem'}}>{
-                    moment(el.submission_time, "YYYY-MM-DD hh:mm").format('MM/DD/YY h:mm A')}</p>
+                    moment(el.submission_time, "YYYY-MM-DD HH:mm").format('MM/DD/YY hh:mm a')}</p>
                     {/* <p style = {{fontSize: '.8rem'}}>{el.submission_time}</p> */}
                     <br></br>
                     <hr></hr>

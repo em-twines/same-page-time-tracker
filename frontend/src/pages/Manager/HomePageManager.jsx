@@ -20,6 +20,7 @@ export default function HomePageManager({ decision, setDecision }) {
   const [users, setUsers] = useState([]);
   const [managers, setManagers] = useState([]);
   const [toggle, setToggle] = useState([]);
+  const [stateChanger, setStateChanger] = useState(true);
 
   const [defaultMessage, setDefaultMesssage] = useState(
     "Your PTO request has been approved!"
@@ -65,14 +66,17 @@ export default function HomePageManager({ decision, setDecision }) {
     }
   }
 
-  function handleSubmit(event) {
-    getAllRequests();
-  }
+
 
   useEffect(() => {
     getAllRequests();
     getAllEmployees();
-  }, [decision]);
+  }, [stateChanger]);
+
+  // useEffect(() => {
+  //   getAllRequests();
+  //   getAllEmployees();
+  // }, [decision]);
 
   return (
     <div>
@@ -87,6 +91,9 @@ export default function HomePageManager({ decision, setDecision }) {
                 requests={requests}
                 defaultMessage={defaultMessage}
                 setDefaultMesssage={setDefaultMesssage}
+                decision={decision}
+                stateChanger={stateChanger}
+               
               />
               <CalendarManager
                 requests={requests}
@@ -97,6 +104,8 @@ export default function HomePageManager({ decision, setDecision }) {
                 setDecision={setDecision}
                 defaultMessage={defaultMessage}
                 user={user}
+                stateChanger={stateChanger}
+                setStateChanger = {setStateChanger}
               />
             </>
           ) : (

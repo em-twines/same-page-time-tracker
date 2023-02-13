@@ -64,9 +64,9 @@ export default function CalendarEmployee({
         }
       } else {
         if (today > el.day) {
-          eventColor = "#85DCB90";
+          eventColor = "#96bad8";
         } else {
-          eventColor = "#85DCB";
+          eventColor = "#383be95";
         }
       }
 

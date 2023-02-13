@@ -18,6 +18,8 @@ export default function CalendarManager({
   setDecision,
   defaultMessage,
   user,
+  stateChanger,
+  setStateChanger
 }) {
   // const[weekendsVisible, setWeekendsVisible] = useState(true);
   // const [eventsDefined, setEvents] = useState();
@@ -61,9 +63,9 @@ export default function CalendarManager({
         }
       } else {
         if (today > el.request_for_pto.day) {
-          eventColor = "#85DCB90";
+          eventColor = "#96bad8";
         } else {
-          eventColor = "#85DCB";
+          eventColor = "#383be95";
         }
       }
 
@@ -111,7 +113,8 @@ export default function CalendarManager({
         setDecision={setDecision}
         userId={userId}
         defaultMessage={defaultMessage}
-
+        stateChanger={stateChanger}
+        setStateChanger = {setStateChanger}
 
 
       />
@@ -124,24 +127,14 @@ export default function CalendarManager({
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          // events = {addeventSource(events)}
           initialView="dayGridMonth"
           editable={true}
           selectable={true}
           selectMirror={true}
           dayMaxEvents={true}
-          // weekends={this.state.weekendsVisible}
           events={eventsDefined}
-          // eventColor={eventColorState}
-          // select={handleDateSelect}
-          // eventContent={renderEventContent} // custom render function
           eventClick={handleEventClick}
-          // eventsSet={setEvents}// called after events are initialized/added/changed/removed
-          /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
+
         />
         <div></div>
       </div>
