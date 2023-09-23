@@ -1,6 +1,6 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import useAuth from "./hooks/useAuth";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +16,8 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ManageStaff from "./pages/Manager/ManageStaff";
 import SettingsPage from "./pages/Manager/SettingsPage";
+import LandingPage from "./pages/LandingPage/LandingPage.jsx";
+import AddEmployeePage from "./pages/Manager/AddEmployeePage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -31,7 +33,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./media/PTSans-BoldItalic.ttf";
 import "./media/PTSans-Regular.ttf";
-import AddEmployeePage from "./pages/Manager/AddEmployeePage";
 
 function App() {
   const [user, token] = useAuth();
@@ -39,13 +40,14 @@ function App() {
   const navigate = useNavigate();
 
 
-
+// TODO: add drop down menu to log in / register
+// TODO: create path to get from landing to log in / register
 
 
   
   return (
-    <div>
-      <Navbar />
+    <Fragment>
+      {/* <Navbar /> */}
 
       <ToastContainer
         autoClose={2500}
@@ -58,7 +60,8 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<RegisterPage />} />
 
         <Route
@@ -103,7 +106,7 @@ function App() {
         />
       </Routes>
       <Footer />
-    </div>
+    </Fragment>
   );
 }
 
