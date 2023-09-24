@@ -1,0 +1,57 @@
+
+
+@font-face {
+  font-family: "Bold Itlic";   /*Can be any text*/
+  src: local("PTSans-BoldItalic"),
+    url("../../media/PTSans-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Bold-Italic";   /*Can be any text*/
+  src: local("PTSans-BoldItalic"),
+    url("../../media/PTSans-BoldItalic.ttf") format("truetype");
+}
+
+ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+li {
+  font-size: 1.25rem;
+  font-family: "Bold-Italic";
+
+}
+
+.navBar {
+  background: #41B3A3;
+  box-shadow: 4px 2px 5px gray;
+  color: white;
+  margin-bottom: 2rem;
+  padding: 1.5rem 2rem;
+}
+
+.navBar button {
+  background: #E27D60;
+  border-radius: 20rem;
+  border: 2px solid white;
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0;
+  padding-bottom: 0; 
+  margin-left: 1rem;
+}
+
+.navBar button:hover {
+  background: white;
+  color: steelblue;
+  cursor: pointer;
+}
+
+.brand {
+  cursor: pointer;
+  font-size: 2rem;
+}
+

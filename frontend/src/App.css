@@ -34,7 +34,7 @@
 
 .same-page-button{
   margin: 1rem;
-  background: #E27D60;
+  background: #e27d60;
   border-radius: 20rem;
   border: 2px solid white;
   color: white;
@@ -71,9 +71,7 @@
   padding: .5rem;
 }
 
-
-
-.background {
+/* .background {
   width:100vw;
   height:100vh;
   border:1px solid;
@@ -83,9 +81,8 @@
     radial-gradient(farthest-side,green  96%,transparent) top right/80px 80px,
     radial-gradient(farthest-side,blue   96%,transparent) 100px 50px/100px 100px,
     radial-gradient(farthest-side,red    96%,transparent) top left/40px 40px;
-    /* the circle                                          position / size */
-  background-repeat:no-repeat;
-}
+    background-repeat:no-repeat;
+} */
 
 
 
@@ -114,18 +111,20 @@ p {
 
 button {
   background-color: transparent;
-  border: 2px solid steelblue;
-  color: steelblue;
-  font-size: 1rem;
+  border: none;
+  /* border: 2px solid steelblue; */
+  /* color: steelblue; */
+  font-size: 1em;
   font-family: "PTSans";;
   max-width: 100px;
-  padding: 0.5rem 0.5rem;
+  /* padding: 0.5rem 0.5rem; */
+
 }
 
 button:hover {
   cursor: pointer;
   color: white;
-  background-color: steelblue;
+  /* background-color: steelblue; */
 }
 
 .container {

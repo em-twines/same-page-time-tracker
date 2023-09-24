@@ -47,7 +47,7 @@ function App() {
   
   return (
     <Fragment>
-      {/* <Navbar /> */}
+      <Navbar />
 
       <ToastContainer
         autoClose={2500}

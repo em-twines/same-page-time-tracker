@@ -5,18 +5,21 @@ import { Link } from "react-router-dom";
 import "./LandingPage.css";
 
 const LandingPage = () => {
-
-    return (
-        <Fragment>
-            <div className='circles-grid'>
-                <div className='line'></div>
-        <div className="circle-1"></div>
-     
-      <h2 className="subtitle-container"> Manage PTO for yourself and your team, all in one place.
-       
-      </h2>
-      </div>
+  return (
+    <Fragment>
+      <div className="component-container">
+        <div className="circles-grid">
+          <div className="circle-1"></div>
+        <h1 className='splash-large-1'>Get on the <br></br>same page...</h1>
+          <h2 className="splash-medium">
+            {" "}
+            Manage PTO<br></br>for yourself and your team, all in one place.
+          </h2>
+          <div className='circle-2'></div>
+          <h1 className='splash-large-2'>...and get on with your day.</h1>
+          </div>
+        </div>
     </Fragment>
-    )
-}
-export default LandingPage; 
+  );
+};
+export default LandingPage;

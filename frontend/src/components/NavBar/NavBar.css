@@ -1,57 +1,76 @@
 
 
 @font-face {
-  font-family: "Bold Itlic";   /*Can be any text*/
-  src: local("PTSans-BoldItalic"),
-    url("../../media/PTSans-BoldItalic.ttf") format("truetype");
+    font-family: "Bold Itlic";   /*Can be any text*/
+    src: local("PTSans-BoldItalic"),
+      url("../../media/PTSans-BoldItalic.ttf") format("truetype");
+  }
+  
+  @font-face {
+    font-family: "Bold-Italic";   /*Can be any text*/
+    src: local("PTSans-BoldItalic"),
+      url("../../media/PTSans-BoldItalic.ttf") format("truetype");
+  }
+  
+  ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    align-items: baseline;
+  }
+  
+  li {
+    font-size: 1.25rem;
+    font-family: "Bold-Italic";  
+  }
+  
+  .navBar {
+    position: fixed; 
+    /* background: #1443cf; */
+    /* box-shadow: 4px 2px 5px rgb(0, 0, 0); */
+    color: rgb(0, 0, 0);
+    margin-bottom: 2rem;
+    padding: 5% 5% 0 5%;
+    z-index: 10;
+    width: 100%;
 }
 
-@font-face {
-  font-family: "Bold-Italic";   /*Can be any text*/
-  src: local("PTSans-BoldItalic"),
-    url("../../media/PTSans-BoldItalic.ttf") format("truetype");
-}
+  .container {
+    display: flex; 
+    flex-direction: column; 
+    align-items: stretch;
+    height: 100%; 
+  }
 
-ul {
-  display: flex;
-  justify-content: space-between;
-  list-style-type: none;
-}
+  .line {
+    display: flex; 
+    width: 100%; 
+    border-width: 2.5px;
+    border-style: solid; 
+    border-color: #e27d60;
+    align-self: flex-end;
+  }
 
-li {
-  font-size: 1.25rem;
-  font-family: "Bold-Italic";
-
-}
-
-.navBar {
-  background: #41B3A3;
-  box-shadow: 4px 2px 5px gray;
-  color: white;
-  margin-bottom: 2rem;
-  padding: 1.5rem 2rem;
-}
-
-.navBar button {
-  background: #E27D60;
-  border-radius: 20rem;
-  border: 2px solid white;
-  color: white;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0;
-  padding-bottom: 0; 
-  margin-left: 1rem;
-}
-
-.navBar button:hover {
-  background: white;
-  color: steelblue;
-  cursor: pointer;
-}
-
-.brand {
-  cursor: pointer;
-  font-size: 2rem;
-}
-
+  .navBar button {
+    /* background: #E27D60;
+    border-radius: 20rem;
+    border: 2px solid white; */
+    color: black;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0;
+    padding-bottom: 0; 
+    margin-left: 1rem;
+  }
+  
+  .navBar button:hover {
+    color: white;
+    cursor: pointer;
+  }
+  
+  .brand {
+    cursor: pointer;
+    font-size: 2rem;
+  }
+  
+  
