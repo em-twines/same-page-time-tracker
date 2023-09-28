@@ -1,0 +1,69 @@
+
+
+@font-face {
+  font-family: "Bold Itlic";   /*Can be any text*/
+  src: local("PTSans-BoldItalic"),
+    url("../../media/PTSans-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Bold-Italic";   /*Can be any text*/
+  src: local("PTSans-BoldItalic"),
+    url("../../media/PTSans-BoldItalic.ttf") format("truetype");
+}
+
+.ul-pages {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.li-pages {
+  font-size: 1em;
+  font-family: "Bold-Italic";
+
+}
+
+.navBar-pages {
+  position: relative; 
+  /* background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg,  #2812d0, #FF2F22);
+  /* box-shadow: 4px 2px 8px #ffffff; */
+  /* box-shadow: 2px 1000px 1px white inset;
+  color: black;  */
+  padding: 20px;
+  z-index: 10;
+  width: 100%;
+  
+}
+
+
+.nav-container {
+  display:flex; 
+  justify-content: space-around;
+}
+
+.navBar-pages button {
+    color: black#E6E1E5;
+    border-radius: 25px;
+    border: solid 1.5px transparent;
+    /* background-image: linear-gradient(to bottom right, #3B37FF 2%, #E401A5, #FF2F22); */
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg,  #3B37FF, #FF2F22);
+    box-shadow: 2px 1000px 1px white inset;
+    padding: .5rem 1rem .5rem 1rem;
+    margin-left: .8rem;
+    margin-right: .8rem;
+}
+
+.navBar-pages button:hover {
+  background: white;
+  color: steelblue;
+  cursor: pointer;
+}
+
+.brand-pages {
+  cursor: pointer;
+  font-size: 1.5em;
+}
+

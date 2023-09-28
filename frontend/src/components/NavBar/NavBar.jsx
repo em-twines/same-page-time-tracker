@@ -4,10 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import "./NavBar.css";
 
-const Navbar = () => {
+const NavBar = () => {
   const { logoutUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log(user); 
   return (
     <div className="navBar">
       <div className="container">
@@ -31,7 +30,9 @@ const Navbar = () => {
           </li>
           <li>
             {user ? (
-              user.is_manager ? (
+              user?.is_manager ? (
+            // {user ? (
+            //   user.is_manager ? (
                 <ul>
                   <button
                     className="nav-button"
@@ -57,7 +58,7 @@ const Navbar = () => {
                 </ul>
               ) : (
                 <button className="nav-button" onClick={logoutUser}>
-                  LOG IN
+                  LOG OUT
                 </button>
               )
             ) : (
@@ -71,4 +72,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;

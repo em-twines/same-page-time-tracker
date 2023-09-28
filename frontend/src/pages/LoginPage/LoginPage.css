@@ -1,20 +1,11 @@
-.error {
-  color: red;
-}
-
-.container{
+.login--tv {
   display: flex; 
   align-items: center;
   justify-content: center;
-}
-.form-container{
-  display: flex; 
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem;
-}
-
-.item{
-  padding: 1rem;
+  margin: 2px;
+  border-radius: 25px;
+  border: solid #e27d60 4px;
+  background: white;
+  padding: 40% 20%;
+  height: fit-content;
 }

@@ -1,3 +1,9 @@
+/* orange: #e27d60 
+light-blue: #4e4efb 
+dark-blue: #2812d0
+
+*/
+
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap"); */
 
 @import url('https://fonts.google.com/share?selection.family=PT%20Sans:ital,wght@0,400;1,400;1,700%7CPermanent%20Marker%7CQuicksand:wght@300');
@@ -27,7 +33,6 @@
 
  */
 
-
 .body{
   height: 100vh;
 }
@@ -35,21 +40,20 @@
 .same-page-button{
   margin: 1rem;
   background: #e27d60;
-  border-radius: 20rem;
-  border: 2px solid white;
+  border-radius: 20px;
+  border: 15px solid white;
   color: white;
-  width: 8rem;
+  width: 100px;
 
 }
 
 .same-page-button-green{
   margin: 1rem;
-  background: #41B3A3;
-  border-radius: 20rem;
-  border: 2px solid white;
+  background: #2812d0;
+  border-radius: 20px;
+  border: 15px solid white;
   color: white;
-  width: 8rem;
-
+  width: 100px;
 }
 
 .same-page-button-mauve{
@@ -64,33 +68,13 @@
 
 .same-page-link{
   text-align: center;
-  color: white;
-  text-decoration: underline;
-  background-color: #41B3A3; 
-  border-radius: 20rem;
-  padding: .5rem;
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  border: 2px solid #e27d60;
+  color: #e27d60;
+  width: 100px;
 }
-
-/* .background {
-  width:100vw;
-  height:100vh;
-  border:1px solid;
-  background:
-    radial-gradient(farthest-side,yellow 32%,yellow 90% ,purple 93%, purple 96%,transparent) left center/60px 60px,
-    radial-gradient(farthest-side,yellow 96%,transparent) bottom left/80px 80px,
-    radial-gradient(farthest-side,green  96%,transparent) top right/80px 80px,
-    radial-gradient(farthest-side,blue   96%,transparent) 100px 50px/100px 100px,
-    radial-gradient(farthest-side,red    96%,transparent) top left/40px 40px;
-    background-repeat:no-repeat;
-} */
-
-
-
-
-
-
-
-
 
 *,
 *::before,

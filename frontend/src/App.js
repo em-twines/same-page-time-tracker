@@ -1,5 +1,5 @@
 // General Imports
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Router } from "react-router-dom";
 import React, { useState, Fragment } from "react";
 import useAuth from "./hooks/useAuth";
 import "./App.css";
@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-
 // Pages Imports
 import HomePageEmployee from "./pages/Employee/HomePageEmployee";
 import HomePageManager from "./pages/Manager/HomePageManager";
@@ -16,11 +15,12 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ManageStaff from "./pages/Manager/ManageStaff";
 import SettingsPage from "./pages/Manager/SettingsPage";
-import LandingPage from "./pages/LandingPage/LandingPage.jsx";
+import LandingPage from "./pages/Landing/Landing.jsx";
 import AddEmployeePage from "./pages/Manager/AddEmployeePage";
 
 // Component Imports
-import Navbar from "./components/NavBar/NavBar";
+import NavBar from "./components/NavBar/NavBar"
+import NavBarPages from "./components/NavBar/NavBarPages.jsx";
 import Footer from "./components/Footer/Footer";
 
 // Util Imports
@@ -34,21 +34,15 @@ import "@fontsource/roboto/700.css";
 import "./media/PTSans-BoldItalic.ttf";
 import "./media/PTSans-Regular.ttf";
 
+//  TODO: make login / register modals of the same page.
+
 function App() {
   const [user, token] = useAuth();
   const [decision, setDecision] = useState();
   const navigate = useNavigate();
 
-
-// TODO: add drop down menu to log in / register
-// TODO: create path to get from landing to log in / register
-
-
-  
   return (
     <Fragment>
-      <Navbar />
-
       <ToastContainer
         autoClose={2500}
         newestOnTop
@@ -58,52 +52,98 @@ function App() {
         draggable
         theme="dark"
       />
-
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage/>} />
-        <Route path="/register" element={<RegisterPage />} />
 
-        <Route
-          path="/manager"
-          element={
-            <PrivateRoute>
-              <HomePageManager decision={decision} setDecision={setDecision} />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/manager/manage-staff"
-          element={
-            <PrivateRoute>
-              <ManageStaff />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/manager/add-employee"
-          element={
-            <PrivateRoute>
-              <AddEmployeePage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/manager/settings"
-          element={
-            <PrivateRoute>
-              <SettingsPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/employee"
-          element={
-            <PrivateRoute>
-              <HomePageEmployee decision={decision} setDecision={setDecision} />
-            </PrivateRoute>
-          }
-        />
+        {/* {!user?.username ? ( */}
+          <>
+            <Route
+              path="/login"
+              element={
+                <Fragment>
+                  <NavBar />
+                  <LoginPage />
+                </Fragment>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <Fragment>
+                  <NavBar />
+                  <RegisterPage />
+                </Fragment>
+              }
+            />
+          </>
+        {/* ) : ( */}
+          <>
+            <Route
+              path="/manager"
+              element={
+                <PrivateRoute>
+                  <Fragment>
+                  <NavBarPages />
+                  <HomePageManager
+                    decision={decision}
+                    setDecision={setDecision} />
+                  </Fragment>
+                </PrivateRoute>
+              }
+            >
+            <Route
+              exact
+              path="/manager/manage-staff"
+              element={
+                <PrivateRoute>
+                   <Fragment>
+                  <NavBarPages />
+                  <ManageStaff />
+                  </Fragment>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              exact
+              path="/manager/add-employee"
+              element={
+                <PrivateRoute>
+                   <Fragment>
+                  <NavBarPages />
+                  <AddEmployeePage />
+                  </Fragment>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              exact
+              path="/manager/settings"
+              element={
+                <PrivateRoute>
+                   <Fragment>
+                  <NavBarPages />
+                  <SettingsPage />
+                  </Fragment>
+                </PrivateRoute>
+              }
+            />
+            </Route>
+            <Route
+              path="/employee"
+              element={
+                <PrivateRoute>
+                   <Fragment>
+                  <NavBarPages />
+                  <HomePageEmployee
+                    decision={decision}
+                    setDecision={setDecision}
+                  />
+                  </Fragment>
+                </PrivateRoute>
+              }
+            />
+          </>
+        {/* )} */}
       </Routes>
       <Footer />
     </Fragment>
