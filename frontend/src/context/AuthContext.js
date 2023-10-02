@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 201) {
         console.log("Successful registration! Log in to access token");
         setIsServerError(false);
-        navigate("/");
+        navigate("/login");
       } else {
         navigate("/register");
       }
